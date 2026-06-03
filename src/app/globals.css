@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/*
+  XoomAI design system — premium, dark, enterprise-AI.
+  Display: Sora. Body: Inter. Accent: cyan → indigo gradient.
+*/
+
+@theme {
+  --color-background: #070b16;
+  --color-surface: #0c1322;
+  --color-surface-2: #111a2e;
+  --color-border: #1d2740;
+  --color-foreground: #e8edf7;
+  --color-muted: #9aa7c2;
+  --color-muted-2: #6b779a;
+
+  --color-primary: #22d3ee;
+  --color-primary-foreground: #04121a;
+  --color-accent: #7c5cfc;
+  --color-accent-foreground: #ffffff;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
+
+  --radius: 0.9rem;
+
+  --shadow-glow: 0 0 0 1px rgba(34, 211, 238, 0.18), 0 18px 60px -20px rgba(34, 211, 238, 0.35);
+  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -32px rgba(0, 0, 0, 0.8);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 35%, transparent);
+    color: var(--color-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Background field used behind hero / dark sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 60%, transparent 100%);
+  }
+
+  .glow-radial {
+    background: radial-gradient(60% 50% at 50% 0%, rgba(34, 211, 238, 0.18) 0%, rgba(124, 92, 252, 0.1) 35%, transparent 70%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--color-primary) 0%, #8ab4ff 45%, var(--color-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card-surface {
+    background: linear-gradient(180deg, color-mix(in oklab, var(--color-surface) 92%, white 0%), var(--color-surface));
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+  }
+
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(120deg, rgba(34, 211, 238, 0.6), rgba(124, 92, 252, 0.5), transparent 60%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@layer utilities {
+  .container-xa {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 80rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-xa { padding-inline: 2rem; }
+  }
+}
+
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
