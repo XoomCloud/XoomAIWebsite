@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { InnerHero } from "@/components/sections/inner-hero";
+import Image from "next/image";
 import { Section, SectionHeading } from "@/components/sections/section";
-import { Architecture } from "@/components/sections/architecture";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { Integrations } from "@/components/sections/integrations";
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
 
 const departments: { value: string; label: string; codename: string; icon: IconName; tasks: string[] }[] = [
   { value: "management", label: "Management", codename: "Orchestrator", icon: "Briefcase", tasks: ["Routes tasks and prioritises work across the business", "Manages executive email and calendar", "Produces daily briefings and status summaries", "Coordinates the other agents and your team"] },
-  { value: "sales", label: "Sales & Growth", codename: "Growth", icon: "TrendingUp", tasks: ["Qualifies and follows up leads in minutes", "Drafts proposals and tailored outreach", "Researches accounts and market signals", "Keeps your pipeline and CRM up to date"] },
-  { value: "service", label: "Customer Service", codename: "Customer Success", icon: "Headphones", tasks: ["Answers customer enquiries 24/7 across channels", "Triages and routes support tickets", "Monitors satisfaction and flags at-risk accounts", "Escalates complex cases to your team with context"] },
-  { value: "finance", label: "Finance", codename: "Finance", icon: "Banknote", tasks: ["Processes invoices and extracts data", "Prepares bookkeeping and reconciliations for review", "Tracks cash flow and surfaces exceptions", "Assembles compliance documentation"] },
-  { value: "operations", label: "Operations & Admin", codename: "Automation", icon: "Workflow", tasks: ["Automates multi-step workflows across systems", "Integrates your ERP, CRM and line-of-business tools", "Removes copy-paste and data-entry work", "Coordinates approvals and routing"] },
-  { value: "hr", label: "HR & People", codename: "HR & People", icon: "Users", tasks: ["Screens applicants and schedules interviews", "Runs consistent onboarding workflows", "Handles leave requests and routine queries", "Maintains people records and compliance"] },
-  { value: "marketing", label: "Marketing", codename: "Media Hub", icon: "Sparkles", tasks: ["Drafts on-brand content and campaigns", "Schedules and coordinates social posts", "Repurposes content across channels", "Reports on campaign performance"] },
-  { value: "data", label: "Data & Analytics", codename: "Data", icon: "BarChart3", tasks: ["Builds and updates dashboards", "Monitors KPIs and targets in real time", "Detects anomalies before they cost you", "Generates plain-English reports on demand"] },
+  { value: "sales", label: "Sales & Growth", codename: "ORBIT", icon: "TrendingUp", tasks: ["Qualifies and follows up leads in minutes", "Drafts proposals and tailored outreach", "Researches accounts and market signals", "Keeps your pipeline and CRM up to date"] },
+  { value: "service", label: "Customer Service", codename: "PULSE", icon: "Headphones", tasks: ["Answers customer enquiries 24/7 across channels", "Triages and routes support tickets", "Monitors satisfaction and flags at-risk accounts", "Escalates complex cases to your team with context"] },
+  { value: "finance", label: "Finance", codename: "VAULT", icon: "Banknote", tasks: ["Processes invoices and extracts data", "Prepares bookkeeping and reconciliations for review", "Tracks cash flow and surfaces exceptions", "Assembles compliance documentation"] },
+  { value: "operations", label: "Operations & Admin", codename: "CRANK", icon: "Workflow", tasks: ["Automates multi-step workflows across systems", "Integrates your ERP, CRM and line-of-business tools", "Removes copy-paste and data-entry work", "Coordinates approvals and routing"] },
+  { value: "hr", label: "HR & People", codename: "TRIBE", icon: "Users", tasks: ["Screens applicants and schedules interviews", "Runs consistent onboarding workflows", "Handles leave requests and routine queries", "Maintains people records and compliance"] },
+  { value: "marketing", label: "Media Hub", codename: "LUMEN", icon: "Sparkles", tasks: ["Drafts on-brand content and campaigns", "Schedules and coordinates social posts", "Repurposes content across channels", "Reports on campaign performance"] },
+  { value: "data", label: "Data & Analytics", codename: "QUARTZ", icon: "BarChart3", tasks: ["Builds and updates dashboards", "Monitors KPIs and targets in real time", "Detects anomalies before they cost you", "Generates plain-English reports on demand"] },
 ];
 
 const capabilities = [
@@ -125,16 +125,31 @@ export default function XoomAgentPage() {
         </div>
       </Section>
 
-      {/* Architecture */}
-      <Section className="pt-0">
+      {/* Architecture — the real XOOM AI OS diagram */}
+      <Section className="on-dark">
         <SectionHeading
           eyebrow="The XOOM AI OS"
           title="An enterprise agent platform under the hood"
           subtitle="XoomAgent™ runs on the XOOM AI OS — a control plane that manages, secures and orchestrates autonomous agents connected to your memory, knowledge, tools and systems."
         />
-        <div className="mx-auto mt-12 max-w-5xl">
-          <Architecture />
-        </div>
+        <Reveal className="mx-auto mt-12 max-w-5xl">
+          <div className="ring-gradient rounded-3xl">
+            <div className="card-surface overflow-hidden rounded-3xl p-2 md:p-3">
+              <Image
+                src="/images/xoom-ai-os-architecture.jpg"
+                alt="XOOM AI OS high-level architecture: a management control plane (swarm and agent management, task planning, communication and orchestration, memory and knowledge, security and governance, monitoring) above the Xoom Agent Runtime, connected to memory, knowledge, tools, schedulers and connectors, plus clients and integrations, and working with leading AI, cloud and data platforms."
+                width={1536}
+                height={1024}
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className="h-auto w-full rounded-2xl"
+              />
+            </div>
+          </div>
+          <p className="mt-4 text-center text-sm text-muted">
+            The XOOM AI OS — the control plane behind every XoomAgent™ deployment. Each agent runs in an
+            isolated gateway with permissioned access and full audit trails.
+          </p>
+        </Reveal>
       </Section>
 
       {/* Department pillars */}

@@ -19,7 +19,7 @@ export function organizationSchema() {
     name: SITE.name,
     legalName: SITE.legalName,
     url: SITE.url,
-    logo: `${SITE.url}/logo.svg`,
+    logo: `${SITE.url}/images/xoomai-logo-dark.png`,
     email: SITE.email,
     telephone: SITE.phone,
     parentOrganization: { "@type": "Organization", name: SITE.parent },

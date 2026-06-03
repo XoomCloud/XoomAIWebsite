@@ -1,46 +1,45 @@
 @import "tailwindcss";
 
 /*
-  XoomAI design system — premium, dark, enterprise-AI.
-  Display: Sora. Body: Inter. Accent: cyan → indigo gradient.
+  XoomAI design system — LIGHT, premium, enterprise-AI.
+  Predominantly light with strategic dark bands (footer, primary CTAs, OS architecture).
+  Brand: cyan → violet → magenta (from the XOOM AI logo). Display: Sora. Body: Inter.
 */
 
 @theme {
-  --color-background: #070b16;
-  --color-surface: #0c1322;
-  --color-surface-2: #111a2e;
-  --color-border: #1d2740;
-  --color-foreground: #e8edf7;
-  --color-muted: #9aa7c2;
-  --color-muted-2: #6b779a;
+  --color-background: #f4f7fb;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef2f9;
+  --color-border: #e1e8f2;
+  --color-foreground: #0b1424;
+  --color-muted: #51607a;
+  --color-muted-2: #8b96ab;
 
-  --color-primary: #22d3ee;
-  --color-primary-foreground: #04121a;
-  --color-accent: #7c5cfc;
+  --color-primary: #0891b2;       /* readable cyan for text & accents */
+  --color-primary-bright: #22d3ee; /* vivid cyan for fills, glows, gradients */
+  --color-primary-foreground: #ffffff;
+  --color-accent: #7c3aed;        /* violet */
+  --color-magenta: #c026d3;       /* logo magenta */
   --color-accent-foreground: #ffffff;
-  --color-success: #34d399;
-  --color-warning: #fbbf24;
+  --color-success: #059669;
+  --color-warning: #d97706;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
 
   --radius: 0.9rem;
 
-  --shadow-glow: 0 0 0 1px rgba(34, 211, 238, 0.18), 0 18px 60px -20px rgba(34, 211, 238, 0.35);
-  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -32px rgba(0, 0, 0, 0.8);
-
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 22px 44px -28px rgba(16, 24, 40, 0.22);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Brand gradient reused across icons, rings and highlights */
+  --brand-gradient: linear-gradient(115deg, #c026d3 0%, #7c3aed 45%, #06b6d4 100%);
 }
 
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
+  * { border-color: var(--color-border); }
 
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     background-color: var(--color-background);
@@ -56,59 +55,82 @@
     text-wrap: balance;
   }
 
-  ::selection {
-    background: color-mix(in oklab, var(--color-primary) 35%, transparent);
-    color: var(--color-foreground);
-  }
+  ::selection { background: color-mix(in oklab, var(--color-accent) 28%, transparent); }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
     border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Background field used behind hero / dark sections */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgba(12, 20, 36, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(12, 20, 36, 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 60%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
   }
 
   .glow-radial {
-    background: radial-gradient(60% 50% at 50% 0%, rgba(34, 211, 238, 0.18) 0%, rgba(124, 92, 252, 0.1) 35%, transparent 70%);
+    background: radial-gradient(55% 50% at 50% 0%, rgba(124, 58, 237, 0.12) 0%, rgba(34, 211, 238, 0.1) 40%, transparent 72%);
   }
 
   .text-gradient {
-    background: linear-gradient(100deg, var(--color-primary) 0%, #8ab4ff 45%, var(--color-accent) 100%);
+    background: var(--brand-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .card-surface {
-    background: linear-gradient(180deg, color-mix(in oklab, var(--color-surface) 92%, white 0%), var(--color-surface));
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow-card);
   }
 
-  .ring-gradient {
-    position: relative;
-  }
+  .ring-gradient { position: relative; }
   .ring-gradient::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(120deg, rgba(34, 211, 238, 0.6), rgba(124, 92, 252, 0.5), transparent 60%);
+    background: var(--brand-gradient);
+    opacity: 0.65;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+  }
+
+  /* Scoped dark band — redefines tokens so token-based utilities flip automatically */
+  .on-dark {
+    --color-background: #080d1a;
+    --color-surface: #101a2e;
+    --color-surface-2: #16223a;
+    --color-border: #243352;
+    --color-foreground: #eaf0fa;
+    --color-muted: #9fb0cc;
+    --color-muted-2: #6f7e9c;
+    --color-primary: #34d8f1;
+    --color-primary-foreground: #04121a;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+  .on-dark .card-surface {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+    border: 1px solid var(--color-border);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -34px rgba(0, 0, 0, 0.85);
+  }
+  .on-dark .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+  .on-dark .glow-radial {
+    background: radial-gradient(55% 50% at 50% 0%, rgba(124, 58, 237, 0.3) 0%, rgba(34, 211, 238, 0.18) 40%, transparent 72%);
   }
 }
 
@@ -119,8 +141,14 @@
     max-width: 80rem;
     padding-inline: 1.25rem;
   }
-  @media (min-width: 768px) {
-    .container-xa { padding-inline: 2rem; }
+  @media (min-width: 768px) { .container-xa { padding-inline: 2rem; } }
+
+  /* Branded icon badge — angular bracket motif from the logo */
+  .icon-badge {
+    position: relative;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
   }
 }
 

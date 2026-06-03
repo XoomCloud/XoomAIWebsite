@@ -114,6 +114,23 @@ Service), breadcrumbs
 
 ---
 
+## 6b. Design revision (round 2 — client feedback)
+
+- **Flipped to a light-predominant theme** keeping the brand palette (cyan → violet → magenta).
+  Strategic **dark bands** (footer, primary CTA blocks, the XOOM AI OS architecture section) provide
+  contrast and rhythm via a scoped `.on-dark` token override — so it reads premium, not "predominantly black".
+- **Real logos** wired in: dark-text logo in the header (light bg), white-text logo in the footer (dark bg);
+  schema `logo` now points to the real asset.
+- **Custom branded iconography** (`IconBadge`) replaces the generic "tinted-square + Lucide glyph" grid look —
+  it uses the logo's angular bracket (clipped corner) + node-dot motif, thin 1.6 strokes and a cycling
+  cyan/violet/magenta tone so feature grids never read as a uniform default-icon wall.
+- **Photography added** for human warmth (licensed placeholders in `public/images/people/`): a "real
+  Australian team" band on the homepage, a rotating people band on every industry page, and a photo on
+  the contact page. _These are tasteful placeholders — swap for final brand/AI-generated imagery when ready._
+- **The client diagrams are now used:** the actual **XOOM AI OS** architecture diagram is shown on the
+  XoomAgent page, and the 8 platform pillars use their real codenames (Orchestrator, **PULSE, ORBIT,
+  VAULT, CRANK, TRIBE, LUMEN, QUARTZ**).
+
 ## 7. Notes & next steps
 
 - **Stack note:** `create-next-app` installed Next **16** (current latest App Router) rather than 15 —

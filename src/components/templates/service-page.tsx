@@ -9,7 +9,7 @@ import { Integrations } from "@/components/sections/integrations";
 import { FAQ } from "@/components/sections/faq";
 import { CTABlock } from "@/components/sections/cta-block";
 import { Reveal } from "@/components/motion/reveal";
-import { Icon } from "@/components/icon";
+import { IconBadge } from "@/components/icon-badge";
 import { JsonLd, serviceSchema } from "@/components/seo/json-ld";
 import { getService } from "@/content/services";
 import { AlertTriangle } from "lucide-react";
@@ -83,9 +83,7 @@ export function ServicePage({ slug }: { slug: string }) {
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {s.whyPoints.map((w, i) => (
             <Reveal key={w.title} delay={i} className="card-surface rounded-2xl p-6">
-              <span className="grid size-11 place-items-center rounded-xl bg-accent/10 text-accent ring-1 ring-inset ring-accent/20">
-                <Icon name={w.icon} className="size-5" />
-              </span>
+              <IconBadge name={w.icon} index={i} />
               <h3 className="mt-4 font-display text-lg font-semibold">{w.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{w.description}</p>
             </Reveal>
