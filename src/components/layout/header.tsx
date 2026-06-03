@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { MAIN_NAV } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { CTAButton } from "@/components/cta-button";
@@ -31,11 +32,15 @@ export function Header() {
       )}
     >
       <div className="container-xa flex h-16 items-center justify-between md:h-20">
-        <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-          <span className="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
-            <Sparkles className="size-4" aria-hidden />
-          </span>
-          Xoom<span className="text-gradient">AI</span>
+        <Link href="/" className="flex items-center" aria-label="XoomAI home">
+          <Image
+            src="/images/xoomai-logo-dark.png"
+            alt="XoomAI — powering business intelligence"
+            width={991}
+            height={285}
+            priority
+            className="h-8 w-auto md:h-9"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">

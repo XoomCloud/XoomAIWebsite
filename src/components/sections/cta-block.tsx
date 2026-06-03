@@ -19,7 +19,7 @@ export function CTABlock({
     <section className="py-16 md:py-24">
       <div className="container-xa">
         <Reveal className="ring-gradient relative overflow-hidden rounded-3xl">
-          <div className="relative overflow-hidden bg-gradient-to-br from-surface-2 via-surface to-background p-10 text-center md:p-16">
+          <div className="on-dark relative overflow-hidden bg-gradient-to-br from-surface-2 via-surface to-background p-10 text-center md:p-16">
             <div className="glow-radial pointer-events-none absolute inset-0" aria-hidden />
             <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden />
             <div className="relative mx-auto max-w-2xl">

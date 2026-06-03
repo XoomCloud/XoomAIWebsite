@@ -9,6 +9,7 @@ import { StatsBand } from "@/components/sections/stats-band";
 import { TrustSection } from "@/components/sections/trust-section";
 import { TestimonialCard } from "@/components/sections/testimonial";
 import { Integrations } from "@/components/sections/integrations";
+import { ImageFeature } from "@/components/sections/image-feature";
 import { FAQ } from "@/components/sections/faq";
 import { CTABlock } from "@/components/sections/cta-block";
 import { Reveal } from "@/components/motion/reveal";
@@ -189,6 +190,24 @@ export default function HomePage() {
         <div className="mt-12">
           <CardGrid cards={serviceCards} columns={3} />
         </div>
+      </Section>
+
+      {/* Human band — real people behind the AI */}
+      <Section>
+        <ImageFeature
+          image="/images/people/team-collab.jpg"
+          alt="The XoomAI team collaborating on an AI workforce deployment for an Australian business"
+          eyebrow="Real People, Real Support"
+          title="AI deployed and managed by an Australian team"
+          body="XoomAgent™ is the technology — but behind it is a real Australian team from XoomCloud who scope, build, secure and continuously improve your AI workforce. You're never handed a tool and left to figure it out."
+          points={[
+            "Australian-based, security-led specialists",
+            "Hands-on setup, integration and tuning",
+            "Ongoing monitoring & optimisation",
+            "A real person to call on 1300 040 225",
+          ]}
+          cta={{ label: "Book a Free AI Workflow Audit", booking: true }}
+        />
       </Section>
 
       <TrustSection />

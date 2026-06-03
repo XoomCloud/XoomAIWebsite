@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { RevealGroup, revealItem } from "@/components/motion/reveal";
-import { Icon, type IconName } from "@/components/icon";
+import { IconBadge } from "@/components/icon-badge";
+import { type IconName } from "@/components/icon";
 import { cn } from "@/lib/utils";
 
 export type Feature = {
@@ -27,13 +28,11 @@ export function FeatureGrid({
 
   return (
     <RevealGroup className={cn("grid gap-5", cols)}>
-      {features.map((f) => (
+      {features.map((f, i) => (
         <motion.div key={f.title} variants={revealItem}>
-          <Card className="group h-full hover:-translate-y-1 hover:ring-1 hover:ring-primary/30">
-            <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/20 transition-colors group-hover:bg-primary/15">
-              <Icon name={f.icon} className="size-5" />
-            </span>
-            <CardTitle className="mt-4">{f.title}</CardTitle>
+          <Card className="group h-full hover:-translate-y-1.5 hover:shadow-[0_28px_60px_-32px_rgba(124,58,237,0.4)]">
+            <IconBadge name={f.icon} index={i} className="transition-transform duration-300 group-hover:scale-105" />
+            <CardTitle className="mt-5">{f.title}</CardTitle>
             <CardDescription>{f.description}</CardDescription>
           </Card>
         </motion.div>

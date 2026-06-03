@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { Sparkles, Phone, Mail, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, ShieldCheck } from "lucide-react";
 import { SITE, SERVICES_NAV, INDUSTRIES_NAV } from "@/lib/site";
 import { CTAButton } from "@/components/cta-button";
 
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative mt-24 border-t border-border bg-surface/40">
+    <footer className="on-dark relative mt-24 border-t border-border">
       <div className="container-xa py-16">
         {/* CTA strip */}
         <div className="ring-gradient mb-16 overflow-hidden rounded-3xl bg-gradient-to-br from-surface-2 to-surface p-8 md:p-12">
@@ -33,11 +34,14 @@ export function Footer() {
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold">
-              <span className="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-primary to-accent text-primary-foreground">
-                <Sparkles className="size-4" aria-hidden />
-              </span>
-              Xoom<span className="text-gradient">AI</span>
+            <Link href="/" className="inline-flex items-center" aria-label="XoomAI home">
+              <Image
+                src="/images/xoomai-logo-white.png"
+                alt="XoomAI — powering business intelligence"
+                width={991}
+                height={285}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
               Your managed AI workforce for Australian business. XoomAgent™ automates email, documents,

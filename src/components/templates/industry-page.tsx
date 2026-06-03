@@ -4,17 +4,28 @@ import { InnerHero } from "@/components/sections/inner-hero";
 import { Section, SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { Integrations } from "@/components/sections/integrations";
+import { ImageFeature } from "@/components/sections/image-feature";
 import { FAQ } from "@/components/sections/faq";
 import { CTABlock } from "@/components/sections/cta-block";
 import { Reveal } from "@/components/motion/reveal";
 import { Badge } from "@/components/ui/badge";
 import { JsonLd, serviceSchema } from "@/components/seo/json-ld";
-import { getIndustry } from "@/content/industries";
+import { getIndustry, industries } from "@/content/industries";
+
+const IMAGE_POOL = [
+  "/images/people/team-collab.jpg",
+  "/images/people/office-meeting.jpg",
+  "/images/people/working-laptop.jpg",
+  "/images/people/professional-woman.jpg",
+  "/images/people/advisor.jpg",
+  "/images/people/business-handshake.jpg",
+];
 import { ArrowRight, ShieldCheck, AlertTriangle } from "lucide-react";
 
 export function IndustryPage({ slug }: { slug: string }) {
   const ind = getIndustry(slug);
   if (!ind) return null;
+  const image = IMAGE_POOL[Math.max(0, industries.findIndex((x) => x.slug === slug)) % IMAGE_POOL.length];
 
   return (
     <>
@@ -114,6 +125,20 @@ export function IndustryPage({ slug }: { slug: string }) {
             </ul>
           </Reveal>
         </div>
+      </Section>
+
+      {/* Human band */}
+      <Section className="pt-0">
+        <ImageFeature
+          image={image}
+          alt={`An Australian ${ind.nav.toLowerCase()} team working alongside their XoomAgent™ AI employee`}
+          reverse
+          eyebrow="Managed by Real People"
+          title={`A real Australian team behind your ${ind.nav.toLowerCase()} AI`}
+          body={`We don't hand you software and walk away. XoomAI's Australian, security-led team scopes, builds and manages XoomAgent™ around the way your ${ind.nav.toLowerCase()} business actually runs — and keeps improving it.`}
+          points={["Sector-aware setup & integration", "Privacy-first, audited data handling", "Ongoing tuning & optimisation", "Australian-based support"]}
+          cta={{ label: "Book a Free AI Workflow Audit", booking: true }}
+        />
       </Section>
 
       {/* Integrations */}

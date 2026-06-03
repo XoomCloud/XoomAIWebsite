@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Section, SectionHeading } from "@/components/sections/section";
 import { ContactForm } from "@/components/contact/contact-form";
@@ -38,6 +39,19 @@ export default function ContactPage() {
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Contact details */}
           <Reveal className="space-y-4">
+            <div className="ring-gradient overflow-hidden rounded-3xl">
+              <div className="relative overflow-hidden rounded-3xl">
+                <Image
+                  src="/images/people/office-meeting.jpg"
+                  alt="The XoomAI team meeting with an Australian business to scope their AI workflow audit"
+                  width={1400}
+                  height={780}
+                  sizes="(max-width: 1024px) 100vw, 460px"
+                  className="h-44 w-full object-cover md:h-52"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-[#7c3aed]/30 via-transparent to-[#06b6d4]/15 mix-blend-multiply" aria-hidden />
+              </div>
+            </div>
             <div className="ring-gradient rounded-3xl">
               <div className="card-surface relative overflow-hidden rounded-3xl p-7">
                 <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-32" aria-hidden />
