@@ -119,7 +119,9 @@ Service), breadcrumbs
 - **Stack note:** `create-next-app` installed Next **16** (current latest App Router) rather than 15 —
   fully compatible and recommended.
 - **Analytics:** set `NEXT_PUBLIC_GA_ID` or `NEXT_PUBLIC_GTM_ID` to go live; events already fire.
-- **Contact form** currently emits an analytics event and shows success; wire to an API route / CRM
-  endpoint or form provider (e.g. Resend, HubSpot) when ready.
+- **Contact form** captures all fields and emails them to **support@xoomcloud.com.au** via the
+  `/api/contact` route (Resend). Set `RESEND_API_KEY` (and optionally `CONTACT_TO` / `CONTACT_FROM`) —
+  see `.env.example`. Includes server-side Zod validation, a honeypot, `replyTo` set to the submitter,
+  and graceful error handling.
 - **Testimonials/stats** use indicative examples — replace with verified client results as they're approved.
 - Consider adding a lightweight **blog/MDX** (the old site had 3 posts) for ongoing SEO.
