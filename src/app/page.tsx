@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Hero } from "@/components/sections/hero";
+import { HeroV2 } from "@/components/sections/hero-v2";
 import { Section, SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { CardGrid, type LinkCard } from "@/components/sections/card-grid";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
-import { StatsBand } from "@/components/sections/stats-band";
 import { TrustSection } from "@/components/sections/trust-section";
 import { TestimonialCard } from "@/components/sections/testimonial";
 import { Integrations } from "@/components/sections/integrations";
@@ -47,13 +46,6 @@ const processSteps = [
   { title: "Optimise", description: "We monitor, measure and continuously improve performance as part of the managed service." },
 ];
 
-const homeStats = [
-  { value: "24/7", label: "Always-on AI workforce" },
-  { value: "$2,399", label: "From, per month", note: "Less than a part-time hire" },
-  { value: "9", label: "Industries served" },
-  { value: "100%", label: "Australian owned", note: "Backed by XoomCloud" },
-];
-
 const homeFaqs = [
   { q: "What exactly is XoomAgent™?", a: "XoomAgent™ is a fully managed AI employee for your business — an agent runtime connected to your inboxes, documents, CRM and internal tools. It automates real work like triaging email, qualifying leads, processing documents and updating systems, and it's fully managed by XoomAI." },
   { q: "Is this just a chatbot?", a: "No. A chatbot only chats. XoomAgent™ takes action — it reads and routes email, updates your CRM, processes documents and runs multi-step workflows across your systems, with permissioned access and full audit trails." },
@@ -80,29 +72,9 @@ const serviceCards: LinkCard[] = services.map((s) => ({
 export default function HomePage() {
   return (
     <>
-      <Hero
-        badge="Your managed AI workforce for Australian business"
-        title="Deploy Your First AI Employee Without Hiring Another"
-        highlight="Staff Member"
-        subtitle="XoomAgent™ helps Australian businesses automate emails, documents, customer enquiries, CRM updates, lead follow-up and internal workflows — fully managed by XoomAI."
-        primary={{ label: "Book a Free AI Workflow Audit", booking: true }}
-        secondary={{ label: "See What XoomAgent Automates", href: "/xoomagent" }}
-        panel={{
-          label: "XoomAgent™",
-          items: [
-            { icon: "Inbox", text: "Triaged 14 new enquiries", status: "Done" },
-            { icon: "UserCheck", text: "Qualified 3 leads → CRM", status: "Done" },
-            { icon: "FileText", text: "Processed 8 invoices", status: "Done" },
-            { icon: "CalendarClock", text: "Booked 2 consultations", status: "Done" },
-          ],
-        }}
-      />
+      <HeroV2 />
 
-      <Section className="pt-4 md:pt-6">
-        <StatsBand stats={homeStats} caption="Figures shown are indicative examples of typical XoomAgent™ deployments, not guarantees." />
-      </Section>
-
-      <Section id="capabilities">
+      <Section id="workforce">
         <SectionHeading
           eyebrow="What XoomAgent™ Can Do"
           title="One AI employee. Eight jobs handled."

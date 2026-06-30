@@ -1,46 +1,46 @@
 @import "tailwindcss";
 
 /*
-  XoomAI design system — LIGHT, premium, enterprise-AI.
-  Predominantly light with strategic dark bands (footer, primary CTAs, OS architecture).
-  Brand: cyan → violet → magenta (from the XOOM AI logo). Display: Sora. Body: Inter.
+  XoomAI — v2 "Living Company". Stark, premium, confident.
+  Predominantly clean light site with one cinematic dark hero stage and dark feature bands.
+  Restrained palette: ink + paper, electric cyan accent, with violet/magenta as functional
+  data-flow colours in the live visualisations. Display: Space Grotesk. Body: Inter.
 */
 
 @theme {
-  --color-background: #f4f7fb;
+  --color-background: #f6f7f9;     /* cool near-white */
   --color-surface: #ffffff;
-  --color-surface-2: #eef2f9;
-  --color-border: #e1e8f2;
-  --color-foreground: #0b1424;
-  --color-muted: #51607a;
-  --color-muted-2: #8b96ab;
+  --color-surface-2: #eef1f5;
+  --color-border: #e3e7ee;
+  --color-foreground: #0a0c12;     /* ink */
+  --color-muted: #535b6b;
+  --color-muted-2: #888f9f;
 
-  --color-primary: #0891b2;       /* readable cyan for text & accents */
-  --color-primary-bright: #22d3ee; /* vivid cyan for fills, glows, gradients */
+  --color-primary: #0a93b3;        /* readable cyan on light */
+  --color-primary-bright: #22d3ee; /* electric cyan for glow/fills */
   --color-primary-foreground: #ffffff;
-  --color-accent: #7c3aed;        /* violet */
-  --color-magenta: #c026d3;       /* logo magenta */
+  --color-accent: #6d3bf5;         /* violet (functional) */
+  --color-magenta: #d017c9;
   --color-accent-foreground: #ffffff;
-  --color-success: #059669;
-  --color-warning: #d97706;
+  --color-ink: #0a0c12;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
 
-  --radius: 0.9rem;
+  --radius: 1rem;
 
-  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 22px 44px -28px rgba(16, 24, 40, 0.22);
+  --shadow-soft: 0 1px 2px rgba(10, 12, 18, 0.04), 0 18px 44px -28px rgba(10, 12, 18, 0.28);
+  --shadow-lift: 0 2px 6px rgba(10, 12, 18, 0.06), 0 36px 70px -34px rgba(34, 211, 238, 0.3);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Brand gradient reused across icons, rings and highlights */
-  --brand-gradient: linear-gradient(115deg, #c026d3 0%, #7c3aed 45%, #06b6d4 100%);
+  --brand-gradient: linear-gradient(110deg, #22d3ee 0%, #6d3bf5 52%, #d017c9 100%);
 }
 
 @layer base {
   * { border-color: var(--color-border); }
-
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -48,35 +48,17 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
-
-  ::selection { background: color-mix(in oklab, var(--color-accent) 28%, transparent); }
-
-  :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
+  ::selection { background: color-mix(in oklab, var(--color-primary-bright) 30%, transparent); }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: 4px; }
 }
 
 @layer components {
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, rgba(12, 20, 36, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(12, 20, 36, 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 55%, transparent 100%);
-  }
-
-  .glow-radial {
-    background: radial-gradient(55% 50% at 50% 0%, rgba(124, 58, 237, 0.12) 0%, rgba(34, 211, 238, 0.1) 40%, transparent 72%);
-  }
-
   .text-gradient {
     background: var(--brand-gradient);
     -webkit-background-clip: text;
@@ -84,10 +66,24 @@
     color: transparent;
   }
 
-  .card-surface {
+  .card-surface,
+  .panel {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(10, 12, 18, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 12, 18, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 50%, transparent 100%);
+  }
+
+  .glow-radial {
+    background: radial-gradient(50% 50% at 50% 0%, rgba(34, 211, 238, 0.12) 0%, rgba(109, 59, 245, 0.08) 44%, transparent 72%);
   }
 
   .ring-gradient { position: relative; }
@@ -98,39 +94,40 @@
     border-radius: inherit;
     padding: 1px;
     background: var(--brand-gradient);
-    opacity: 0.65;
+    opacity: 0.55;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
 
-  /* Scoped dark band — redefines tokens so token-based utilities flip automatically */
+  /* Dark cinematic stage — flips tokens for descendants */
   .on-dark {
-    --color-background: #080d1a;
-    --color-surface: #101a2e;
-    --color-surface-2: #16223a;
-    --color-border: #243352;
-    --color-foreground: #eaf0fa;
-    --color-muted: #9fb0cc;
-    --color-muted-2: #6f7e9c;
-    --color-primary: #34d8f1;
-    --color-primary-foreground: #04121a;
+    --color-background: #06070b;
+    --color-surface: #0d1018;
+    --color-surface-2: #141823;
+    --color-border: #1e2433;
+    --color-foreground: #f0f3f9;
+    --color-muted: #9aa3b5;
+    --color-muted-2: #6a7283;
+    --color-primary: #2fd4ee;
+    --color-primary-foreground: #06222a;
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
-  .on-dark .card-surface {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  .on-dark .card-surface,
+  .on-dark .panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
     border: 1px solid var(--color-border);
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -34px rgba(0, 0, 0, 0.85);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset, 0 30px 60px -34px rgba(0, 0, 0, 0.9);
   }
   .on-dark .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   }
   .on-dark .glow-radial {
-    background: radial-gradient(55% 50% at 50% 0%, rgba(124, 58, 237, 0.3) 0%, rgba(34, 211, 238, 0.18) 40%, transparent 72%);
+    background: radial-gradient(50% 50% at 50% 0%, rgba(34, 211, 238, 0.28) 0%, rgba(109, 59, 245, 0.18) 44%, transparent 72%);
   }
 }
 
@@ -138,28 +135,35 @@
   .container-xa {
     width: 100%;
     margin-inline: auto;
-    max-width: 80rem;
+    max-width: 82rem;
     padding-inline: 1.25rem;
   }
-  @media (min-width: 768px) { .container-xa { padding-inline: 2rem; } }
+  @media (min-width: 768px) { .container-xa { padding-inline: 2.5rem; } }
 
-  /* Branded icon badge — angular bracket motif from the logo */
-  .icon-badge {
-    position: relative;
-    display: grid;
-    place-items: center;
-    isolation: isolate;
+  .icon-badge { position: relative; display: grid; place-items: center; isolation: isolate; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Headline clamp for cinematic scale */
+  .display-hero {
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    font-weight: 600;
   }
 }
 
-@keyframes accordion-down {
-  from { height: 0; opacity: 0; }
-  to { height: var(--radix-accordion-content-height); opacity: 1; }
-}
-@keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); opacity: 1; }
-  to { height: 0; opacity: 0; }
-}
+@keyframes accordion-down { from { height: 0; opacity: 0; } to { height: var(--radix-accordion-content-height); opacity: 1; } }
+@keyframes accordion-up { from { height: var(--radix-accordion-content-height); opacity: 1; } to { height: 0; opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
