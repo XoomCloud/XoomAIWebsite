@@ -1,112 +1,27 @@
 "use client";
 
 import * as React from "react";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Phone, TrendingUp, Headphones, Banknote, Workflow, Users, Sparkles,
   ArrowRight, ArrowDown, type LucideIcon,
 } from "lucide-react";
 import { CTAButton } from "@/components/cta-button";
 
-/* ── The company "nervous system" ───────────────────────────────────────── */
+/* Departments drive the live task feed */
+type Dept = { label: string; color: string; task: string; icon: LucideIcon };
 
-type Dept = { id: string; label: string; x: number; y: number; color: string; task: string; icon: LucideIcon };
-
-const CORE = { x: 50, y: 31 };
-
-// viewBox is 0 0 100 62 — coordinates are fixed (no randomness → no hydration drift)
 const DEPTS: Dept[] = [
-  { id: "marketing", label: "Marketing", x: 50, y: 7, color: "#6d3bf5", task: "Campaign scheduled", icon: Sparkles },
-  { id: "sales", label: "Sales", x: 80, y: 15, color: "#22d3ee", task: "Lead qualified", icon: TrendingUp },
-  { id: "reception", label: "Reception", x: 20, y: 16, color: "#22d3ee", task: "Call answered", icon: Phone },
-  { id: "finance", label: "Finance", x: 86, y: 40, color: "#10b981", task: "Invoice processed", icon: Banknote },
-  { id: "support", label: "Support", x: 14, y: 40, color: "#d017c9", task: "Ticket closed", icon: Headphones },
-  { id: "hr", label: "HR", x: 68, y: 56, color: "#f59e0b", task: "Candidate screened", icon: Users },
-  { id: "ops", label: "Operations", x: 32, y: 56, color: "#6d3bf5", task: "Workflow run", icon: Workflow },
+  { label: "Reception", color: "#22d3ee", task: "Call answered", icon: Phone },
+  { label: "Sales", color: "#22d3ee", task: "Lead qualified", icon: TrendingUp },
+  { label: "Support", color: "#d017c9", task: "Ticket closed", icon: Headphones },
+  { label: "Finance", color: "#10b981", task: "Invoice processed", icon: Banknote },
+  { label: "Operations", color: "#6d3bf5", task: "Workflow run", icon: Workflow },
+  { label: "HR", color: "#f59e0b", task: "Candidate screened", icon: Users },
+  { label: "Marketing", color: "#6d3bf5", task: "Campaign scheduled", icon: Sparkles },
 ];
 
-function NervousSystem({ animate }: { animate: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 100 62"
-      preserveAspectRatio="xMidYMid slice"
-      className="absolute inset-0 h-full w-full"
-      aria-hidden
-    >
-      <defs>
-        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
-        </radialGradient>
-        {DEPTS.map((d) => (
-          <linearGradient key={d.id} id={`edge-${d.id}`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.5" />
-            <stop offset="100%" stopColor={d.color} stopOpacity="0.15" />
-          </linearGradient>
-        ))}
-      </defs>
-
-      {/* edges */}
-      {DEPTS.map((d) => (
-        <line
-          key={`l-${d.id}`}
-          x1={CORE.x} y1={CORE.y} x2={d.x} y2={d.y}
-          stroke={`url(#edge-${d.id})`} strokeWidth="0.22"
-        />
-      ))}
-
-      {/* travelling work pulses */}
-      {animate &&
-        DEPTS.map((d, i) => {
-          const outbound = i % 2 === 0; // dispatch vs return — feels two-way
-          const from = outbound ? CORE : d;
-          const to = outbound ? d : CORE;
-          return (
-            <motion.circle
-              key={`p-${d.id}`}
-              r="0.7"
-              fill={d.color}
-              initial={{ cx: from.x, cy: from.y, opacity: 0 }}
-              animate={{ cx: [from.x, to.x], cy: [from.y, to.y], opacity: [0, 1, 1, 0] }}
-              transition={{ duration: 2.1, delay: i * 0.45, repeat: Infinity, repeatDelay: 1.4, ease: "linear" }}
-              style={{ filter: "drop-shadow(0 0 1.4px currentColor)" }}
-            />
-          );
-        })}
-
-      {/* department nodes */}
-      {DEPTS.map((d, i) => (
-        <g key={`n-${d.id}`}>
-          <motion.circle
-            cx={d.x} cy={d.y} r="2.4" fill={d.color} opacity={0.14}
-            animate={animate ? { r: [2.2, 3.4, 2.2], opacity: [0.12, 0.28, 0.12] } : undefined}
-            transition={{ duration: 2.1, delay: i * 0.45 + 1, repeat: Infinity, repeatDelay: 1.4 }}
-          />
-          <circle cx={d.x} cy={d.y} r="1.1" fill={d.color} />
-        </g>
-      ))}
-
-      {/* core */}
-      <circle cx={CORE.x} cy={CORE.y} r="9" fill="url(#coreGlow)" />
-      <motion.circle
-        cx={CORE.x} cy={CORE.y} r="2.6" fill="none" stroke="#22d3ee" strokeWidth="0.18" opacity={0.5}
-        animate={animate ? { r: [2.6, 6, 2.6], opacity: [0.5, 0, 0.5] } : undefined}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
-      />
-      <circle cx={CORE.x} cy={CORE.y} r="2" fill="#eafcff" />
-    </svg>
-  );
-}
-
 /* ── Live task feed ─────────────────────────────────────────────────────── */
-
-const FEED = DEPTS.map((d) => ({ label: d.task, dept: d.label, color: d.color, icon: d.icon }));
 
 function TaskFeed({ animate }: { animate: boolean }) {
   const [tick, setTick] = React.useState(0);
@@ -116,22 +31,21 @@ function TaskFeed({ animate }: { animate: boolean }) {
     return () => clearInterval(t);
   }, [animate]);
 
-  // newest three, newest first
-  const items = [0, 1, 2].map((o) => {
-    const idx = ((tick - o) % FEED.length + FEED.length) % FEED.length;
-    return { ...FEED[idx], key: `${tick - o}` };
+  const items = [0, 1, 2, 3].map((o) => {
+    const idx = ((tick - o) % DEPTS.length + DEPTS.length) % DEPTS.length;
+    return { ...DEPTS[idx], key: `${tick - o}` };
   });
 
   return (
     <div className="panel w-full overflow-hidden p-2.5">
       <div className="mb-2 flex items-center gap-2 px-2 pt-1 text-[11px] font-medium text-muted">
         <span className="relative flex size-2">
-          <span className="absolute inline-flex size-full animate-ping rounded-full bg-success/60" />
+          {animate && <span className="absolute inline-flex size-full animate-ping rounded-full bg-success/60" />}
           <span className="relative inline-flex size-2 rounded-full bg-success" />
         </span>
         Live · your AI workforce, working now
       </div>
-      <div className="relative space-y-1.5">
+      <div className="space-y-1.5">
         <AnimatePresence initial={false} mode="popLayout">
           {items.map((it, i) => {
             const Icon = it.icon;
@@ -140,7 +54,7 @@ function TaskFeed({ animate }: { animate: boolean }) {
                 key={it.key}
                 layout
                 initial={animate ? { opacity: 0, y: -10, scale: 0.98 } : false}
-                animate={{ opacity: i === 0 ? 1 : 0.55 - i * 0.12, y: 0, scale: 1 }}
+                animate={{ opacity: i === 0 ? 1 : 0.6 - i * 0.13, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="flex items-center gap-3 rounded-xl border border-border bg-surface-2/50 px-3 py-2.5"
@@ -148,8 +62,8 @@ function TaskFeed({ animate }: { animate: boolean }) {
                 <span className="grid size-7 shrink-0 place-items-center rounded-lg" style={{ backgroundColor: `${it.color}1f`, color: it.color }}>
                   <Icon className="size-3.5" aria-hidden />
                 </span>
-                <span className="flex-1 text-sm text-foreground">{it.label}</span>
-                <span className="text-[11px] text-muted-2">{it.dept}</span>
+                <span className="flex-1 text-sm text-foreground">{it.task}</span>
+                <span className="text-[11px] text-muted-2">{it.label}</span>
                 <svg viewBox="0 0 24 24" className="size-4 text-success" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden>
                   <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -204,42 +118,19 @@ function Stat({ target, suffix, label, animate }: { target: number; suffix?: str
 export function HeroV2() {
   const reduce = useReducedMotion();
   const animate = !reduce;
-
-  // pointer parallax (disabled on coarse pointers / reduced motion)
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const sx = useSpring(px, { stiffness: 60, damping: 18 });
-  const sy = useSpring(py, { stiffness: 60, damping: 18 });
-  const fine = React.useRef(false);
-
-  React.useEffect(() => {
-    fine.current =
-      !reduce && typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
-  }, [reduce]);
-
-  function onPointerMove(e: React.PointerEvent) {
-    if (!fine.current) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    px.set(((e.clientX - r.left) / r.width - 0.5) * 22);
-    py.set(((e.clientY - r.top) / r.height - 0.5) * 22);
-  }
-
   const ease = [0.16, 1, 0.3, 1] as const;
 
   return (
-    <section
-      onPointerMove={onPointerMove}
-      className="on-dark relative flex min-h-[100svh] flex-col overflow-hidden"
-    >
-      {/* background layers */}
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" aria-hidden />
-      <motion.div className="pointer-events-none absolute inset-0 opacity-90" style={{ x: sx, y: sy }} aria-hidden>
-        <NervousSystem animate={animate} />
-      </motion.div>
-      {/* legibility vignette */}
+    <section className="on-dark relative flex min-h-[100svh] flex-col overflow-hidden">
+      {/* clean dark stage — soft brand glow + vignette, no busy animation */}
       <div
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(120% 80% at 50% 42%, rgba(6,7,11,0) 30%, rgba(6,7,11,0.55) 70%, rgba(6,7,11,0.92) 100%)" }}
+        style={{ background: "radial-gradient(80% 55% at 50% 0%, rgba(34,211,238,0.1) 0%, rgba(109,59,245,0.08) 40%, transparent 72%)" }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(120% 80% at 50% 38%, rgba(6,7,11,0) 45%, rgba(6,7,11,0.55) 78%, rgba(6,7,11,0.95) 100%)" }}
         aria-hidden
       />
 
@@ -254,7 +145,7 @@ export function HeroV2() {
               className="eyebrow text-[color:var(--color-muted)]"
             >
               <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/60" />
+                {animate && <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/60" />}
                 <span className="relative inline-flex size-2 rounded-full bg-primary" />
               </span>
               The AI Workforce Platform · Australian made
@@ -295,7 +186,6 @@ export function HeroV2() {
               </CTAButton>
             </motion.div>
 
-            {/* proof */}
             <motion.div
               initial={animate ? { opacity: 0 } : false}
               animate={{ opacity: 1 }}
