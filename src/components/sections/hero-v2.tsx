@@ -7,6 +7,7 @@ import {
   ArrowRight, ArrowDown, type LucideIcon,
 } from "lucide-react";
 import { CTAButton } from "@/components/cta-button";
+import { SITE } from "@/lib/site";
 
 /* Departments drive the live task feed */
 type Dept = { label: string; color: string; task: string; icon: LucideIcon };
@@ -185,6 +186,25 @@ export function HeroV2() {
                 See it in action
               </CTAButton>
             </motion.div>
+
+            <motion.a
+              href={SITE.phoneHref}
+              initial={animate ? { opacity: 0, y: 12 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease, delay: 0.35 }}
+              className="group mt-6 inline-flex items-center gap-3"
+              data-cta="hero_call"
+            >
+              <span className="grid size-10 place-items-center rounded-full bg-primary/15 text-primary ring-1 ring-inset ring-primary/30 transition-colors group-hover:bg-primary/25">
+                <Phone className="size-4" aria-hidden />
+              </span>
+              <span className="leading-tight">
+                <span className="block text-xs uppercase tracking-[0.16em] text-muted-2">Prefer to talk? Call us</span>
+                <span className="font-display text-xl font-semibold text-foreground transition-colors group-hover:text-primary md:text-2xl">
+                  {SITE.phone}
+                </span>
+              </span>
+            </motion.a>
 
             <motion.div
               initial={animate ? { opacity: 0 } : false}

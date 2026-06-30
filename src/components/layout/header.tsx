@@ -3,8 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { MAIN_NAV } from "@/lib/site";
+import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import { MAIN_NAV, SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { CTAButton } from "@/components/cta-button";
 import { ConversionEvents } from "@/lib/analytics";
@@ -75,7 +75,15 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-5 lg:flex">
+          <a
+            href={SITE.phoneHref}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
+            data-cta="header_call"
+          >
+            <Phone className="size-4 text-primary" aria-hidden />
+            {SITE.phone}
+          </a>
           <CTAButton booking size="sm" event={ConversionEvents.bookAudit} eventLabel="header_book_audit">
             Book a Free Audit
           </CTAButton>
@@ -121,7 +129,15 @@ export function Header() {
                 )}
               </div>
             ))}
-            <div className="pt-4">
+            <div className="flex flex-col gap-3 pt-4">
+              <a
+                href={SITE.phoneHref}
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-full border border-border py-3 text-base font-semibold text-foreground"
+              >
+                <Phone className="size-4 text-primary" aria-hidden />
+                Call {SITE.phone}
+              </a>
               <CTAButton booking size="lg" className="w-full" event={ConversionEvents.bookAudit} eventLabel="mobile_book_audit">
                 Book a Free AI Workflow Audit
               </CTAButton>
