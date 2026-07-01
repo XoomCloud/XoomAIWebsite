@@ -29,7 +29,7 @@ export function HubspotForm() {
   }, [router]);
 
   return (
-    <div className="rounded-2xl border border-border bg-white/[0.03] p-6 backdrop-blur-sm md:p-8">
+    <div className="rounded-2xl bg-white p-6 shadow-[0_24px_70px_-28px_rgba(0,0,0,0.7)] md:p-8">
       <div
         className="hs-form-frame min-h-64"
         data-region={REGION}
