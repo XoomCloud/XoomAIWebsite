@@ -15,14 +15,22 @@ const REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION || "na1";
  */
 export function HubspotForm() {
   const router = useRouter();
+  const leadFired = React.useRef(false);
 
   React.useEffect(() => {
     function onMessage(e: MessageEvent) {
-      const data = e.data as { type?: string; eventName?: string } | undefined;
-      if (data?.type === "hsFormCallback" && data.eventName === "onFormSubmitted") {
-        trackLead({ content_name: "AI Strategy Session", value: 1, currency: "AUD" });
-        router.push("/thank-you");
-      }
+      const data = e.data as { type?: string; eventName?: string; id?: string } | undefined;
+      // HubSpot Forms API callback. `onFormSubmitted` fires ONLY after HubSpot
+      // confirms a successful submission — not on submit attempts or validation errors.
+      if (data?.type !== "hsFormCallback" || data.eventName !== "onFormSubmitted") return;
+      // Match this form only (ignore other embeds on the page).
+      if (data.id && data.id !== FORM_ID) return;
+      // Fire the Meta Lead event exactly once per successful submission…
+      if (leadFired.current) return;
+      leadFired.current = true;
+      trackLead({ content_name: "AI Strategy Session", value: 1, currency: "AUD" });
+      // …then redirect to the HubSpot meeting page.
+      router.push("/thank-you");
     }
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
