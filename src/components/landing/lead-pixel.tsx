@@ -5,47 +5,31 @@ import { trackLead } from "@/lib/meta";
 
 /**
  * Fires the Meta Pixel Lead event exactly once, in the browser, on /book.
- * The pixel loads via next/script (afterInteractive), so it may not be ready
- * when this mounts — poll every 50ms (up to 5s) for window.fbq, then fire once.
+ * The pixel loads via next/script (afterInteractive) and may not be ready when
+ * this mounts. MetaPixel dispatches a "metaPixelReady" event right after
+ * fbq('init'); we fire on that (or immediately if fbq is already present).
  * Renders nothing — no styling or layout impact.
  */
 export function LeadPixel() {
   const fired = React.useRef(false);
 
   React.useEffect(() => {
-    // TEMPORARY debug (remove after testing)
-    console.log("LeadPixel mounted");
+    function fireLead() {
+      if (fired.current) return; // only ever fire once
+      fired.current = true;
+      trackLead({ content_name: "AI Strategy Session", value: 1, currency: "AUD" });
+      window.removeEventListener("metaPixelReady", fireLead); // stop listening after firing
+    }
 
-    const POLL_MS = 50;
-    const MAX_MS = 5000;
-    let elapsed = 0;
+    if (typeof window.fbq === "function") {
+      // Pixel already initialised — fire now.
+      fireLead();
+    } else {
+      // Wait for MetaPixel to signal readiness.
+      window.addEventListener("metaPixelReady", fireLead);
+    }
 
-    const interval = setInterval(() => {
-      // Already fired — stop polling.
-      if (fired.current) {
-        clearInterval(interval);
-        return;
-      }
-
-      // Pixel is ready: fire once, stop polling, never fire again.
-      if (typeof window !== "undefined" && typeof window.fbq === "function") {
-        fired.current = true;
-        clearInterval(interval);
-        console.log("fbq type:", typeof window.fbq);
-        trackLead({ content_name: "AI Strategy Session", value: 1, currency: "AUD" });
-        console.log("Lead event dispatched");
-        return;
-      }
-
-      // Give up after 5 seconds.
-      elapsed += POLL_MS;
-      if (elapsed >= MAX_MS) {
-        clearInterval(interval);
-        console.log("LeadPixel: fbq unavailable after 5s — Lead not fired");
-      }
-    }, POLL_MS);
-
-    return () => clearInterval(interval);
+    return () => window.removeEventListener("metaPixelReady", fireLead);
   }, []);
 
   return null;
