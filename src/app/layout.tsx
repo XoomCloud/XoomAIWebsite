@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { ChromeGate } from "@/components/layout/chrome-gate";
 import { Analytics } from "@/components/analytics";
+import { MetaPixel } from "@/components/meta-pixel";
 import { JsonLd, organizationSchema, professionalServiceSchema } from "@/components/seo/json-ld";
 
 const inter = Inter({
@@ -68,13 +68,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <ChromeGate>{children}</ChromeGate>
         <JsonLd data={[organizationSchema(), professionalServiceSchema()]} />
         <Analytics />
+        <MetaPixel />
       </body>
     </html>
   );
