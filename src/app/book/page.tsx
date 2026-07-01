@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LandingNav } from "@/components/landing/landing-nav";
 import { MeetingEmbed } from "@/components/landing/meeting-embed";
+import { LeadPixel } from "@/components/landing/lead-pixel";
 import { SITE } from "@/lib/site";
 import { CalendarClock, ShieldCheck, Clock } from "lucide-react";
 
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default function BookPage() {
   return (
     <div className="on-dark relative min-h-screen">
+      {/* Fire the Meta Lead event once on load, then show the scheduler below. */}
+      <LeadPixel />
       <div className="fixed inset-0 -z-10 bg-[#06070b]" aria-hidden />
       <LandingNav />
 
