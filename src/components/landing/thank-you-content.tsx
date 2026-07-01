@@ -8,7 +8,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { CalendarClock, Mail, Phone, ArrowUpRight } from "lucide-react";
 import { SITE } from "@/lib/site";
 
-const MEETING_URL = process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL;
+const MEETING_URL = process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL || "https://meetings.hubspot.com/vlad-nielsen";
 
 const STEPS = [
   { icon: Mail, title: "Check your inbox", body: "We've noted your details. Look out for a confirmation email from our team." },
