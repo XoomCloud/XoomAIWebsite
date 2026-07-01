@@ -26,6 +26,8 @@ export function HubspotForm() {
 
   React.useEffect(() => {
     function onMessage(e: MessageEvent) {
+      // TEMPORARY debug: inspect every postMessage HubSpot emits (remove after testing).
+      console.log("HubSpot Message", e.origin, e.data);
       const data = e.data as { type?: string; eventName?: string; id?: string } | undefined;
       // HubSpot Forms API callback. `onFormSubmitted` fires ONLY after HubSpot
       // confirms a successful submission — not on submit attempts or validation errors.
