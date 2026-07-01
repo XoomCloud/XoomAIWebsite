@@ -1,11 +1,32 @@
+"use client";
+
+import * as React from "react";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import { META_PIXEL_ID } from "@/lib/meta";
 
 /**
- * Meta Pixel loader. Set NEXT_PUBLIC_META_PIXEL_ID to activate; renders nothing
- * until configured. Fires PageView on load. Use trackLead()/trackMeta() for events.
+ * Meta Pixel — Meta's recommended base install via next/script.
+ * The base snippet fires PageView on first load; the effect below re-fires
+ * PageView on client-side (App Router) route changes. Set NEXT_PUBLIC_META_PIXEL_ID
+ * to override the default ID. Use trackLead()/trackMeta() (src/lib/meta) for events.
  */
 export function MetaPixel() {
+  const pathname = usePathname();
+  const initialised = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!META_PIXEL_ID) return;
+    // The base snippet already fires the first PageView — skip the initial run.
+    if (!initialised.current) {
+      initialised.current = true;
+      return;
+    }
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "PageView");
+    }
+  }, [pathname]);
+
   if (!META_PIXEL_ID) return null;
 
   return (
