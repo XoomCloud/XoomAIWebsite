@@ -90,12 +90,11 @@ export default function YourAiEmployeePage() {
           <p className="text-center text-xs uppercase tracking-[0.2em] text-muted-2">
             Trusted by Australian business owners across trades, professional services & more
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 opacity-70">
-            {["ACME BUILDING", "NORTHPOINT LEGAL", "APEX ACCOUNTING", "CLEARVIEW HEALTH", "METRO TRADES", "SUMMIT RETAIL"].map((l) => (
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {["OEMX Diesel", "Stirling Supports", "Avanti Book Keepers", "Acquira Wealth Partners", "Informed Design", "Elite Structures"].map((l) => (
               <span key={l} className="font-display text-sm font-semibold tracking-wide text-muted">{l}</span>
             ))}
           </div>
-          <p className="mt-3 text-center text-[11px] text-muted-2">Logo placeholders — replace with client brands.</p>
         </div>
       </section>
 

@@ -3,7 +3,6 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Phone, Mail, FileText, CalendarCheck, Star, ShieldCheck } from "lucide-react";
-import { DemoModal } from "./demo-modal";
 
 const ROWS = [
   { icon: Phone, text: "Answered inbound call — booked callback", color: "#22d3ee" },
@@ -73,7 +72,6 @@ export function LandingHero() {
             >
               Book Free Strategy Session
             </a>
-            <DemoModal />
           </motion.div>
 
           <motion.div
