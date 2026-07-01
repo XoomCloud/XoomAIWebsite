@@ -14,7 +14,11 @@ export function LeadPixel() {
   React.useEffect(() => {
     if (fired.current) return; // guard against double-invocation (e.g. React strict mode)
     fired.current = true;
+    // TEMPORARY debug (remove after testing)
+    console.log("LeadPixel mounted");
+    console.log("fbq type:", typeof window.fbq);
     trackLead({ content_name: "AI Strategy Session", value: 1, currency: "AUD" });
+    console.log("Lead event dispatched");
   }, []);
 
   return null;
