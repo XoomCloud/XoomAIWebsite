@@ -163,27 +163,27 @@
 }
 
 /*
-  HubSpot embedded form — restyle for the dark landing page.
+  HubSpot embedded form — restyled to sit on a white card on the dark landing page.
   Free HubSpot plans can't theme the form in-app, so we override from the page.
   Broad element selectors cover HubSpot's class variants (.hs-* and .hsfc-*).
 */
 .hs-form-frame,
 .hs-form-frame :where(label, legend, p, span, h1, h2, h3, h4, div, li, a, strong, fieldset) {
-  color: #eef3fb !important;
+  color: #1f2633 !important;
 }
 .hs-form-frame :where(input, select, textarea) {
-  color: #eef3fb !important;
-  background-color: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid #2a3346 !important;
-  border-radius: 12px !important;
+  color: #0a0c12 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d5dbe6 !important;
+  border-radius: 10px !important;
   padding: 0.7rem 0.9rem !important;
 }
 .hs-form-frame :where(input, select, textarea):focus {
-  border-color: rgba(34, 211, 238, 0.6) !important;
+  border-color: rgba(13, 148, 182, 0.65) !important;
   outline: none !important;
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(13, 148, 182, 0.15) !important;
 }
-.hs-form-frame :where(input, textarea)::placeholder { color: #79839a !important; }
+.hs-form-frame :where(input, textarea)::placeholder { color: #9aa3b2 !important; }
 .hs-form-frame select option { color: #0a0c12 !important; }
 .hs-form-frame :where(input[type="checkbox"], input[type="radio"]) {
   accent-color: #22d3ee !important;
@@ -207,7 +207,7 @@
 }
 /* validation errors stay legible red */
 .hs-form-frame :where(.hs-error-msg, .hs-error-msgs label, .hsfc-ErrorAlert, [class*="error"]) {
-  color: #fca5a5 !important;
+  color: #dc2626 !important;
 }
 
 @keyframes accordion-down { from { height: 0; opacity: 0; } to { height: var(--radix-accordion-content-height); opacity: 1; } }
