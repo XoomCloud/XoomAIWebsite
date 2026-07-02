@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XoomAgent Sales Enablement Guide | XoomAI</title>
+  <meta name="description" content="A non-technical sales enablement guide for introductory XoomAgent conversations, from lead capture through onboarding.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1a1a2e;
+      --midnight: #0d0b2a;
+      --purple: #6b46c1;
+      --violet: #7c3aed;
+      --violet-dark: #6d28d9;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --bright-cyan: #00d4ff;
+      --ink: #141426;
+      --muted: rgba(26, 26, 46, 0.72);
+      --line: rgba(26, 26, 46, 0.12);
+      --soft: #f7f8fc;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--soft);
+      font-family: "Montserrat", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+    .page { background: linear-gradient(180deg, #ffffff 0%, #f7f8fc 42%, #ffffff 100%); }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .hero {
+      color: var(--white);
+      background:
+        radial-gradient(900px 420px at 78% 14%, rgba(0, 212, 255, 0.24), transparent 58%),
+        radial-gradient(760px 420px at 18% 5%, rgba(124, 58, 237, 0.42), transparent 62%),
+        linear-gradient(135deg, var(--midnight), var(--navy) 54%, #17123f);
+      padding: 34px 0 70px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding-bottom: 70px;
+    }
+
+    .logo { height: 38px; width: auto; display: block; }
+    .doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 6px 11px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      white-space: nowrap;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 920px;
+      font-size: clamp(42px, 7vw, 82px);
+      font-weight: 900;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 850;
+      color: var(--navy);
+    }
+
+    h3 {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--violet), var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin-top: 28px;
+      font-size: clamp(17px, 2vw, 22px);
+      color: rgba(255,255,255,0.78);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 46px;
+    }
+
+    .metric {
+      min-height: 132px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 30px;
+      line-height: 1;
+      color: var(--bright-cyan);
+    }
+
+    .metric span { display: block; margin-top: 10px; color: rgba(255,255,255,0.76); font-weight: 600; }
+
+    .nav-band {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toc {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+      scrollbar-width: none;
+    }
+
+    .toc a {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--navy);
+      background: var(--white);
+    }
+
+    section { padding: 74px 0; border-bottom: 1px solid var(--line); }
+    .section-head { max-width: 820px; margin-bottom: 34px; }
+    .eyebrow {
+      margin-bottom: 12px;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple);
+    }
+
+    .lead { margin: 14px 0 0; color: var(--muted); font-size: 17px; max-width: 850px; }
+
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card, .note, .script {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+      box-shadow: 0 18px 50px rgba(26, 26, 46, 0.06);
+    }
+
+    .card { padding: 24px; }
+    .card p, .card ul, .card ol { margin-bottom: 0; }
+    .card p:first-child { margin-top: 0; }
+    .muted { color: var(--muted); }
+
+    ul, ol { padding-left: 20px; }
+    li { margin: 8px 0; }
+    strong { color: var(--navy); }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-bottom: 14px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(107,70,193,0.08);
+      color: var(--purple);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .note {
+      padding: 26px;
+      background: linear-gradient(135deg, rgba(107,70,193,0.08), rgba(6,182,212,0.08));
+      border-color: rgba(107,70,193,0.18);
+    }
+
+    .script { overflow: hidden; }
+    .script h3 {
+      padding: 18px 22px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--purple), var(--blue), var(--cyan));
+    }
+    .script .body { padding: 22px; }
+    .quote {
+      margin: 0;
+      padding: 18px;
+      border-left: 4px solid var(--cyan);
+      background: rgba(6,182,212,0.06);
+      color: var(--navy);
+      font-weight: 650;
+    }
+
+    .timeline {
+      counter-reset: step;
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+    }
+
+    .step::before {
+      content: counter(step, decimal-leading-zero);
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--violet), var(--blue));
+      font-family: "Poppins", Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .do-dont {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .do-dont .card:first-child { border-top: 5px solid var(--cyan); }
+    .do-dont .card:last-child { border-top: 5px solid #ef4444; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+    }
+
+    table { width: 100%; min-width: 760px; border-collapse: collapse; }
+    th, td { padding: 15px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: var(--navy); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(107,70,193,0.06); }
+    tr:last-child td { border-bottom: 0; }
+
+    .footer {
+      padding: 44px 0;
+      color: rgba(255,255,255,0.74);
+      background: var(--midnight);
+    }
+
+    .footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .small { font-size: 12px; }
+
+    @media (max-width: 920px) {
+      .hero-grid, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-2, .grid-3, .do-dont { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; flex-direction: column; padding-bottom: 48px; }
+      .doc-meta { justify-content: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, 1180px); }
+      .hero { padding-top: 24px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      section { padding: 54px 0; }
+      .step { grid-template-columns: 1fr; }
+      .logo { height: 32px; }
+    }
+
+    @media print {
+      .nav-band { display: none; }
+      body { background: white; }
+      section { break-inside: avoid; padding: 34px 0; }
+      .card, .note, .script, .step { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="wrap">
+        <div class="topbar">
+          <img class="logo" src="/images/xoomai-logo-white.png" alt="XoomAI">
+          <div class="doc-meta">
+            <span class="pill">Sales enablement</span>
+            <span class="pill">Internal guide</span>
+            <span class="pill">Updated July 2026</span>
+          </div>
+        </div>
+        <p class="eyebrow" style="color: var(--bright-cyan);">XoomAgent™ introductory sales guide</p>
+        <h1>Sell the outcome, then earn the <span class="gradient-text">technical discovery.</span></h1>
+        <p class="hero-copy">This guide gives sales staff the language, process, questions and handoff criteria to run confident first conversations about XoomAgent™ without getting dragged into implementation detail too early.</p>
+        <div class="hero-grid">
+          <div class="metric"><strong>24/7</strong><span>AI workforce for repetitive business work.</span></div>
+          <div class="metric"><strong>8</strong><span>common work categories sales can discuss simply.</span></div>
+          <div class="metric"><strong>30-45</strong><span>minute audit or discovery call target.</span></div>
+          <div class="metric"><strong>1</strong><span>clear next step: book a technical discovery.</span></div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="nav-band" aria-label="Guide sections">
+      <div class="wrap toc">
+        <a href="#positioning">Positioning</a>
+        <a href="#sales-process">Sales process</a>
+        <a href="#qualification">Qualification</a>
+        <a href="#talk-tracks">Talk tracks</a>
+        <a href="#use-cases">Use cases</a>
+        <a href="#objections">Objections</a>
+        <a href="#handoff">Handoff</a>
+        <a href="#onboarding">Onboarding</a>
+      </div>
+    </nav>
+
+    <section id="positioning">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">01 / Positioning</p>
+          <h2>What XoomAgent™ is</h2>
+          <p class="lead">XoomAgent™ is a fully managed AI employee for Australian businesses. It connects to the tools a business already uses, handles repetitive work around the clock, and is deployed and managed by XoomAI.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <span class="tag">The simple version</span>
+            <h3>One AI employee. Eight jobs handled.</h3>
+            <p class="muted">XoomAgent™ takes repetitive admin, enquiry handling, lead follow-up, document processing and system updates off the team’s plate so staff can focus on customers, judgement and growth.</p>
+          </div>
+          <div class="card">
+            <span class="tag">What makes it different</span>
+            <h3>Managed, secure and practical</h3>
+            <p class="muted">It is not a DIY chatbot or a generic AI tool. XoomAI scopes, builds, integrates, trains, monitors and improves the agent as a managed service.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Trust angle</span>
+            <h3>Backed by XoomCloud</h3>
+            <p class="muted">XoomAI is backed by XoomCloud’s managed IT and cyber-security experience. That matters when conversations turn to data, access, governance and support.</p>
+          </div>
+        </div>
+        <div class="note" style="margin-top: 20px;">
+          <h3>Core sales message</h3>
+          <p><strong>XoomAgent™ gives SMBs the output of an extra digital team member without hiring, training or managing another person.</strong> It works inside their current inboxes, documents, CRM and workflows, with human oversight where it matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sales-process">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">02 / Sales process</p>
+          <h2>Lead to onboard</h2>
+          <p class="lead">The sales job is to identify operational pain, qualify fit, build confidence and move the prospect into a proper technical discovery. Do not try to design the full solution on the first call.</p>
+        </div>
+        <div class="timeline">
+          <div class="step">
+            <div>
+              <h3>Lead captured</h3>
+              <p class="muted">Source can be website, referral, LinkedIn, partner, event, campaign, quiz or inbound email. Record source, company, contact, industry, team size, current systems and stated pain.</p>
+              <p><strong>Exit criteria:</strong> lead logged, owner assigned, first response sent within one business day.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Initial qualification</h3>
+              <p class="muted">Confirm they have repetitive work worth automating, a real business process, decision-maker access and enough urgency to justify change.</p>
+              <p><strong>Exit criteria:</strong> qualified, nurture, partner referral or no fit.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Introductory conversation</h3>
+              <p class="muted">Keep it business-led. Discuss wasted time, missed enquiries, manual follow-up, poor visibility, customer response delays and staff capacity. Avoid deep architecture.</p>
+              <p><strong>Exit criteria:</strong> one or two likely workflows identified and value acknowledged by the prospect.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>AI Workflow Audit booked</h3>
+              <p class="muted">Book 30-45 minutes minimum with the right stakeholders. Sales should brief the technical lead before the call.</p>
+              <p><strong>Exit criteria:</strong> calendar invite sent, CRM updated, pre-discovery notes complete.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Technical discovery</h3>
+              <p class="muted">Technical team maps systems, permissions, workflow detail, data sources, risks, integrations and implementation scope.</p>
+              <p><strong>Exit criteria:</strong> recommended starting build, dependencies, pricing path and next steps agreed.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Proposal and close</h3>
+              <p class="muted">Proposal should focus on business outcomes, starting workflows, inclusions, setup, managed service, security posture, rollout plan and commercial terms.</p>
+              <p><strong>Exit criteria:</strong> signed agreement, deposit or first invoice, onboarding scheduled.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Onboarding and activation</h3>
+              <p class="muted">Client provides access, documents, process knowledge and approval rules. XoomAI configures, tests, trains users and launches with monitoring.</p>
+              <p><strong>Exit criteria:</strong> agent live, team trained, success metrics being tracked.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="qualification">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">03 / Qualification</p>
+          <h2>Who is a good fit?</h2>
+          <p class="lead">XoomAgent™ is strongest where a business has repeated work, high enquiry volume, scattered systems or staff losing time to low-value admin.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Strong fit signals</h3>
+            <ul>
+              <li>They receive repetitive emails, enquiries, documents, forms or support requests.</li>
+              <li>Staff copy data between inboxes, spreadsheets, CRMs and line-of-business systems.</li>
+              <li>Leads or customer enquiries arrive after hours and go cold.</li>
+              <li>They have a CRM, Microsoft 365, Google Workspace, booking system, e-commerce platform or document store.</li>
+              <li>They can identify a measurable bottleneck: hours lost, slow response, missed revenue, errors or poor visibility.</li>
+              <li>They want a managed service, not another tool to figure out.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Poor fit signals</h3>
+            <ul>
+              <li>They only want a novelty chatbot with no business process behind it.</li>
+              <li>No clear workflow, data source, owner or success measure exists.</li>
+              <li>They expect perfect autonomous decision-making with no approval points.</li>
+              <li>They are unwilling to provide access, process knowledge or stakeholder time.</li>
+              <li>Budget is materially below a managed service starting point.</li>
+              <li>They want a one-off experiment but no operational ownership.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid-4" style="margin-top: 18px;">
+          <div class="card"><span class="tag">Need</span><h3>High repetition</h3><p class="muted">Same tasks happen daily or weekly.</p></div>
+          <div class="card"><span class="tag">Value</span><h3>Clear ROI</h3><p class="muted">Time, speed, capacity, revenue or error reduction.</p></div>
+          <div class="card"><span class="tag">Access</span><h3>Systems exist</h3><p class="muted">Inbox, CRM, docs, forms, booking, support or finance tools.</p></div>
+          <div class="card"><span class="tag">Owner</span><h3>Champion present</h3><p class="muted">Someone can approve, unblock and adopt.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="talk-tracks">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">04 / Talk tracks</p>
+          <h2>How to explain it without jargon</h2>
+          <p class="lead">Use plain commercial language. The goal is not to impress them with AI. The goal is to make them realise the work they tolerate every day can be removed.</p>
+        </div>
+        <div class="grid-2">
+          <div class="script">
+            <h3>30-second opener</h3>
+            <div class="body">
+              <p class="quote">XoomAgent™ is a managed AI employee for Australian businesses. It handles repetitive work like inbox triage, lead qualification, customer enquiries, document processing, CRM updates and reporting. We scope it around your actual workflows, connect it to the systems you already use, and manage it for you.</p>
+            </div>
+          </div>
+          <div class="script">
+            <h3>When they ask, “Is this a chatbot?”</h3>
+            <div class="body">
+              <p class="quote">A chatbot only talks. XoomAgent™ can take action. It can read, sort, draft, route, update records, prepare documents, follow up leads and escalate to the right person. The chat interface is only one doorway into the work.</p>
+            </div>
+          </div>
+          <div class="script">
+            <h3>When they ask about security</h3>
+            <div class="body">
+              <p class="quote">Security is one of the reasons XoomAgent™ exists as a managed service. It runs on dedicated infrastructure, your data is not used to train models, access is permissioned, and actions are auditable. XoomAI is backed by XoomCloud’s managed IT and cyber-security background.</p>
+            </div>
+          </div>
+          <div class="script">
+            <h3>When they ask about price early</h3>
+            <div class="body">
+              <p class="quote">Managed deployments start from $2,399 per month, with scope confirmed after the audit. The better way to think about it is: which repetitive role, workflow or lost revenue stream do we remove first?</p>
+            </div>
+          </div>
+        </div>
+        <div class="do-dont" style="margin-top: 20px;">
+          <div class="card">
+            <h3>Do say</h3>
+            <ul>
+              <li>AI employee</li>
+              <li>Managed AI workforce</li>
+              <li>Repetitive work removed</li>
+              <li>Dedicated infrastructure</li>
+              <li>No model training on your data</li>
+              <li>Human approval where it matters</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Do not lead with</h3>
+            <ul>
+              <li>Agents, orchestration, prompts or vector databases</li>
+              <li>“It can do anything”</li>
+              <li>Fully autonomous decision-making</li>
+              <li>Replacing staff</li>
+              <li>Guaranteed savings without discovery</li>
+              <li>Deep integration promises before technical review</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">05 / Use cases</p>
+          <h2>The eight jobs sales can discuss</h2>
+          <p class="lead">These are introductory categories. The technical team will later map the exact workflows, systems, permissions and controls.</p>
+        </div>
+        <div class="grid-4">
+          <div class="card"><span class="tag">Inbox</span><h3>Email and inbox triage</h3><p class="muted">Reads, sorts, drafts and routes incoming email so the right message reaches the right person quickly.</p></div>
+          <div class="card"><span class="tag">Sales</span><h3>Lead qualification</h3><p class="muted">Responds to new enquiries, captures key details, qualifies fit and pushes clean notes into the CRM.</p></div>
+          <div class="card"><span class="tag">Support</span><h3>Customer support</h3><p class="muted">Answers routine enquiries day and night, escalating anything sensitive, complex or high value.</p></div>
+          <div class="card"><span class="tag">Documents</span><h3>Document processing</h3><p class="muted">Extracts, classifies and routes data from invoices, contracts, forms, statements and PDFs.</p></div>
+          <div class="card"><span class="tag">CRM</span><h3>CRM updates</h3><p class="muted">Keeps contacts, deals, notes, statuses and follow-up tasks accurate as work happens.</p></div>
+          <div class="card"><span class="tag">Ops</span><h3>Workflow automation</h3><p class="muted">Connects systems so triggers in one place update another without manual hand-offs.</p></div>
+          <div class="card"><span class="tag">Reporting</span><h3>Scheduled reporting</h3><p class="muted">Compiles regular summaries from business systems so teams have a current picture.</p></div>
+          <div class="card"><span class="tag">Knowledge</span><h3>Internal knowledge assistant</h3><p class="muted">Answers staff questions from documents, SOPs and policies with brand and process context.</p></div>
+        </div>
+        <div class="table-wrap" style="margin-top: 28px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Industry</th>
+                <th>Strong opening pain</th>
+                <th>Likely starting XoomAgent™ workflow</th>
+                <th>Business outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Professional services</td>
+                <td>Proposal writing, client enquiries and project admin interrupt billable work.</td>
+                <td>Proposal support, enquiry capture, knowledge assistant and admin follow-up.</td>
+                <td>Faster proposal turnaround and more billable capacity.</td>
+              </tr>
+              <tr>
+                <td>Retail and e-commerce</td>
+                <td>Unanswered product, order, returns and stock questions lose sales.</td>
+                <td>Product Q&A, order support, inventory lookup and after-hours sales assistance.</td>
+                <td>Higher conversion, fewer repetitive support tickets and better customer response.</td>
+              </tr>
+              <tr>
+                <td>Financial services</td>
+                <td>Onboarding, compliance admin and document handling consume adviser time.</td>
+                <td>Client onboarding, KYC support, document processing and compliance reminders.</td>
+                <td>Less admin load, cleaner files and faster client service.</td>
+              </tr>
+              <tr>
+                <td>Hospitality</td>
+                <td>Bookings, guest questions, function enquiries and reviews arrive around the clock.</td>
+                <td>Reservation handling, guest enquiry answers, event lead qualification and review response.</td>
+                <td>Fewer missed bookings and faster guest communication.</td>
+              </tr>
+              <tr>
+                <td>Construction and trades</td>
+                <td>Quote requests, supplier updates, site admin and compliance paperwork slow jobs down.</td>
+                <td>Quote intake, supplier coordination, document collection and job status updates.</td>
+                <td>Cleaner handoffs, faster quoting and less admin for supervisors.</td>
+              </tr>
+              <tr>
+                <td>Real estate</td>
+                <td>Buyer, seller, tenant and property management enquiries come in faster than teams can respond.</td>
+                <td>Lead capture, enquiry qualification, inspection follow-up and CRM updates.</td>
+                <td>More opportunities captured and less manual follow-up.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">06 / First-call questions</p>
+          <h2>Ask for the workflow, not the technology</h2>
+          <p class="lead">The best first calls make the prospect describe the work they hate, the delays they tolerate and the systems they already live in.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Pain</h3>
+            <ul>
+              <li>What repetitive work is stealing the most time each week?</li>
+              <li>Where do enquiries, tasks or documents get stuck?</li>
+              <li>What does your team complain about doing manually?</li>
+              <li>What do you wish happened automatically before the day starts?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Volume</h3>
+            <ul>
+              <li>How many enquiries, emails, documents or tickets come through each week?</li>
+              <li>How long does the current process usually take?</li>
+              <li>How often does work happen after hours?</li>
+              <li>How many people touch the same task before it is complete?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Impact</h3>
+            <ul>
+              <li>What happens when this work is delayed?</li>
+              <li>Does it cost revenue, customer experience, compliance risk or team morale?</li>
+              <li>If this was handled automatically, what would your team do with the time?</li>
+              <li>What would make this worth fixing in the next 30-60 days?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Systems</h3>
+            <ul>
+              <li>Which inboxes, CRMs, document stores, forms and systems are involved?</li>
+              <li>Where does the data start and where should it end up?</li>
+              <li>What tools already have good information and what is messy?</li>
+              <li>Who controls system access?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Governance</h3>
+            <ul>
+              <li>Which actions can be automated safely?</li>
+              <li>Which actions need approval before sending or updating?</li>
+              <li>What should always be escalated to a person?</li>
+              <li>Are there compliance or privacy requirements we need to know early?</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Decision</h3>
+            <ul>
+              <li>Who needs to be involved in a workflow audit?</li>
+              <li>What budget range is realistic for a managed service?</li>
+              <li>What timeline matters?</li>
+              <li>What would stop this from moving ahead?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="objections">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">07 / Objection handling</p>
+          <h2>Common concerns and calm answers</h2>
+          <p class="lead">Stay direct. Do not over-defend AI. Acknowledge the concern, connect it to XoomAI’s managed model, then move back to business value.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Objection</th>
+                <th>Response</th>
+                <th>Then ask</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>“We tried AI and it was underwhelming.”</td>
+                <td>Most businesses try a tool, not a workflow. XoomAgent™ is built around operational tasks, connected systems and managed delivery.</td>
+                <td>What did you want that AI tool to actually do?</td>
+              </tr>
+              <tr>
+                <td>“We are worried about data security.”</td>
+                <td>Reasonable. XoomAgent™ is designed for permissioned access, audit trails, dedicated infrastructure and no model training on your data.</td>
+                <td>Which data or systems are most sensitive in your environment?</td>
+              </tr>
+              <tr>
+                <td>“Will this replace staff?”</td>
+                <td>The stronger use case is capacity, not replacement. It removes repetitive work so staff spend more time with customers and higher-value tasks.</td>
+                <td>Where is your team currently spending time below their skill level?</td>
+              </tr>
+              <tr>
+                <td>“Our systems are messy.”</td>
+                <td>That is common. The audit helps work out which workflow is clean enough to start with and what needs tidying before automation.</td>
+                <td>Which process is painful but still consistent enough to map?</td>
+              </tr>
+              <tr>
+                <td>“We do not know where to start.”</td>
+                <td>That is exactly what the AI Workflow Audit is for. We map the highest-impact workflows and recommend a sensible first build.</td>
+                <td>Where do you lose the most time each week?</td>
+              </tr>
+              <tr>
+                <td>“It sounds expensive.”</td>
+                <td>It is a managed digital employee, not a subscription widget. The value case usually comes from time returned, faster response and fewer missed opportunities.</td>
+                <td>What does the current manual process cost you in hours, delays or missed revenue?</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="handoff">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">08 / Technical discovery handoff</p>
+          <h2>What sales must capture before handoff</h2>
+          <p class="lead">A good handoff stops the discovery call from starting cold. Sales should provide the technical team with enough context to probe intelligently.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Minimum handoff notes</h3>
+            <ul>
+              <li>Company, contact, role, industry and lead source.</li>
+              <li>Main pain points in the prospect’s own words.</li>
+              <li>Likely first workflow and why it matters.</li>
+              <li>Current systems involved: email, CRM, documents, forms, finance, support, booking or e-commerce.</li>
+              <li>Expected volume: emails, enquiries, documents, tickets, leads or tasks.</li>
+              <li>Any security, privacy, compliance or approval concerns raised.</li>
+              <li>Decision-makers and stakeholders who should attend.</li>
+              <li>Budget signal and desired timeline.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Book discovery when</h3>
+            <ul>
+              <li>The prospect has at least one clear repetitive workflow.</li>
+              <li>There is a measurable pain or business outcome.</li>
+              <li>They have access to the people who understand the workflow.</li>
+              <li>They are open to a managed monthly service.</li>
+              <li>They understand technical feasibility comes after discovery.</li>
+              <li>They can commit 30-45 minutes with relevant stakeholders.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note" style="margin-top: 20px;">
+          <h3>Sales handoff summary template</h3>
+          <p><strong>Company:</strong> [Name] | <strong>Industry:</strong> [Industry] | <strong>Primary pain:</strong> [Pain] | <strong>Likely workflow:</strong> [Workflow] | <strong>Systems:</strong> [Tools] | <strong>Volume:</strong> [Estimate] | <strong>Risk concerns:</strong> [Security/compliance] | <strong>Decision process:</strong> [Stakeholders/timeline] | <strong>Recommended discovery focus:</strong> [1-2 points]</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="onboarding">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">09 / Onboarding expectation</p>
+          <h2>What happens after the sale</h2>
+          <p class="lead">Sales should set expectations early: XoomAI manages the build, but the client still needs to provide process knowledge, access and approvals.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <span class="tag">1</span>
+            <h3>Kickoff</h3>
+            <p class="muted">Confirm outcomes, stakeholders, first workflows, systems, success metrics, communication channel and rollout timeline.</p>
+          </div>
+          <div class="card">
+            <span class="tag">2</span>
+            <h3>Access and knowledge</h3>
+            <p class="muted">Collect required documents, SOPs, inbox rules, CRM fields, templates, FAQs, examples, user permissions and approval rules.</p>
+          </div>
+          <div class="card">
+            <span class="tag">3</span>
+            <h3>Build and configure</h3>
+            <p class="muted">XoomAI configures workflows, knowledge, guardrails, escalation paths, reporting and integrations.</p>
+          </div>
+          <div class="card">
+            <span class="tag">4</span>
+            <h3>Test and review</h3>
+            <p class="muted">Run sample work, check outputs, adjust tone, verify routing, confirm permissions and refine edge cases.</p>
+          </div>
+          <div class="card">
+            <span class="tag">5</span>
+            <h3>Train the team</h3>
+            <p class="muted">Show staff what the agent does, how to request work, how approvals work and when to escalate.</p>
+          </div>
+          <div class="card">
+            <span class="tag">6</span>
+            <h3>Launch and optimise</h3>
+            <p class="muted">Go live with monitoring, reporting and continuous improvement as part of the managed service.</p>
+          </div>
+        </div>
+        <div class="script" style="margin-top: 24px;">
+          <h3>Clean closing language</h3>
+          <div class="body">
+            <p class="quote">The next step is not a technical deep dive today. The right next step is a 30-45 minute AI Workflow Audit with the people who know this process. We will map the workflow properly, check the systems involved, identify the safest starting point and come back with a practical recommendation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>
+        <strong style="color: white;">XoomAI</strong><br>
+        <span class="small">Your managed AI workforce for Australian business.</span>
+      </div>
+      <div class="small">
+        XoomAgent™ is a trademark of XoomCloud Pty Ltd.<br>
+        Internal sales enablement guide. Not for technical scoping or legal advice.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
