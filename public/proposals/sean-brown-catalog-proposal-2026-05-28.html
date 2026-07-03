@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sean Brown - Website Catalog Generation Proposal | XoomAI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #111229;
+      --ink: #1a1a2e;
+      --muted: #5d6678;
+      --purple: #6b46c1;
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --green: #0f9f6e;
+      --paper: #ffffff;
+      --soft: #f7f8fc;
+      --line: #e2e8f0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f3f5fb;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: var(--paper);
+      box-shadow: 0 20px 70px rgba(17, 18, 41, 0.12);
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(17, 18, 41, 0.96), rgba(24, 29, 68, 0.96)),
+        linear-gradient(90deg, var(--purple), var(--cyan));
+      color: white;
+      padding: 64px 56px 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+      box-shadow: 0 0 0 48px rgba(107, 70, 193, 0.12), 0 0 0 96px rgba(6, 182, 212, 0.08);
+    }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 56px;
+    }
+
+    .brand {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .brand span { color: var(--cyan); }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: rgba(255, 255, 255, 0.82);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: 48px;
+      line-height: 1.08;
+      font-weight: 850;
+      letter-spacing: 0;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 690px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 18px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .meta-item {
+      padding: 24px 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    .meta-item:last-child { border-right: 0; }
+
+    .label {
+      display: block;
+      color: #7a8496;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .value {
+      font-size: 15px;
+      font-weight: 750;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    main { padding: 56px; }
+
+    section { margin-bottom: 56px; }
+    section:last-child { margin-bottom: 0; }
+
+    h2 {
+      font-size: 28px;
+      line-height: 1.2;
+      margin-bottom: 18px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    p { font-size: 16px; color: #394150; margin-bottom: 14px; }
+
+    .lead {
+      font-size: 19px;
+      color: #2d3545;
+      max-width: 820px;
+    }
+
+    .section-kicker {
+      color: var(--purple);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      background: var(--paper);
+    }
+
+    .card.accent {
+      border-left: 4px solid var(--purple);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+    }
+
+    .card.cyan { border-left-color: var(--cyan); }
+    .card.green { border-left-color: var(--green); }
+    .card.blue { border-left-color: var(--blue); }
+
+    .card p { font-size: 14px; color: var(--muted); margin-bottom: 0; }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: white;
+      font-weight: 850;
+      font-size: 14px;
+    }
+
+    .price-panel {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 24px;
+    }
+
+    .price-main {
+      background: var(--navy);
+      color: white;
+      padding: 34px;
+    }
+
+    .price-main .label { color: rgba(255, 255, 255, 0.58); }
+
+    .price {
+      font-size: 46px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+      margin: 8px 0;
+    }
+
+    .price small {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.62);
+      font-weight: 650;
+    }
+
+    .price-main p {
+      color: rgba(255, 255, 255, 0.74);
+      margin-bottom: 0;
+    }
+
+    .price-detail {
+      padding: 34px;
+      background: var(--soft);
+    }
+
+    .line-items {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .line-items li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      color: #394150;
+      font-size: 14px;
+    }
+
+    .line-items li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .requirements {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .requirement {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      min-height: 128px;
+    }
+
+    .requirement strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .requirement span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .terms {
+      background: #fbfcff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .terms ul {
+      padding-left: 20px;
+      color: #4d5667;
+    }
+
+    .terms li { margin-bottom: 8px; }
+
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.66);
+      padding: 34px 56px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    footer strong { color: white; }
+
+    @media (max-width: 780px) {
+      .hero { padding: 42px 26px; }
+      .topline { flex-direction: column; margin-bottom: 38px; }
+      h1 { font-size: 34px; }
+      .hero p { font-size: 16px; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      .meta-item:nth-child(2) { border-right: 0; }
+      main { padding: 36px 24px; }
+      .grid, .price-panel, .requirements { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; }
+      .hero, .price-main, footer { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="topline">
+          <div class="brand">Xoom<span>AI</span></div>
+          <div class="badge">Project Proposal</div>
+        </div>
+        <h1>Website Catalog Generation</h1>
+        <p>A focused one-off project to convert Sean Brown's product data and visual assets into a practical WordPress catalog foundation for his website.</p>
+      </div>
+    </header>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="label">Prepared For</span>
+        <span class="value">Sean Brown</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Prepared By</span>
+        <span class="value">Vlad Nielsen<br>XoomAI</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Date</span>
+        <span class="value">28 May 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="label">Reference</span>
+        <span class="value">SB-CAT-2026-001</span>
+      </div>
+    </div>
+
+    <main>
+      <section>
+        <div class="section-kicker">Executive Summary</div>
+        <h2>A clean catalog foundation for the website.</h2>
+        <p class="lead">XoomAI will assist with the initial catalog setup by preparing the supplied product spreadsheet, shaping the WordPress catalog structure, and applying brand imagery and design direction so the catalog can be reviewed on the website.</p>
+        <p>This proposal is scoped as a short custom development engagement. It is separate from XoomAI's managed XoomAgent service packages and is priced as a one-off block of implementation time.</p>
+      </section>
+
+      <section>
+        <div class="section-kicker">Scope Of Work</div>
+        <h2>What is included</h2>
+        <div class="grid">
+          <div class="card accent">
+            <h3>Product Data Integration</h3>
+            <p>Review and prepare the spreadsheet containing part numbers, descriptions, and pricing so it can support the initial catalog structure.</p>
+          </div>
+          <div class="card accent cyan">
+            <h3>WordPress Catalog Setup</h3>
+            <p>Configure the catalog foundation inside WordPress using the supplied cPanel or WordPress access details.</p>
+          </div>
+          <div class="card accent blue">
+            <h3>Catalog Design & Template</h3>
+            <p>Apply the brand guide, imagery, and layout direction to create a polished catalog presentation for review.</p>
+          </div>
+          <div class="card accent green">
+            <h3>Website Catalog Generation</h3>
+            <p>Generate the initial catalog structure and presentation using the supplied product data, brand assets, and website access.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-kicker">Delivery Approach</div>
+        <h2>Proposed workflow</h2>
+        <div class="steps">
+          <div class="step">
+            <div>
+              <h3>Access and materials</h3>
+              <p>Sean provides WordPress/cPanel access, the product spreadsheet, the brand guide, and the imagery folder.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Catalog structure</h3>
+              <p>XoomAI reviews the data, maps the catalog fields, and prepares the initial product/category structure.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Design integration</h3>
+              <p>The catalog template is styled with the supplied brand assets and prepared for review on the WordPress instance.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div>
+              <h3>Catalog review</h3>
+              <p>The generated catalog is prepared for Sean to review on the website before any final adjustments are made.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-kicker">Investment</div>
+        <h2>One-off implementation block</h2>
+        <div class="price-panel">
+          <div class="price-main">
+            <span class="label">Project Investment</span>
+            <div class="price">$945 <small>+ GST</small></div>
+            <p>Total payable including GST: $1,039.50 AUD.</p>
+          </div>
+          <div class="price-detail">
+            <ul class="line-items">
+              <li><span>Implementation time</span><span>5 hours</span></li>
+              <li><span>Hourly rate</span><span>$189 + GST</span></li>
+              <li><span>Subtotal</span><span>$945.00</span></li>
+              <li><span>GST</span><span>$94.50</span></li>
+              <li><span>Total incl. GST</span><span>$1,039.50</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-kicker">Client Inputs</div>
+        <h2>Required before commencement</h2>
+        <p>To keep the project inside the quoted block, XoomAI will need the following materials before work begins.</p>
+        <div class="requirements">
+          <div class="requirement">
+            <strong>Product spreadsheet</strong>
+            <span>Part numbers, descriptions, pricing, and any category or grouping information available.</span>
+          </div>
+          <div class="requirement">
+            <strong>Website access</strong>
+            <span>WordPress admin and/or cPanel access details required to configure the catalog foundation.</span>
+          </div>
+          <div class="requirement">
+            <strong>Brand assets</strong>
+            <span>Brand guide, logo files, image folder, and any preferred catalog examples or design references.</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-kicker">Timeline</div>
+        <h2>Schedule</h2>
+        <p>Work can commence once the required access and materials are supplied. Delivery timing will be confirmed at commencement based on access availability, data quality, and any requested design revisions.</p>
+      </section>
+
+      <section class="terms">
+        <div class="section-kicker">Terms</div>
+        <h2>Project terms</h2>
+        <ul>
+          <li>This proposal covers up to 5 hours of custom implementation work.</li>
+          <li>Additional scope, revisions, troubleshooting, or integrations outside the listed deliverables will be quoted separately or billed at $189 + GST per hour with approval.</li>
+          <li>Client-provided access, spreadsheet quality, and supplied imagery may affect completion timing.</li>
+          <li>No client-facing communication, publishing, or production launch activity will occur without approval.</li>
+          <li>Pricing is valid for 30 days from the proposal date.</li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      <div><strong>XoomAI</strong><br>Automation, implementation, and digital systems.</div>
+      <div>Prepared for Sean Brown - SB-CAT-2026-001</div>
+    </footer>
+  </div>
+</body>
+</html>
