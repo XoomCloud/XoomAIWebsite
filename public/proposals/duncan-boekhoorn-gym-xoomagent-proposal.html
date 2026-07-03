@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XoomAgent™ Proposal — Duncan Boekhoorn</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', sans-serif; background: #f7f8fb; color: #1a1a2e; line-height: 1.6; }
+.page { max-width: 1040px; margin: 0 auto; background: #ffffff; box-shadow: 0 12px 40px rgba(26,26,46,0.08); }
+.hero { background: linear-gradient(135deg, #1a1a2e 0%, #0d0b2a 52%, #31256f 100%); color: #ffffff; padding: 56px 64px 64px; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; width: 420px; height: 420px; right: -120px; top: -130px; border-radius: 50%; background: radial-gradient(circle, rgba(6,182,212,0.26), transparent 68%); }
+.brand { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 28px; position: relative; z-index: 1; }
+.brand span { color: #7c3aed; }
+.hero-grid { display: grid; grid-template-columns: 1.35fr 0.85fr; gap: 40px; margin-top: 54px; position: relative; z-index: 1; }
+.eyebrow { color: #00D4FF; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 14px; }
+h1 { font-family: 'Poppins', sans-serif; font-size: 46px; line-height: 1.1; font-weight: 800; margin-bottom: 20px; }
+.accent { background: linear-gradient(135deg, #7c3aed, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { color: rgba(255,255,255,0.76); font-size: 17px; max-width: 650px; }
+.meta-card { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; align-self: start; }
+.meta-row { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+.meta-label { color: rgba(255,255,255,0.48); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; }
+.meta-value { color: #ffffff; font-weight: 700; font-size: 15px; }
+section { padding: 54px 64px; border-bottom: 1px solid rgba(26,26,46,0.08); }
+section.alt { background: #fbfbfe; }
+h2 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 30px; line-height: 1.2; margin-bottom: 18px; color: #1a1a2e; }
+h3 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 10px; color: #1a1a2e; }
+p { font-size: 15px; color: rgba(26,26,46,0.74); margin-bottom: 16px; }
+.lead { font-size: 18px; color: #1a1a2e; font-weight: 500; max-width: 820px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 28px; }
+.card { background: #ffffff; border: 1px solid rgba(26,26,46,0.08); border-radius: 12px; padding: 24px; box-shadow: 0 5px 20px rgba(26,26,46,0.05); }
+.card.topline { border-top: 4px solid #6b46c1; }
+.card.cyan { border-top-color: #06b6d4; }
+.card.blue { border-top-color: #3b82f6; }
+.tag { display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(107,70,193,0.08); color: #6b46c1; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+ul { margin: 12px 0 0 18px; }
+li { margin-bottom: 10px; font-size: 14px; color: rgba(26,26,46,0.74); }
+.price-band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 28px; }
+.price-card { background: #ffffff; border: 1px solid rgba(26,26,46,0.08); border-radius: 12px; padding: 26px; }
+.price-card.primary { background: linear-gradient(135deg, #1a1a2e, #0d0b2a); color: #ffffff; border: none; }
+.price-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; color: #6b46c1; margin-bottom: 12px; }
+.primary .price-title { color: #00D4FF; }
+.price { font-family: 'Poppins', sans-serif; font-size: 34px; font-weight: 800; line-height: 1; color: #1a1a2e; }
+.primary .price { color: #ffffff; }
+.period { color: rgba(26,26,46,0.52); font-size: 13px; margin-top: 8px; }
+.primary .period { color: rgba(255,255,255,0.62); }
+.note { font-size: 12px; color: rgba(26,26,46,0.58); margin-top: 14px; margin-bottom: 0; }
+.primary .note { color: rgba(255,255,255,0.62); }
+.timeline { margin-top: 28px; display: grid; gap: 16px; }
+.step { display: grid; grid-template-columns: 48px 1fr; gap: 18px; align-items: start; }
+.number { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; color: #ffffff; background: linear-gradient(135deg, #7c3aed, #3b82f6); font-family: 'Poppins', sans-serif; font-weight: 800; }
+.step-copy { background: #ffffff; border: 1px solid rgba(26,26,46,0.08); border-radius: 12px; padding: 18px 20px; }
+.terms { background: #f7f8fb; padding: 28px; border-radius: 12px; border: 1px solid rgba(26,26,46,0.08); margin-top: 24px; }
+.callout { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.22); border-radius: 12px; padding: 24px; margin-top: 24px; }
+.footer { padding: 34px 64px; background: #0d0b2a; color: rgba(255,255,255,0.58); display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+.footer strong { color: #ffffff; font-family: 'Poppins', sans-serif; font-size: 18px; }
+.footer p { color: rgba(255,255,255,0.58); margin: 0; font-size: 12px; }
+@media print {
+ body { background: #ffffff; }
+ .page { box-shadow: none; }
+ .hero, .price-card.primary, .footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+ section { break-inside: avoid; }
+}
+@media (max-width: 760px) {
+ .hero, section, .footer { padding-left: 28px; padding-right: 28px; }
+ .hero-grid, .grid-2, .grid-3, .price-band { grid-template-columns: 1fr; }
+ h1 { font-size: 34px; }
+ .footer { display: block; }
+ .footer p { margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <div class="brand">XOOM<span>AI</span></div>
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Custom XoomAgent™ Proposal</div>
+        <h1>AI automation for your <span class="accent">boxing and strength gym.</span></h1>
+        <p>A specialised XoomAgent™ deployment for Duncan Boekhoorn, built to reduce admin load, respond to leads faster, and turn Meta, phone and GymMaster activity into one connected sales workflow.</p>
+      </div>
+      <aside class="meta-card">
+        <div class="meta-row">
+          <div class="meta-label">Prepared For</div>
+          <div class="meta-value">Duncan Boekhoorn<br>Boxing and Strength Gym</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Prepared By</div>
+          <div class="meta-value">Vlad Nielsen<br>XoomAI</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Prepared</div>
+          <div class="meta-value">3 July 2026</div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-label">Reference</div>
+          <div class="meta-value">DBG-2026-001</div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <section>
+    <h2>The outcome</h2>
+    <p class="lead">The gym gets a practical AI operating layer that handles the repetitive admin around leads, calls, marketing and member workflows, while humans still own the training floor and final sales conversations.</p>
+    <p>You already have the process knowledge. The gap is consistency: phone calls are not being answered, Meta leads need fast follow-up, GymMaster needs cleaner handoffs, and marketing takes time even when the strategy is clear.</p>
+    <div class="grid-3">
+      <div class="card topline">
+        <span class="tag">Lead speed</span>
+        <h3>Sub-five-minute response</h3>
+        <p>New enquiries are captured quickly and moved into the right workflow before the lead goes cold.</p>
+      </div>
+      <div class="card topline cyan">
+        <span class="tag">Admin relief</span>
+        <h3>Less manual chasing</h3>
+        <p>Trial reminders, follow-up prompts, booking handoffs and routine member admin become repeatable workflows.</p>
+      </div>
+      <div class="card topline blue">
+        <span class="tag">Marketing</span>
+        <h3>Meta execution support</h3>
+        <p>Campaign creation, creative iteration, spend changes and performance monitoring can be driven in plain English.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <h2>Proposed solution</h2>
+    <p class="lead">A specialised 3-4 agent XoomAgent™ package configured for your gym, with phone, Meta, CRM workflow and personal VA capability.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Phone and receptionist agent</h3>
+        <p>Inbound AI call handling through Aircall, with the ability to use a local number, forward your existing business mobile, or port a number into the system.</p>
+        <ul>
+          <li>Inbound call answering and message capture</li>
+          <li>Lead pre-qualification and call routing</li>
+          <li>Call notes and details logged for follow-up</li>
+          <li>Escalation to you or the team when a human needs to step in</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Meta ads agent</h3>
+        <p>An agent for Facebook and Instagram campaign support, using the Meta API to help create, modify and analyse campaigns without living inside Ads Manager.</p>
+        <ul>
+          <li>Create campaigns, ad sets and creatives from plain-English instructions</li>
+          <li>Adjust daily spend, audience, demographic and targeting settings</li>
+          <li>Analyse performance and shift attention toward stronger ads</li>
+          <li>Use brand rules and existing media assets for consistent creative</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>GymMaster workflow agent</h3>
+        <p>GymMaster has a workable API, which gives us a strong base for automating lead, booking and member follow-up workflows.</p>
+        <ul>
+          <li>Push lead form enquiries into GymMaster as prospects</li>
+          <li>Trigger booking reminders and trial-session instructions</li>
+          <li>Start follow-up loops for prospects who do not convert</li>
+          <li>Support reporting such as overdue payments or member status checks</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Executive VA for Duncan</h3>
+        <p>A personal virtual assistant for day-to-day admin, scheduling, task tracking and system queries across the connected business tools.</p>
+        <ul>
+          <li>Ask operational questions in plain English</li>
+          <li>Request weekly or recurring reports</li>
+          <li>Draft messages, reminders and follow-ups</li>
+          <li>Use Discord or Slack on desktop and mobile as the command centre</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Example workflow</h2>
+    <div class="timeline">
+      <div class="step">
+        <div class="number">1</div>
+        <div class="step-copy">
+          <h3>Lead is generated</h3>
+          <p>A person responds to a Meta lead ad, sends an enquiry, calls the gym, or comes through another agreed channel.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">2</div>
+        <div class="step-copy">
+          <h3>AI captures and qualifies</h3>
+          <p>The relevant agent captures the details, responds quickly, books the next action where possible, and alerts you when a human sales call is required.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">3</div>
+        <div class="step-copy">
+          <h3>GymMaster is updated</h3>
+          <p>The prospect is created or updated in GymMaster, with trial information, appointment details and follow-up status available to the team.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">4</div>
+        <div class="step-copy">
+          <h3>Follow-up keeps moving</h3>
+          <p>If they attend but do not sign up, the follow-up loop starts automatically: check-in message, second-session prompt, and escalation if the conversation needs a person.</p>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <h3>Important operating principle</h3>
+      <p>Outbound AI sales is not the focus. Inbound handling, fast lead response, structured follow-up and admin automation are where the immediate return is strongest and safest.</p>
+    </div>
+  </section>
+
+  <section class="alt">
+    <h2>Implementation plan</h2>
+    <div class="timeline">
+      <div class="step">
+        <div class="number">1</div>
+        <div class="step-copy">
+          <h3>Workflow mapping</h3>
+          <p>Confirm the exact lead, trial, conversion, non-conversion, hold, payment and member admin workflows that matter most.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">2</div>
+        <div class="step-copy">
+          <h3>System connection</h3>
+          <p>Connect Meta, Aircall, GymMaster and the selected collaboration channel. Where content assets live in Dropbox, Gmail, OneDrive or SharePoint, we map that source as well.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">3</div>
+        <div class="step-copy">
+          <h3>Agent configuration</h3>
+          <p>Configure each agent, train the brand and process rules, and test against real gym scenarios before launch.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="number">4</div>
+        <div class="step-copy">
+          <h3>Launch and tune</h3>
+          <p>Go live once the system is set up, tested and you are onboarded. Ongoing monthly service covers hosting, monitoring, improvements and support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Investment</h2>
+    <p class="lead">A month-to-month specialised XoomAgent™ deployment for the gym, designed to pay for itself through faster lead response, better marketing execution and reduced admin load.</p>
+    <div class="price-band">
+      <div class="price-card primary">
+        <div class="price-title">Managed XoomAgent™ Package</div>
+        <div class="price">$1,399</div>
+        <div class="period">per month + GST</div>
+        <p class="note">Specialised 3-4 agent deployment covering phone, Meta, GymMaster workflow and personal VA capability.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-title">Onboarding</div>
+        <div class="price">$2,500</div>
+        <div class="period">one-off + GST</div>
+        <p class="note">Workflow mapping, integrations, configuration, testing and onboarding.</p>
+      </div>
+      <div class="price-card">
+        <div class="price-title">Contract</div>
+        <div class="price">30 days</div>
+        <div class="period">month-to-month</div>
+        <p class="note">No long lock-in. Service starts after setup, testing and onboarding are complete.</p>
+      </div>
+    </div>
+    <div class="terms">
+      <h3>Commercial notes</h3>
+      <ul>
+        <li>All prices are exclusive of GST.</li>
+        <li>Standard local inbound and outbound calling is included. Premium, 1300 or special-rate calling may be treated separately if required.</li>
+        <li>A first-period discount can be discussed if needed, but the core package is priced at $1,399/month + GST.</li>
+        <li>Based on $60/week memberships, five retained new members broadly offsets the monthly platform fee.</li>
+        <li>Final workflow scope is confirmed during onboarding before production deployment.</li>
+        <li>Proposal is valid for 30 days from the prepared date.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="alt">
+    <h2>Next step</h2>
+    <p class="lead">If the numbers make sense, the next move is to confirm the priority workflows and start onboarding.</p>
+    <p>XoomAI will map the lead-to-member journey, confirm the exact GymMaster API actions required, configure the phone path, and build the Meta workflow around the way you already think about campaigns.</p>
+  </section>
+
+  <footer class="footer">
+    <div>
+      <strong>XoomAI</strong>
+      <p>Your AI workforce, built for real business operations.</p>
+    </div>
+    <p>Prepared by Vlad Nielsen · XoomAgent™ Proposal · DBG-2026-001</p>
+  </footer>
+</main>
+</body>
+</html>
