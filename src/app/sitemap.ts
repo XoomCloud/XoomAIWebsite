@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/xoomagent", priority: 0.95, freq: "weekly" },
     { path: "/industries", priority: 0.8, freq: "monthly" },
     { path: "/ai-readiness", priority: 0.8, freq: "monthly" },
+    { path: "/guides", priority: 0.6, freq: "monthly" },
     { path: "/contact", priority: 0.7, freq: "monthly" },
   ];
 
