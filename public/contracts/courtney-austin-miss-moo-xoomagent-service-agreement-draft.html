@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRAFT XoomAgent™ Service Agreement — Miss Moo Disability Support Pty Ltd</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Poppins:wght@600;700;800&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Montserrat', sans-serif; font-size: 10.5pt; color: #111; background: #f0f0f0; line-height: 1.65; }
+  .doc-header .company-name, .doc-header .doc-title, .section-title, .signing-title, .sig-block-title { font-family: 'Poppins', sans-serif; }
+
+  .top-bar {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size: 13px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .top-bar strong { color: #d8b4fe; }
+
+  .doc-wrap {
+    max-width: 820px;
+    margin: 32px auto;
+    background: #fff;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
+
+  .page { padding: 40px 52px; }
+
+  /* HEADER */
+  .doc-header { text-align: center; border-bottom: 2px solid #111; padding-bottom: 18px; margin-bottom: 24px; }
+  .doc-header .company-name { font-size: 16pt; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; font-family: Montserrat, sans-serif; }
+  .doc-header .company-sub { font-size: 9pt; color: #444; margin-top: 3px; }
+  .doc-header .doc-title { font-size: 17pt; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin-top: 14px; font-family: Montserrat, sans-serif; }
+  .doc-header .doc-subtitle { font-size: 10pt; color: #555; margin-top: 4px; font-style: italic; }
+
+  /* PARTIES */
+  .parties-block { border: 1px solid #ccc; border-radius: 4px; padding: 16px 20px; margin-bottom: 24px; background: #fafafa; }
+  .parties-block table { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+  .parties-block td { padding: 5px 8px; vertical-align: top; }
+  .parties-block td:first-child { font-weight: bold; width: 140px; white-space: nowrap; color: #333; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 20px; break-inside: avoid; page-break-inside: avoid; }
+  .section-title { font-size: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin-bottom: 10px; font-family: Montserrat, sans-serif; }
+  .clause { margin-bottom: 7px; display: flex; gap: 8px; break-inside: avoid; page-break-inside: avoid; }
+  .clause-num { min-width: 42px; flex-shrink: 0; font-weight: bold; font-size: 10.5pt; }
+  .clause-text { font-size: 10.5pt; line-height: 1.65; }
+  .sub-clause { margin-top: 5px; margin-left: 20px; display: flex; gap: 8px; break-inside: avoid; page-break-inside: avoid; }
+  .sub-clause-num { min-width: 36px; flex-shrink: 0; font-size: 10.5pt; }
+  .sub-clause-text { font-size: 10.5pt; line-height: 1.65; }
+  .highlight-box { border-left: 3px solid #111; background: #f5f5f5; padding: 10px 14px; margin: 10px 0; font-size: 10pt; font-style: italic; break-inside: avoid; page-break-inside: avoid; }
+  .legal-note { font-size: 8.5pt; color: #666; font-style: italic; border: 1px solid #ddd; border-radius: 4px; padding: 8px 12px; margin-bottom: 20px; }
+
+  /* ===== SIGNING SECTION ===== */
+  .signing-section {
+    margin-top: 40px;
+    border-top: 2px solid #111;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    background: #fff;
+  }
+
+  .signing-title {
+    font-family: Montserrat, sans-serif;
+    font-size: 16pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .signing-subtitle {
+    text-align: center;
+    font-size: 10pt;
+    color: #555;
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+
+  .sig-block {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px;
+    background: #fafafa;
+  }
+  .sig-block-title {
+    font-family: Montserrat, sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .field-group { margin-bottom: 14px; }
+  .field-group label { display: block; font-family: Montserrat, sans-serif; font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 4px; }
+  .field-group input, .field-group select {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #999;
+    background: transparent;
+    padding: 6px 2px;
+    font-size: 11pt;
+    font-family: 'Montserrat', sans-serif;
+    color: #111;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field-group input:focus { border-bottom-color: #7c3aed; }
+  .field-group input[readonly] { color: #444; cursor: default; }
+  .field-group input[readonly]:focus { border-bottom-color: #999; }
+  .field-group input.prefilled { color: #1a1a2e; font-weight: 600; }
+
+  /* SIGNATURE PAD */
+  .sig-pad-wrap { margin-bottom: 14px; }
+  .sig-pad-label { font-family: Montserrat, sans-serif; font-size: 8.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .sig-tabs { display: flex; gap: 4px; }
+  .sig-tab {
+    font-family: Montserrat, sans-serif;
+    font-size: 9pt;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    cursor: pointer;
+    color: #6b7280;
+    transition: all 0.15s;
+  }
+  .sig-tab.active { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+  .sig-canvas-wrap { position: relative; border: 1.5px solid #d1d5db; border-radius: 6px; background: #fff; overflow: hidden; height: 100px; }
+  .sig-canvas-wrap canvas { width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+  .sig-type-wrap { display: none; }
+  .sig-type-input {
+    width: 100%;
+    height: 100px;
+    border: none;
+    font-family: 'Dancing Script', cursive;
+    font-size: 38px;
+    color: #111;
+    padding: 10px 14px;
+    outline: none;
+    background: transparent;
+    resize: none;
+  }
+  .sig-clear {
+    font-family: Montserrat, sans-serif;
+    font-size: 9pt;
+    color: #9ca3af;
+    cursor: pointer;
+    margin-top: 4px;
+    display: inline-block;
+    text-decoration: underline;
+  }
+  .sig-clear:hover { color: #ef4444; }
+
+  /* SUBMIT */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 32px;
+    padding: 0 20px;
+  }
+  .submit-note {
+    font-family: Montserrat, sans-serif;
+    font-size: 10pt;
+    color: #4b5563;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .submit-btn {
+    font-family: Montserrat, sans-serif;
+    font-size: 15pt;
+    font-weight: 700;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #fff;
+    border: none;
+    border-radius: 99px;
+    padding: 16px 56px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(124,58,237,0.4); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* STATUS */
+  .status-box {
+    display: none;
+    margin-top: 24px;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-family: Montserrat, sans-serif;
+    font-size: 12pt;
+    text-align: center;
+  }
+  .status-box.success { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+  .status-box.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  .status-box.loading { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+
+  .doc-footer {
+    margin-top: 32px;
+    border-top: 1px solid #ccc;
+    padding: 12px 0 0;
+    font-size: 8pt;
+    color: #777;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 20px; }
+    .sig-grid { grid-template-columns: 1fr; }
+  }
+  .doc-header .company-name, .doc-header .doc-title, .section-title, .signing-title, .sig-block-title { font-family: 'Poppins', sans-serif; }
+  @media print {
+    @page { size: A4; margin: 10mm; }
+    body { background: #fff; }
+    .top-bar { display: none; }
+    .doc-wrap { max-width: none; margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <strong>DRAFT FOR REVIEW — XoomAgent™ Service Agreement</strong> — Not for signature until approved and finalised.
+</div>
+
+<div class="doc-wrap">
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="company-name">XoomCloud PTY LTD</div>
+    <div class="company-sub">ABN 37 680 921 162 &nbsp;·&nbsp; Trading as XoomAI &nbsp;·&nbsp; xoomai.com.au</div>
+    <div class="doc-title">DRAFT XoomAgent™ Service Agreement</div>
+    <div class="doc-subtitle">Miss Moo Disability Support Pty Ltd</div>
+    <div class="doc-subtitle">Terms and Conditions for Managed XoomAgent™ Services</div>
+  </div>
+
+  <div class="legal-note">
+    <strong>Important:</strong> This Agreement is a legally binding contract. The Client is encouraged to seek independent legal advice before signing. By executing this Agreement, both parties agree to be bound by its terms.
+  </div>
+
+  <!-- PARTIES -->
+  <div class="parties-block">
+    <table>
+      <tr><td>Provider:</td><td><strong>XoomCloud PTY LTD (ABN 37 680 921 162)</strong>, trading as XoomAI, of Gold Coast, Queensland, Australia ("<strong>XoomAI</strong>")</td></tr>
+      <tr><td>Client:</td><td><strong>Miss Moo Disability Support Pty Ltd (ABN 70 670 117 567)</strong>, represented by Courtney Austin or another authorised signatory ("<strong>Client</strong>")</td></tr>
+      <tr><td>Agreement Date:</td><td>The date on which the Client executes this Agreement by signature below</td></tr>
+      <tr><td>Governing Law:</td><td>Queensland, Australia</td></tr>
+    </table>
+  </div>
+
+  <!-- 1. DEFINITIONS -->
+  <div class="section">
+    <div class="section-title">1. Definitions</div>
+    <div class="clause"><span class="clause-num">1.1</span><span class="clause-text">In this Agreement, the following terms have the meanings set out below:</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text"><strong>"Agreement"</strong> means this Service Agreement together with any Proposal, Schedule, or Statement of Work issued by XoomAI and accepted by the Client.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text"><strong>"AI Output"</strong> means any content, recommendation, quote, bid, report, message, decision, or other result generated by XoomAgent™ or any underlying artificial intelligence model.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text"><strong>"Automated Workflow"</strong> means any process configured within XoomAgent™ that executes actions — including collecting availability, preparing rosters, validating completed shifts, creating exception queues, tracking onboarding documents, updating approved records, analysing shift notes or incident reports, preparing communications, generating reports or interacting with third-party platforms — without requiring manual intervention at the time of execution.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(d)</span><span class="sub-clause-text"><strong>"Client Data"</strong> means any data, information, content or materials provided by the Client to XoomAI or processed by XoomAgent™ in the course of providing the Services, including authorised staff, participant, service, rostering, incident, finance, marketing and business information. Client Data may include personal information, sensitive information and health information.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(e)</span><span class="sub-clause-text"><strong>"Confidential Information"</strong> means all non-public information disclosed by either party in connection with this Agreement.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(f)</span><span class="sub-clause-text"><strong>"Fees"</strong> means the charges set out in the applicable Proposal or Schedule.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(g)</span><span class="sub-clause-text"><strong>"Cloud Environment"</strong> means the approved cloud infrastructure used to host XoomAgent™ for the Client.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(h)</span><span class="sub-clause-text"><strong>"Intellectual Property"</strong> means all patents, trademarks, copyright, trade secrets, know-how, source code, algorithms, and other intellectual property rights.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(i)</span><span class="sub-clause-text"><strong>"Services"</strong> means the managed XoomAgent™ services described in the applicable Proposal or Schedule, including cloud deployment, configuration, integration, training, ongoing management, support, rostering and shift workflows, employee onboarding, compliance-document tracking, approved Astalty and Xero workflows, participant-service support, approved communications, marketing and operational reporting.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(j)</span><span class="sub-clause-text"><strong>"Third-Party AI Services"</strong> means AI platforms, APIs, or models provided by third parties (including Anthropic and OpenAI) used by XoomAI to deliver the Services.</span></div>
+  </div>
+
+  <!-- 2. SERVICES -->
+  <div class="section">
+    <div class="section-title">2. Services</div>
+    <div class="clause"><span class="clause-num">2.1</span><span class="clause-text">XoomAI agrees to provide the Services in accordance with the terms of this Agreement and the applicable Proposal or Schedule.</span></div>
+    <div class="clause"><span class="clause-num">2.2</span><span class="clause-text">XoomAI will use reasonable endeavours to deliver the Services to the standard described in the Proposal but does not guarantee any specific outcome or business improvement.</span></div>
+    <div class="clause"><span class="clause-num">2.3</span><span class="clause-text">XoomAI reserves the right to modify, update, or enhance the Services. Material changes that adversely affect the Client will be notified with reasonable notice.</span></div>
+    <div class="clause"><span class="clause-num">2.4</span><span class="clause-text">XoomAI may engage subcontractors to deliver components of the Services and remains responsible to the Client regardless of any such arrangement.</span></div>
+  </div>
+
+  <!-- 3. FEES -->
+  <div class="section">
+    <div class="section-title">3. Fees and Payment</div>
+    <div class="clause"><span class="clause-num">3.1</span><span class="clause-text">The Client agrees to pay the Fees set out in the applicable Proposal or Schedule. All Fees are exclusive of GST unless stated otherwise.</span></div>
+    <div class="clause"><span class="clause-num">3.2</span><span class="clause-text">Once-off fees (including all setup and implementation fees) are invoiced in full upon signing and are <strong>payable in full prior to commencement of work</strong>.</span></div>
+    <div class="clause"><span class="clause-num">3.3</span><span class="clause-text">Monthly recurring Fees are billed monthly in advance, due within <strong>14 days</strong> of invoice date.</span></div>
+    <div class="clause"><span class="clause-num">3.4</span><span class="clause-text">Late payments attract interest at 10% per annum calculated daily. XoomAI may suspend Services for non-payment without liability.</span></div>
+    <div class="clause"><span class="clause-num">3.5</span><span class="clause-text">XoomAI may increase monthly Fees with 30 days' written notice. The Client may terminate if they do not accept the increase.</span></div>
+    <div class="clause"><span class="clause-num">3.6</span><span class="clause-text">All Fees paid are non-refundable except as required by the Australian Consumer Law.</span></div>
+  </div>
+
+  <!-- 4. TERM -->
+  <div class="section">
+    <div class="section-title">4. Term</div>
+    <div class="clause"><span class="clause-num">4.1</span><span class="clause-text">This Agreement commences on the Agreement Date and continues month-to-month until terminated in accordance with clause 5.</span></div>
+    <div class="clause"><span class="clause-num">4.2</span><span class="clause-text">There is no minimum term unless expressly specified in the applicable Proposal or Schedule.</span></div>
+  </div>
+
+  <!-- 5. TERMINATION -->
+  <div class="section">
+    <div class="section-title">5. Termination</div>
+    <div class="clause"><span class="clause-num">5.1</span><span class="clause-text">Either party may terminate with <strong>30 days' written notice</strong>. No refunds of Fees already paid.</span></div>
+    <div class="clause"><span class="clause-num">5.2</span><span class="clause-text">XoomAI may terminate immediately if: (a) Client fails to pay within 30 days of due date; (b) Client commits a material unremedied breach; (c) Client becomes insolvent; or (d) Client misuses the Services.</span></div>
+    <div class="clause"><span class="clause-num">5.3</span><span class="clause-text">On termination, access ceases, outstanding Fees remain payable, and Confidential Information must be returned or destroyed on request.</span></div>
+    <div class="clause"><span class="clause-num">5.4</span><span class="clause-text">Cloud hosting resources remain subject to the accepted proposal, statement of work and relevant third-party provider terms.</span></div>
+  </div>
+
+  <!-- 6. AI -->
+  <div class="section">
+    <div class="section-title">6. Nature of Artificial Intelligence — Important Acknowledgements</div>
+    <div class="highlight-box">The Client acknowledges and agrees that XoomAgent™ is powered by artificial intelligence that operates differently from traditional software. The following clauses are fundamental. Read carefully before signing.</div>
+    <div class="clause"><span class="clause-num">6.1</span><span class="clause-text"><strong>AI Outputs Are Not Guaranteed.</strong> XoomAgent™ uses large language models that generate probabilistic outputs. AI Outputs may be inaccurate, incomplete, or outdated. XoomAI does not warrant the accuracy, reliability, or fitness for purpose of any AI Output.</span></div>
+    <div class="clause"><span class="clause-num">6.2</span><span class="clause-text"><strong>Hallucinations and Errors.</strong> AI systems may produce outputs that appear plausible but are factually incorrect. The Client acknowledges this risk and agrees XoomAI is not liable for any loss arising from reliance on an inaccurate AI Output.</span></div>
+    <div class="clause"><span class="clause-num">6.3</span><span class="clause-text"><strong>Human Review Required.</strong> The Client is responsible for reviewing AI Outputs before acting on them. XoomAgent™ is a decision-support tool and is not a substitute for professional, clinical, care, HR, payroll, financial, legal or regulatory judgement. Participant care decisions, incident-response decisions, worker suitability, staff performance, payroll, invoice, payment and regulatory actions must remain under authorised human control.</span></div>
+    <div class="clause"><span class="clause-num">6.4</span><span class="clause-text"><strong>Automated Workflows — Shared Responsibility.</strong> Where the Client configures, enables or approves any Automated Workflow (including roster allocation, shift approval, document reminders, record updates, reporting or communications on third-party platforms), responsibility is allocated as follows:</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text"><strong>Client responsibility:</strong> The Client is responsible for the accuracy of all data, rate tables, business rules, and instructions provided to XoomAI for the purpose of configuring Automated Workflows, and for reviewing and approving workflow logic before activation;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text"><strong>XoomAI responsibility:</strong> XoomAI is responsible for implementing Automated Workflows in accordance with the Client's approved specifications and for ensuring the System executes the configured logic as intended;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text">Where an Automated Workflow produces an unintended outcome due to a configuration error or system defect attributable to XoomAI, XoomAI will use reasonable endeavours to rectify the issue promptly and will not seek to hold the Client liable for that specific outcome;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(d)</span><span class="sub-clause-text">Where an Automated Workflow produces an unintended outcome due to inaccurate or outdated data, instructions, or approvals provided by the Client, the Client accepts responsibility for that outcome;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(e)</span><span class="sub-clause-text">The Client acknowledges that XoomAI does not review or monitor individual automated actions in real time, and that any contract or commitment arising from an automated action approved by the Client remains the Client's responsibility.</span></div>
+    <div class="clause"><span class="clause-num">6.5</span><span class="clause-text"><strong>Rostering, Shift and Compliance Logic Accuracy.</strong> Where XoomAI configures roster allocation, staff-participant matching, availability, SCHADS Award, shift approval, invoicing, payroll-preparation, onboarding or compliance logic, the Client is responsible for providing and approving current data, rules, exceptions, award interpretations, role requirements and escalation thresholds. XoomAI is not liable for outputs generated from inaccurate, incomplete, outdated or unauthorised Client-provided data or instructions.</span></div>
+    <div class="clause"><span class="clause-num">6.6</span><span class="clause-text"><strong>Third-Party AI Services.</strong> The Services rely on Third-Party AI Services including Anthropic and/or OpenAI. XoomAI does not control these providers and is not liable for their availability, accuracy, or changes to their terms.</span></div>
+    <div class="clause"><span class="clause-num">6.7</span><span class="clause-text"><strong>No Professional Advice.</strong> AI Outputs do not constitute legal, financial, medical, or other professional advice.</span></div>
+  </div>
+
+  <!-- 7. CLOUD ENVIRONMENT -->
+  <div class="section">
+    <div class="section-title">7. Cloud Environment</div>
+    <div class="clause"><span class="clause-num">7.1</span><span class="clause-text">XoomAI will use reasonable endeavours to configure and operate the Cloud Environment in accordance with the accepted proposal or statement of work.</span></div>
+    <div class="clause"><span class="clause-num">7.2</span><span class="clause-text">The Client acknowledges that Microsoft Azure, Astalty, Xero, Microsoft 365, Meta and other social platforms, CRM systems, third-party AI platforms, APIs and internet services are outside XoomAI's direct control.</span></div>
+    <div class="clause"><span class="clause-num">7.3</span><span class="clause-text">Cloud consumption, phone or messaging usage, third-party API charges, advertising spend and similar costs are payable by the Client where specified in the proposal, statement of work or invoice.</span></div>
+    <div class="clause"><span class="clause-num">7.4</span><span class="clause-text">XoomAI is not liable for service interruptions caused by third-party outages, platform restrictions, revoked Client access, Client network issues or platform changes outside XoomAI's reasonable control.</span></div>
+  </div>
+
+  <!-- 8. ACCEPTABLE USE -->
+  <div class="section">
+    <div class="section-title">8. Acceptable Use</div>
+    <div class="clause"><span class="clause-num">8.1</span><span class="clause-text">The Client must not use XoomAgent™ to: (a) generate unlawful, discriminatory, unsafe or harmful content or decisions; (b) make autonomous clinical, participant-care, restrictive-practice, reportable-incident, worker-screening or other regulated decisions; (c) violate third-party platform terms; (d) process personal, sensitive or health information without a lawful basis and appropriate authority; (e) breach the Privacy Act 1988 (Cth), applicable NDIS obligations or workplace laws; (f) reverse-engineer the Services; or (g) share access with unauthorised parties.</span></div>
+    <div class="clause"><span class="clause-num">8.2</span><span class="clause-text">The Client is responsible for ensuring all authorised users are aware of the limitations of AI-generated content.</span></div>
+  </div>
+
+  <!-- 9. DATA -->
+  <div class="section">
+    <div class="section-title">9. Data, Privacy and Confidentiality</div>
+    <div class="clause"><span class="clause-num">9.1</span><span class="clause-text"><strong>Data Ownership.</strong> The Client retains full ownership of all Client Data. XoomAI is granted a limited, non-exclusive licence to process Client Data solely for the purpose of delivering the Services. This licence terminates on expiry or termination of this Agreement.</span></div>
+    <div class="clause"><span class="clause-num">9.2</span><span class="clause-text"><strong>Privacy Compliance.</strong> XoomAI handles Client Data in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles. XoomAI will not sell, rent, or trade Client Data to any third party.</span></div>
+    <div class="clause"><span class="clause-num">9.3</span><span class="clause-text"><strong>Third-Party AI Processing.</strong> The Client acknowledges and consents to authorised Client Data being transmitted to Third-Party AI Services solely for approved workflows and the purpose of generating AI Outputs. Before production activation, the parties will agree the relevant data categories, access controls and human approval points. The Client must not provide data it is not authorised to disclose or process.</span></div>
+    <div class="clause"><span class="clause-num">9.4</span><span class="clause-text"><strong>Data Minimisation.</strong> XoomAI will configure the System to transmit only the minimum Client Data reasonably necessary for each AI interaction. XoomAI will not transmit Client Data to Third-Party AI Services for any purpose other than delivering the Services.</span></div>
+    <div class="clause"><span class="clause-num">9.5</span><span class="clause-text"><strong>Data Storage &amp; Retention.</strong></span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text">Client Data processed by XoomAgent™ may be stored and processed within the Cloud Environment and XoomAI's secure management infrastructure, subject to the accepted proposal, access controls and applicable third-party provider terms.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text">XoomAI does not maintain long-term copies of Client Data beyond what is reasonably necessary for service delivery, backup, and support.</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text">On termination, XoomAI will, at the Client's election, return or securely delete all Client Data within 30 days of written request. XoomAI may retain anonymised or aggregated data that does not identify the Client or any individual.</span></div>
+    <div class="clause"><span class="clause-num">9.6</span><span class="clause-text"><strong>Security Safeguards.</strong> XoomAI will implement and maintain reasonable technical and organisational measures to protect Client Data, including:</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text">encryption of data in transit (TLS 1.2+) and at rest where technically feasible;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text">access controls limiting Client Data access to authorised XoomAI personnel;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text">regular security updates to the System and underlying infrastructure;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(d)</span><span class="sub-clause-text">secure authentication for all remote management access.</span></div>
+    <div class="clause"><span class="clause-num">9.7</span><span class="clause-text"><strong>Data Breach Notification.</strong> In the event of a data breach (as defined in the Privacy Act 1988) involving Client Data, XoomAI will: (a) notify the Client within <strong>72 hours</strong> of becoming aware of the breach; (b) provide reasonable details of the nature and scope; (c) take reasonable steps to contain and remediate; and (d) cooperate with the Client in any notification obligations under the Notifiable Data Breaches scheme.</span></div>
+    <div class="clause"><span class="clause-num">9.8</span><span class="clause-text"><strong>NDIS, Disability Services and Sensitive Information.</strong> Where the Client processes participant, health, incident, staff, support or service-delivery information:</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text">XoomAI acknowledges that the Client may be subject to the NDIS Act 2013 (Cth), NDIS Practice Standards, NDIS Code of Conduct, reportable-incident requirements, worker-screening obligations, the Privacy Act 1988 (Cth), workplace laws and other applicable disability-service obligations;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text">XoomAI will apply data minimisation, role-based access and human approval controls appropriate to the approved workflow and will cooperate with reasonable requests to describe relevant data-processing practices;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text">The Client remains responsible for determining the lawful basis for processing, obtaining any required notices or consents, maintaining accurate source records and ensuring its use of XoomAgent™ complies with applicable NDIS, privacy, employment, award, recordkeeping and incident-management obligations;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(d)</span><span class="sub-clause-text">XoomAgent™ will not be configured as the sole decision-maker for participant care, safety, restrictive practices, incidents, staff suitability, payroll, invoicing, payment or other high-impact or regulated decisions.</span></div>
+    <div class="clause"><span class="clause-num">9.9</span><span class="clause-text"><strong>Confidentiality.</strong> Each party will keep the other's Confidential Information strictly confidential and will not disclose it except to employees, contractors, or advisors who need to know and are bound by equivalent confidentiality obligations. This obligation survives termination for <strong>three (3) years</strong>.</span></div>
+  </div>
+
+  <!-- 10. IP -->
+  <div class="section">
+    <div class="section-title">10. Intellectual Property</div>
+    <div class="clause"><span class="clause-num">10.1</span><span class="clause-text">XoomAI retains all IP rights in XoomAgent™, including its architecture, source code, models, and configurations.</span></div>
+    <div class="clause"><span class="clause-num">10.2</span><span class="clause-text">Custom agents and workflows developed for the Client are licensed on a non-exclusive, non-transferable basis for internal use only, for the duration of this Agreement.</span></div>
+    <div class="clause"><span class="clause-num">10.3</span><span class="clause-text">The Client must not represent AI Outputs as human-created where doing so would be misleading under the Australian Consumer Law.</span></div>
+  </div>
+
+  <!-- 11. LIABILITY -->
+  <div class="section">
+    <div class="section-title">11. Limitation of Liability</div>
+    <div class="clause"><span class="clause-num">11.1</span><span class="clause-text">To the maximum extent permitted by law, XoomAI's total aggregate liability under or in connection with this Agreement (whether in contract, tort, under statute, or otherwise) is limited to the total Fees paid by the Client in the <strong>six (6) months</strong> immediately preceding the event giving rise to the claim.</span></div>
+    <div class="clause"><span class="clause-num">11.2</span><span class="clause-text">XoomAI excludes all liability for: (a) loss of profit or revenue; (b) loss of business or goodwill; (c) loss of data; (d) indirect or consequential loss; (e) loss from AI Output reliance without required human review; (f) Third-Party AI Service failures; (g) Cloud Environment, Astalty, Xero, Microsoft 365, social-platform, API or other third-party failure; (h) unauthorised access not caused by XoomAI's breach of this Agreement.</span></div>
+    <div class="clause"><span class="clause-num">11.3</span><span class="clause-text">Nothing herein excludes rights under the Australian Consumer Law that cannot be excluded by agreement.</span></div>
+  </div>
+
+  <!-- 12. INDEMNITY -->
+  <div class="section">
+    <div class="section-title">12. Indemnification</div>
+    <div class="clause"><span class="clause-num">12.1</span><span class="clause-text"><strong>Client Indemnity.</strong> The Client indemnifies XoomAI against any claim, loss, or expense arising from: (a) the Client's breach of this Agreement; (b) any Automated Workflow the Client configured, approved, or provided data for, except to the extent caused by XoomAI's configuration error; (c) reliance on AI Outputs without adequate verification; (d) the Client's breach of third-party platform terms; (e) third-party claims arising from XoomAgent™ actions taken on the Client's behalf based on Client-provided instructions or data; (f) privacy or data breaches caused by the Client's acts or omissions.</span></div>
+    <div class="clause"><span class="clause-num">12.2</span><span class="clause-text"><strong>XoomAI Indemnity.</strong> XoomAI indemnifies the Client against any claim, loss, or expense arising from: (a) XoomAI's breach of this Agreement; (b) infringement of any third-party intellectual property rights by the XoomAgent™ platform (excluding infringement arising from Client-provided data or instructions); (c) XoomAI's negligent misconfiguration of the System where such misconfiguration directly causes the loss; (d) XoomAI's breach of its obligations under clause 9 (Data, Privacy and Confidentiality).</span></div>
+    <div class="clause"><span class="clause-num">12.3</span><span class="clause-text">Each party's indemnification obligations are subject to the liability cap in clause 11.1 and do not extend to indirect or consequential losses excluded under clause 11.2.</span></div>
+  </div>
+
+  <!-- 13. DISPUTE -->
+  <div class="section">
+    <div class="section-title">13. Dispute Resolution</div>
+    <div class="clause"><span class="clause-num">13.1</span><span class="clause-text">Disputes must first be escalated by written notice and the parties must negotiate in good faith for 14 days before commencing formal proceedings.</span></div>
+    <div class="clause"><span class="clause-num">13.2</span><span class="clause-text">Unresolved disputes will proceed to mediation via the Resolution Institute before any litigation is commenced.</span></div>
+    <div class="clause"><span class="clause-num">13.3</span><span class="clause-text">Either party may seek urgent injunctive relief from a court of competent jurisdiction at any time.</span></div>
+  </div>
+
+  <!-- 14. GENERAL -->
+  <div class="section">
+    <div class="section-title">14. General</div>
+    <div class="clause"><span class="clause-num">14.1</span><span class="clause-text"><strong>Governing Law:</strong> Queensland, Australia. Parties submit to Queensland courts.</span></div>
+    <div class="clause"><span class="clause-num">14.2</span><span class="clause-text"><strong>Entire Agreement:</strong> This Agreement supersedes all prior representations and understandings.</span></div>
+    <div class="clause"><span class="clause-num">14.3</span><span class="clause-text"><strong>Amendments:</strong> Must be in writing and signed by both parties.</span></div>
+    <div class="clause"><span class="clause-num">14.4</span><span class="clause-text"><strong>Severability:</strong> Invalid provisions are severed; remaining provisions continue.</span></div>
+    <div class="clause"><span class="clause-num">14.5</span><span class="clause-text"><strong>Force Majeure:</strong> Neither party liable for events outside reasonable control, including Third-Party AI service failures.</span></div>
+    <div class="clause"><span class="clause-num">14.6</span><span class="clause-text"><strong>Assignment:</strong> Client may not assign without XoomAI's written consent. XoomAI may assign to any related body corporate.</span></div>
+  </div>
+
+  <!-- 15. SERVICE LEVELS -->
+  <div class="section">
+    <div class="section-title">15. Service Levels</div>
+    <div class="clause"><span class="clause-num">15.1</span><span class="clause-text"><strong>Availability Target.</strong> XoomAI will use reasonable endeavours to maintain System availability of <strong>99.0%</strong> measured on a calendar month basis, calculated as: (total minutes in month − minutes of Downtime) ÷ total minutes in month × 100.</span></div>
+    <div class="clause"><span class="clause-num">15.2</span><span class="clause-text"><strong>Exclusions.</strong> The availability target does not apply to Downtime resulting from:</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(a)</span><span class="sub-clause-text">scheduled maintenance, updates, or upgrades notified to the Client with reasonable advance notice;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(b)</span><span class="sub-clause-text">project work, new feature deployments, or system enhancements requested or approved by the Client;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(c)</span><span class="sub-clause-text">Microsoft Azure, Astalty, Xero, Microsoft 365, CRM, social-platform, messaging, advertising, API, data-source, power or internet connectivity issues outside XoomAI's reasonable control;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(d)</span><span class="sub-clause-text">force majeure events;</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(e)</span><span class="sub-clause-text">Third-Party AI Service outages or changes beyond XoomAI's reasonable control; or</span></div>
+    <div class="sub-clause"><span class="sub-clause-num">(f)</span><span class="sub-clause-text">the Client's acts or omissions.</span></div>
+    <div class="clause"><span class="clause-num">15.3</span><span class="clause-text"><strong>Support Response.</strong> XoomAI will respond to support requests within the following timeframes during Business Hours (Monday–Friday, 8:00 AM – 6:00 PM AEST, excluding Queensland public holidays):</span></div>
+    <div class="highlight-box" style="font-style:normal;">
+      <table style="width:100%;border-collapse:collapse;font-size:10pt;">
+        <tr style="border-bottom:1px solid #ccc;"><td style="padding:4px 8px;font-weight:bold;">Critical</td><td style="padding:4px 8px;">System completely unavailable or major business function impaired</td><td style="padding:4px 8px;font-weight:bold;text-align:right;">4 hours</td></tr>
+        <tr style="border-bottom:1px solid #ccc;"><td style="padding:4px 8px;font-weight:bold;">High</td><td style="padding:4px 8px;">Significant feature or integration not functioning</td><td style="padding:4px 8px;font-weight:bold;text-align:right;">8 hours</td></tr>
+        <tr><td style="padding:4px 8px;font-weight:bold;">Normal</td><td style="padding:4px 8px;">General queries, minor issues, enhancement requests</td><td style="padding:4px 8px;font-weight:bold;text-align:right;">1 business day</td></tr>
+      </table>
+    </div>
+    <div class="clause"><span class="clause-num">15.4</span><span class="clause-text"><strong>Remedies.</strong> If XoomAI fails to meet the availability target for two (2) or more consecutive calendar months (excluding Downtime under clause 15.2), the Client may request a service credit equal to 5% of the monthly Fee for each affected month, up to a maximum of 15% of the monthly Fee. Service credits are the Client's <strong>sole remedy</strong> for failure to meet the availability target.</span></div>
+    <div class="clause"><span class="clause-num">15.5</span><span class="clause-text">"Downtime" means any period during which the core XoomAgent™ system is materially unavailable to the Client, excluding the events listed in clause 15.2.</span></div>
+  </div>
+
+  <!-- ===== SIGNING SECTION ===== -->
+  <div class="signing-section" id="signing-section">
+    <div class="signing-title">Sign Agreement</div>
+    <div class="signing-subtitle">Complete all fields below. Draw, type, or trace your signature — then click Submit.</div>
+
+    <div class="sig-grid">
+
+      <!-- XOOMAI BLOCK (pre-filled) -->
+      <div class="sig-block">
+        <div class="sig-block-title">🏢 XoomCloud PTY LTD (XoomAI)</div>
+
+        <div class="field-group">
+          <label>Company</label>
+          <input type="text" value="XoomCloud PTY LTD trading as XoomAI" readonly class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>ABN</label>
+          <input type="text" value="37 680 921 162" readonly class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>Authorised Signatory</label>
+          <input type="text" value="Vlad Nielsen" readonly class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>Title</label>
+          <input type="text" value="Director" readonly class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>Date</label>
+          <input type="date" id="xoomai-date" readonly class="prefilled">
+        </div>
+
+        <div class="sig-pad-wrap">
+          <div class="sig-pad-label"><span>Signature (XoomAI)</span></div>
+          <div style="height:80px;border:1.5px solid #e5e7eb;border-radius:6px;background:#f9fafb;display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:Inter,sans-serif;font-size:9pt;color:#9ca3af;font-style:italic;">To be signed by XoomAI upon receipt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIENT BLOCK (fillable) -->
+      <div class="sig-block">
+        <div class="sig-block-title">👤 Client</div>
+
+        <div class="field-group">
+          <label>Full Name *</label>
+          <input type="text" id="client-name" value="Courtney Austin" required>
+        </div>
+        <div class="field-group">
+          <label>Title / Position *</label>
+          <input type="text" id="client-title" placeholder="e.g. Director, Owner">
+        </div>
+        <div class="field-group">
+          <label>Company Name *</label>
+          <input type="text" id="client-company" value="Miss Moo Disability Support Pty Ltd" class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>ABN</label>
+          <input type="text" id="client-abn" value="70 670 117 567" class="prefilled">
+        </div>
+        <div class="field-group">
+          <label>Date *</label>
+          <input type="date" id="client-date" required>
+        </div>
+
+        <div class="sig-pad-wrap">
+          <div class="sig-pad-label">
+            <span>Signature (Client) *</span>
+            <div class="sig-tabs">
+              <button type="button" class="sig-tab active" onclick="switchTab('client','draw',this)">✏️ Draw</button>
+              <button type="button" class="sig-tab" onclick="switchTab('client','type',this)">⌨️ Type</button>
+            </div>
+          </div>
+          <div class="sig-canvas-wrap" id="client-canvas-wrap">
+            <canvas id="client-sig-canvas"></canvas>
+          </div>
+          <div class="sig-type-wrap" id="client-type-wrap">
+            <div class="sig-canvas-wrap">
+              <textarea class="sig-type-input" id="client-type-input" placeholder="Type your name in cursive..."></textarea>
+            </div>
+          </div>
+          <span class="sig-clear" onclick="clearSig('client')">✕ Clear signature</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <p class="submit-note">
+        By clicking <strong>Submit Signed Agreement</strong>, you confirm you have read and agree to be bound by the terms above.<br>
+        A signed PDF will be generated and emailed to XoomAI. You will receive a copy at the email address provided.
+      </p>
+
+      <div class="field-group" style="max-width:340px;margin:0 auto 20px;">
+        <label>Your Email (we'll send you a copy) *</label>
+        <input type="email" id="client-email" placeholder="your@email.com">
+      </div>
+
+      <button type="button" class="submit-btn" id="submit-btn" onclick="submitAgreement()">
+        <span>✍️</span> Submit Signed Agreement
+      </button>
+
+      <div class="status-box" id="status-box"></div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    XoomCloud PTY LTD (ABN 37 680 921 162) trading as XoomAI &nbsp;·&nbsp; xoomai.com.au &nbsp;·&nbsp; vlad.nielsen@xoomcloud.com.au &nbsp;·&nbsp; 0473 567 214<br>
+    This document does not constitute legal advice. © 2026 XoomCloud PTY LTD. All rights reserved.
+  </div>
+
+</div><!-- /page -->
+</div><!-- /doc-wrap -->
+
+<script>
+  const WEBHOOK_URL = 'https://hook.us2.make.com/dhdgponwrpd11tqio01pjscm1sbf6pap';
+  const pads = {};
+  const modes = { client: 'draw' };
+
+  function formatDateAU(date = new Date()) {
+    return date.toLocaleDateString('en-AU');
+  }
+
+  function formatDateISO(date = new Date()) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  function getDisplayDate(value) {
+    if (!value) return formatDateAU();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      const [y, m, d] = value.split('-');
+      return `${d}/${m}/${y}`;
+    }
+    return value;
+  }
+
+  function initPad(id) {
+    const canvas = document.getElementById(`${id}-sig-canvas`);
+    if (!canvas) return;
+    const wrap = canvas.parentElement;
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = wrap.offsetWidth * ratio;
+    canvas.height = wrap.offsetHeight * ratio;
+    canvas.style.width = `${wrap.offsetWidth}px`;
+    canvas.style.height = `${wrap.offsetHeight}px`;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(ratio, ratio);
+    pads[id] = new SignaturePad(canvas, {
+      penColor: '#1a1a2e',
+      minWidth: 1.2,
+      maxWidth: 2.8,
+    });
+  }
+
+  function resizePad(id) {
+    if (!pads[id]) return;
+    const data = pads[id].isEmpty() ? null : pads[id].toData();
+    initPad(id);
+    if (data && pads[id]) pads[id].fromData(data);
+  }
+
+  function switchTab(id, mode, btn) {
+    if (btn) btn.preventDefault?.();
+    modes[id] = mode;
+    const tabs = btn.closest('.sig-tabs').querySelectorAll('.sig-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(`${id}-canvas-wrap`).style.display = mode === 'draw' ? 'block' : 'none';
+    document.getElementById(`${id}-type-wrap`).style.display = mode === 'type' ? 'block' : 'none';
+    if (mode === 'draw') resizePad(id);
+  }
+
+  function clearSig(id) {
+    if (pads[id]) pads[id].clear();
+    const typeInput = document.getElementById(`${id}-type-input`);
+    if (typeInput) typeInput.value = '';
+  }
+
+  function getSigDataUrl(id) {
+    if (modes[id] === 'draw') {
+      if (!pads[id] || pads[id].isEmpty()) return null;
+      return pads[id].toDataURL('image/png');
+    }
+    const text = document.getElementById(`${id}-type-input`)?.value.trim();
+    if (!text) return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 500;
+    canvas.height = 140;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.font = "56px 'Dancing Script'";
+    ctx.fillText(text, 20, 92);
+    return canvas.toDataURL('image/png');
+  }
+
+  function setStatus(type, msg) {
+    const box = document.getElementById('status-box');
+    box.className = `status-box ${type}`;
+    box.textContent = msg;
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  async function postWebhook(payload) {
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify(payload),
+      mode: 'cors'
+    });
+
+    if (!res.ok) {
+      throw new Error(`Email workflow returned HTTP ${res.status}`);
+    }
+  }
+
+  async function submitAgreement() {
+    const clientName = document.getElementById('client-name').value.trim();
+    const clientTitle = document.getElementById('client-title').value.trim();
+    const clientCompany = document.getElementById('client-company').value.trim();
+    const clientABN = document.getElementById('client-abn').value.trim();
+    const clientDateRaw = document.getElementById('client-date').value;
+    const xoomaiDateRaw = document.getElementById('xoomai-date').value;
+    const clientEmail = document.getElementById('client-email').value.trim();
+
+    if (!clientName) return alert('Please enter your full name.');
+    if (!clientTitle) return alert('Please enter your title or position.');
+    if (!clientCompany) return alert('Please enter your company name.');
+    if (!clientEmail) return alert('Please enter your email address.');
+
+    const clientSig = getSigDataUrl('client');
+    if (!clientSig) return alert('Please provide your signature, draw it or type your name.');
+
+    const clientDate = getDisplayDate(clientDateRaw);
+    const xoomaiDate = getDisplayDate(xoomaiDateRaw);
+
+    setStatus('loading', '⏳ Generating signed PDF...');
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+
+    let doc;
+    let pdfDownloaded = false;
+    try {
+      const { jsPDF } = window.jspdf;
+      doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      const agreementEl = document.querySelector('.page');
+      const sigSection = document.getElementById('signing-section');
+      sigSection.style.display = 'none';
+
+      const fullCanvas = await html2canvas(agreementEl, {
+        scale: 1.5,
+        useCORS: true,
+        logging: false,
+        width: 794,
+        windowWidth: 794,
+        backgroundColor: '#ffffff'
+      });
+
+      sigSection.style.display = 'block';
+
+      const PDF_W_MM = 210;
+      const PDF_H_MM = 297;
+      const pageHeightPx = Math.round(PDF_H_MM * (fullCanvas.width / PDF_W_MM));
+      const ctx = fullCanvas.getContext('2d');
+      const totalH = fullCanvas.height;
+      const totalW = fullCanvas.width;
+
+      function findSmartCut(expectedCut, searchRange = 60) {
+        if (expectedCut >= totalH) return totalH;
+        let bestCut = expectedCut;
+        let bestScore = -1;
+        const lo = Math.max(expectedCut - searchRange, 0);
+        const hi = Math.min(expectedCut + searchRange, totalH - 1);
+        for (let y = hi; y >= lo; y--) {
+          const data = ctx.getImageData(0, y, totalW, 1).data;
+          let white = 0;
+          for (let i = 0; i < data.length; i += 4) {
+            if (data[i] > 240 && data[i + 1] > 240 && data[i + 2] > 240) white++;
+          }
+          const score = white / totalW;
+          if (score > bestScore) {
+            bestScore = score;
+            bestCut = y;
+          }
+        }
+        return bestCut;
+      }
+
+      let currentY = 0;
+      let pageNum = 0;
+      while (currentY < totalH) {
+        const rawCut = currentY + pageHeightPx;
+        let contentEnd = Math.min(rawCut, totalH);
+        if (rawCut < totalH) contentEnd = findSmartCut(rawCut);
+
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = totalW;
+        pageCanvas.height = pageHeightPx;
+        const pCtx = pageCanvas.getContext('2d');
+        pCtx.fillStyle = '#ffffff';
+        pCtx.fillRect(0, 0, totalW, pageHeightPx);
+
+        const sliceH = Math.min(contentEnd, totalH) - currentY;
+        if (sliceH > 0) {
+          pCtx.drawImage(fullCanvas, 0, currentY, totalW, sliceH, 0, 0, totalW, sliceH);
+        }
+
+        if (pageNum > 0) doc.addPage('a4', 'portrait');
+        doc.addImage(pageCanvas.toDataURL('image/jpeg', 0.75), 'JPEG', 0, 0, PDF_W_MM, PDF_H_MM);
+
+        currentY = Math.min(contentEnd, totalH);
+        pageNum++;
+        if (currentY >= totalH) break;
+      }
+
+      doc.addPage();
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.text('EXECUTION', 105, 20, { align: 'center' });
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100);
+      doc.text('By signing below, each party agrees to be bound by the terms of this Agreement.', 105, 28, { align: 'center' });
+      doc.setTextColor(0);
+
+      doc.setFillColor(250, 250, 250);
+      doc.roundedRect(10, 35, 88, 90, 3, 3, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.text('XOOMCLOUD PTY LTD (XOOMAI)', 15, 43);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text('ABN 37 680 921 162', 15, 50);
+      doc.text('Authorised Signatory: Vlad Nielsen', 15, 57);
+      doc.text('Title: Director', 15, 64);
+      doc.text(`Date: ${xoomaiDate}`, 15, 71);
+      doc.setDrawColor(100);
+      doc.line(15, 103, 90, 103);
+      doc.setFontSize(7.5);
+      doc.setTextColor(150);
+      doc.text('To be signed by XoomAI upon receipt', 15, 107);
+      doc.setTextColor(0);
+      doc.setFontSize(8);
+      doc.setTextColor(120);
+      doc.text('Signature', 15, 112);
+      doc.setTextColor(0);
+
+      doc.setFillColor(250, 250, 250);
+      doc.roundedRect(112, 35, 88, 90, 3, 3, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.text('CLIENT', 117, 43);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.text(`Name: ${clientName}`, 117, 50);
+      doc.text(`Title: ${clientTitle || '—'}`, 117, 57);
+      doc.text(`Company: ${clientCompany}`, 117, 64);
+      doc.text(`ABN: ${clientABN || '—'}`, 117, 71);
+      doc.text(`Date: ${clientDate}`, 117, 78);
+      doc.addImage(clientSig, 'PNG', 117, 82, 70, 24);
+      doc.setFontSize(8);
+      doc.setTextColor(120);
+      doc.text('Signature', 117, 112);
+      doc.setTextColor(0);
+
+      doc.setFontSize(7.5);
+      doc.setTextColor(120);
+      doc.text('XoomCloud PTY LTD (ABN 37 680 921 162) trading as XoomAI  ·  xoomai.com.au  ·  vlad.nielsen@xoomcloud.com.au  ·  0473 567 214', 105, 285, { align: 'center' });
+
+      const fileName = `XoomAgent-Service-Agreement-${clientCompany.replace(/[^a-zA-Z0-9]/g,'-')}.pdf`;
+      const pdfBase64 = doc.output('datauristring').split(',')[1];
+      doc.save(fileName);
+      pdfDownloaded = true;
+
+      setStatus('loading', '⏳ PDF ready. Sending copy to workflow...');
+      await postWebhook({
+        type: 'service_agreement_submission',
+        documentType: 'Submit Signed Agreement',
+        file_name: fileName,
+        client_name: clientName,
+        client_title: clientTitle,
+        client_company: clientCompany,
+        client_abn: clientABN,
+        client_date: clientDate,
+        client_email: clientEmail,
+        client_signature: clientSig,
+        xoomai_signatory: 'Vlad Nielsen',
+        xoomai_date: xoomaiDate,
+        pdf_base64: pdfBase64,
+        timestamp: new Date().toISOString()
+      });
+
+      setStatus('success', '✅ Service Agreement submitted! The signed PDF was downloaded and sent to XoomAI. A copy will be emailed to the address provided.');
+      submitBtn.style.display = 'none';
+    } catch (err) {
+      console.error('Submission error:', err);
+      const message = pdfDownloaded
+        ? `⚠️ Your signed PDF was downloaded, but automatic email delivery failed: ${err.message}. Please email the downloaded PDF to vlad.nielsen@xoomcloud.com.au.`
+        : `❌ The signed PDF could not be generated: ${err.message}. Please refresh and try again.`;
+      setStatus('error', message);
+      submitBtn.disabled = false;
+      const sigSection = document.getElementById('signing-section');
+      if (sigSection) sigSection.style.display = 'block';
+    }
+  }
+
+  window.addEventListener('load', () => {
+    initPad('client');
+    const xDate = document.getElementById('xoomai-date');
+    const cDate = document.getElementById('client-date');
+    if (xDate) xDate.value = formatDateISO();
+    if (cDate) cDate.value = formatDateISO();
+  });
+
+  window.addEventListener('resize', () => resizePad('client'));
+</script>
+
+</body>
+</html>
