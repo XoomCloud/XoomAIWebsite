@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
+  async rewrites() {
+    return [
+      {
+        source: "/reports",
+        destination: "/reports/july-2026-sales-pipeline.html",
+      },
+    ];
+  },
   async redirects() {
     return [
       // Legacy industry .html → new /industries/* routes
