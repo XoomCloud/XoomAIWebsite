@@ -1,0 +1,25 @@
+{
+  "customerName": "Example Customer Pty Ltd",
+  "documentSlug": "example-customer-managed-service-agreement",
+  "currency": "AUD",
+  "gstRate": 0.1,
+  "services": [
+    {
+      "id": "managed-business",
+      "quantity": 25,
+      "term": "36 months"
+    },
+    {
+      "id": "managed-onboarding",
+      "unitPrice": 3500
+    },
+    {
+      "id": "m365-business-premium",
+      "quantity": 25
+    },
+    {
+      "id": "teams-voice-enhanced",
+      "quantity": 25
+    }
+  ]
+}

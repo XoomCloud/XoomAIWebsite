@@ -1,0 +1,205 @@
+{
+  "managed-essential": {
+    "category": "IT Support Package",
+    "title": "Xoom Cloud Essential (per user)",
+    "description": "Core managed support, monitoring, patching, endpoint protection, Microsoft 365 backup, email security and essential IT documentation.",
+    "unitPrice": 75,
+    "billing": "Monthly",
+    "term": "As agreed",
+    "inclusions": [
+      "24/7 remote monitoring and management",
+      "8×5 help desk support with up to 3 support requests per month",
+      "Operating system and third-party application patching",
+      "Next-generation antivirus and endpoint protection",
+      "Daily Microsoft 365 backup with 24-hour recovery time objective",
+      "Spam and email malware protection"
+    ]
+  },
+  "managed-business": {
+    "category": "IT Support Package",
+    "title": "Xoom Cloud Business (per user)",
+    "description": "Essential services plus extended unlimited support, advanced backup, managed cybersecurity, mobile device management and quarterly IT strategy.",
+    "unitPrice": 120,
+    "billing": "Monthly",
+    "term": "As agreed",
+    "inclusions": [
+      "12×5 help desk support with unlimited support requests",
+      "Four hours of onsite support per month",
+      "Advanced patch validation and rollback",
+      "Managed endpoint detection and response",
+      "Vulnerability assessments and dark web monitoring",
+      "Mobile device management and compliance support",
+      "Quarterly IT strategy meetings"
+    ]
+  },
+  "managed-premium": {
+    "category": "IT Support Package",
+    "title": "Xoom Cloud Premium (per user)",
+    "description": "Business services plus 24/7 support, advanced security operations, managed cloud, disaster recovery, network management and a dedicated account manager.",
+    "unitPrice": 200,
+    "billing": "Monthly",
+    "term": "As agreed",
+    "inclusions": [
+      "Unlimited 24/7 help desk support",
+      "Managed security information and event management",
+      "Real-time threat monitoring and incident response",
+      "Managed Azure, AWS or Google Cloud environments",
+      "Disaster recovery as a service with instant failover",
+      "Proactive network and SD-WAN management",
+      "Dedicated account manager and vendor management"
+    ]
+  },
+  "managed-onboarding": {
+    "category": "Onboarding",
+    "title": "Xoom Cloud managed service onboarding",
+    "description": "Environment discovery, support documentation, monitoring implementation, remote access tools and general review and recommendations.",
+    "billing": "Once-off",
+    "quantity": 1
+  },
+  "m365-business-premium": {
+    "category": "Software and Subscriptions",
+    "title": "Microsoft 365 Business Premium",
+    "description": "Microsoft productivity, collaboration, identity, endpoint and cyberthreat protection for up to 300 users.",
+    "unitPrice": 32.9,
+    "billing": "Monthly",
+    "term": "Annual commitment"
+  },
+  "m365-teams-phone-standard": {
+    "category": "Software and Subscriptions",
+    "title": "Microsoft Teams Phone Standard",
+    "description": "Cloud calling and phone system licence for Microsoft Teams.",
+    "unitPrice": 15.75,
+    "billing": "Monthly",
+    "term": "Annual commitment"
+  },
+  "redstor-xero-backup": {
+    "category": "Software and Subscriptions",
+    "title": "Redstor Xero Backup and Recovery",
+    "description": "Cloud backup, malware detection and on-demand recovery for Xero data.",
+    "unitPrice": 100,
+    "billing": "Monthly"
+  },
+  "crossware-email-signatures": {
+    "category": "Software and Subscriptions",
+    "title": "Crossware Email Signatures",
+    "description": "Centralised Microsoft 365 email signature management, branding and compliance.",
+    "unitPrice": 2.2,
+    "billing": "Monthly"
+  },
+  "printerlogic-cloud-print": {
+    "category": "Software and Subscriptions",
+    "title": "PrinterLogic Cloud Print Server (per queue)",
+    "description": "Centralised cloud print queue, driver and profile management.",
+    "unitPrice": 13,
+    "billing": "Monthly"
+  },
+  "adobe-acrobat-standard": {
+    "category": "Software and Subscriptions",
+    "title": "Adobe Acrobat Standard for Teams",
+    "unitPrice": 261.72,
+    "billing": "Annual"
+  },
+  "adobe-acrobat-pro": {
+    "category": "Software and Subscriptions",
+    "title": "Adobe Acrobat Pro for Teams",
+    "unitPrice": 414.48,
+    "billing": "Annual"
+  },
+  "adobe-acrobat-premium": {
+    "category": "Software and Subscriptions",
+    "title": "Adobe Acrobat Premium for Teams",
+    "unitPrice": 501.6,
+    "billing": "Annual"
+  },
+  "adobe-acrobat-pro-enterprise": {
+    "category": "Software and Subscriptions",
+    "title": "Adobe Acrobat Pro Enterprise",
+    "unitPrice": 490.8,
+    "billing": "Annual"
+  },
+  "internet-fibre-250": {
+    "category": "Managed Internet",
+    "title": "Fast Fibre 250/250 Mbps",
+    "description": "Symmetrical 250 Mbps fibre connection with 1:1 contention and a static IP.",
+    "billing": "Monthly",
+    "term": "48 months"
+  },
+  "internet-5g-failover": {
+    "category": "Managed Internet",
+    "title": "Fixed Wireless 5G Failover 250 Mbps",
+    "description": "5G fixed wireless failover with no installation fee. A $500 equipment removal fee applies on cancellation.",
+    "billing": "Monthly",
+    "term": "36 months"
+  },
+  "internet-installation": {
+    "category": "Managed Internet",
+    "title": "Install and configure new internet connection",
+    "description": "Tail-provider liaison, peripheral configuration, computer connectivity and local-area-network setup.",
+    "billing": "Once-off",
+    "quantity": 1
+  },
+  "teams-voice-enhanced": {
+    "category": "Teams Calling",
+    "title": "Voice Enhanced for Teams (per user)",
+    "description": "Teams calling with included local, national and mobile calls. Minimum four users. Microsoft Teams Phone System or Microsoft 365 E5 is required.",
+    "unitPrice": 35,
+    "billing": "Monthly"
+  },
+  "teams-voicemail": {
+    "category": "Teams Calling",
+    "title": "Voicemail",
+    "description": "Voicemail for a call centre queue, hunt group or auto attendant.",
+    "unitPrice": 0,
+    "billing": "Monthly"
+  },
+  "teams-call-centre-queue": {
+    "category": "Teams Calling",
+    "title": "Call Centre Queue with time-of-day routing",
+    "unitPrice": 0,
+    "billing": "Monthly"
+  },
+  "teams-hunt-group": {
+    "category": "Teams Calling",
+    "title": "Hunt Group with time-of-day routing",
+    "description": "Distributes incoming calls among assigned users and supports time-based routing.",
+    "unitPrice": 0,
+    "billing": "Monthly"
+  },
+  "teams-did": {
+    "category": "Teams Calling",
+    "title": "Australian direct inward dial number",
+    "unitPrice": 2.5,
+    "billing": "Monthly"
+  },
+  "teams-inbound-number-hosting": {
+    "category": "Teams Calling",
+    "title": "Inbound 1300/1800 number hosting",
+    "description": "Inbound number hosting. Calls are charged in arrears at 7 cents per minute.",
+    "unitPrice": 25,
+    "billing": "Monthly"
+  },
+  "teams-deployment-1-20": {
+    "category": "Teams Calling",
+    "title": "Teams Voice deployment — 1 to 20 users",
+    "description": "Phone system, call routing, direct routing, number porting, extensions and user training. Porting fees are excluded.",
+    "unitPrice": 800,
+    "billing": "Once-off",
+    "quantity": 1
+  },
+  "teams-complex-port": {
+    "category": "Teams Calling",
+    "title": "Complex Category C port (per batch)",
+    "description": "Transition of numbers from another provider to the Teams voice service.",
+    "unitPrice": 160,
+    "billing": "Once-off",
+    "quantity": 1
+  },
+  "teams-1300-port": {
+    "category": "Teams Calling",
+    "title": "Inbound 1300 number hosting porting fee",
+    "description": "Complex inbound-number port. Requests remain valid for 90 days and typically complete within four weeks.",
+    "unitPrice": 70,
+    "billing": "Once-off",
+    "quantity": 1
+  }
+}
