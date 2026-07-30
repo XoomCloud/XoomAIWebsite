@@ -243,6 +243,29 @@ const renderProposedSolution = (config, services) => {
 ${EDITABLE_END}`;
 };
 
+const personaliseTemplate = (template, config) => {
+  let personalised = template;
+
+  if (config.customerName) {
+    const customerName = escapeHtml(config.customerName);
+    personalised = personalised
+      .replaceAll("CLIENT NAME", customerName)
+      .replaceAll(
+        "<em>Customer Name</em> representative",
+        `<em>${customerName}</em> representative`,
+      );
+  }
+
+  if (config.preparedOn) {
+    personalised = personalised.replace(
+      "27-May-2025",
+      escapeHtml(config.preparedOn),
+    );
+  }
+
+  return personalised;
+};
+
 const main = () => {
   const options = parseArgs();
   if (!options.config) {
@@ -265,8 +288,9 @@ const main = () => {
     normaliseService(selection, catalog),
   );
   const template = readFileSync(templatePath, "utf8");
-  const start = template.indexOf(EDITABLE_START);
-  const end = template.indexOf(EDITABLE_END);
+  const personalisedTemplate = personaliseTemplate(template, config);
+  const start = personalisedTemplate.indexOf(EDITABLE_START);
+  const end = personalisedTemplate.indexOf(EDITABLE_END);
 
   if (start < 0 || end < 0 || end <= start) {
     throw new Error(
@@ -274,17 +298,20 @@ const main = () => {
     );
   }
   if (
-    template.indexOf(EDITABLE_START, start + EDITABLE_START.length) >= 0 ||
-    template.indexOf(EDITABLE_END, end + EDITABLE_END.length) >= 0
+    personalisedTemplate.indexOf(
+      EDITABLE_START,
+      start + EDITABLE_START.length,
+    ) >= 0 ||
+    personalisedTemplate.indexOf(EDITABLE_END, end + EDITABLE_END.length) >= 0
   ) {
     throw new Error("The template contains duplicate editable markers.");
   }
 
   const proposedSolution = renderProposedSolution(config, services);
   const outputHtml =
-    template.slice(0, start) +
+    personalisedTemplate.slice(0, start) +
     proposedSolution +
-    template.slice(end + EDITABLE_END.length);
+    personalisedTemplate.slice(end + EDITABLE_END.length);
 
   const fallbackSlug = config.customerName
     ? `${slugify(config.customerName)}-managed-service-agreement`
@@ -300,8 +327,10 @@ const main = () => {
   writeFileSync(outputPath, outputHtml, "utf8");
 
   const generated = readFileSync(outputPath, "utf8");
-  const frozenPrefix = template.slice(0, start);
-  const frozenSuffix = template.slice(end + EDITABLE_END.length);
+  const frozenPrefix = personalisedTemplate.slice(0, start);
+  const frozenSuffix = personalisedTemplate.slice(
+    end + EDITABLE_END.length,
+  );
   if (!generated.startsWith(frozenPrefix) || !generated.endsWith(frozenSuffix)) {
     throw new Error(
       "Frozen agreement validation failed: content outside Proposed Solutions changed.",

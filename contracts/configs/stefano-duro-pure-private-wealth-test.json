@@ -1,0 +1,29 @@
+{
+  "customerName": "Stefano Duro — Pure Private Wealth",
+  "documentSlug": "stefano-duro-pure-private-wealth-managed-service-agreement-test",
+  "preparedOn": "30-Jul-2026",
+  "currency": "AUD",
+  "gstRate": 0.1,
+  "introduction": "Managed IT coverage for four PCs and three user-only plans.",
+  "services": [
+    {
+      "id": "managed-business",
+      "category": "Managed IT Services",
+      "title": "Xoom Cloud Business Plan — Managed PC",
+      "description": "Managed IT support and security for each covered PC.",
+      "quantity": 4,
+      "unitPrice": 120,
+      "billing": "Monthly",
+      "term": "As agreed"
+    },
+    {
+      "category": "Managed IT Services",
+      "title": "Xoom Cloud User Only Plan",
+      "description": "Managed user support for users without a covered PC.",
+      "quantity": 3,
+      "unitPrice": 60,
+      "billing": "Monthly",
+      "term": "As agreed"
+    }
+  ]
+}
