@@ -1,0 +1,283 @@
+/* Managed Service Agreement presentation and execution controls. */
+
+/* DOCX blockquotes are conversion artefacts unless explicitly marked as a note. */
+body > blockquote:not(:first-of-type),
+td blockquote,
+th blockquote {
+  margin: 0.8rem 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+td blockquote,
+th blockquote {
+  margin: 0;
+}
+
+/* Agreement tables use a restrained treatment with no alternating fills. */
+th {
+  border-right: 1px solid var(--brand-line);
+  border-bottom: 1px solid var(--brand-line);
+  background: #f2effa;
+  color: var(--brand-navy);
+}
+
+thead tr:last-child th {
+  border-bottom: 1px solid var(--brand-line);
+}
+
+tbody tr td,
+tr:nth-child(even) td {
+  background: #ffffff;
+}
+
+.customer-value {
+  color: var(--brand-navy);
+  font-weight: 700;
+}
+
+.signing-section {
+  margin: 1.4rem 0 3rem;
+  padding: 28px;
+  border: 1px solid rgba(107, 70, 193, 0.18);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.07), transparent 24rem),
+    linear-gradient(180deg, #ffffff, #fbfaff);
+  box-shadow: 0 18px 50px rgba(13, 11, 42, 0.08);
+}
+
+.signing-title {
+  margin: 0;
+  color: var(--brand-navy);
+  font-family: "Poppins", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.signing-subtitle {
+  margin: 0.35rem 0 1.6rem;
+  color: var(--brand-ink-muted);
+  font-size: 0.86rem;
+}
+
+.sig-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.sig-block {
+  padding: 20px;
+  border: 1px solid var(--brand-line);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.sig-block-title {
+  margin-bottom: 1.1rem;
+  color: var(--brand-navy);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.field-group {
+  margin-bottom: 14px;
+}
+
+.field-group label,
+.sig-pad-label {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(26, 26, 46, 0.62);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-group input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid rgba(26, 26, 46, 0.14);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--brand-navy);
+  font: 500 0.84rem "Montserrat", sans-serif;
+}
+
+.field-group input:focus {
+  border-color: var(--brand-violet);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  outline: 0;
+}
+
+.field-group input[readonly] {
+  background: #f7f6fb;
+  color: rgba(26, 26, 46, 0.76);
+}
+
+.sig-pad-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.sig-tabs {
+  display: flex;
+  gap: 5px;
+}
+
+.sig-tab {
+  padding: 5px 9px;
+  border: 1px solid rgba(107, 70, 193, 0.2);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--brand-purple);
+  cursor: pointer;
+  font: 700 0.64rem "Montserrat", sans-serif;
+}
+
+.sig-tab.active {
+  border-color: var(--brand-violet);
+  background: rgba(107, 70, 193, 0.08);
+}
+
+.sig-canvas-wrap {
+  height: 135px;
+  overflow: hidden;
+  border: 1px solid rgba(26, 26, 46, 0.16);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.sig-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.sig-type-wrap {
+  display: none;
+}
+
+.sig-type-input {
+  width: 100%;
+  height: 100%;
+  padding: 25px 16px;
+  resize: none;
+  border: 0;
+  outline: 0;
+  color: var(--brand-navy);
+  font: 700 2.25rem "Dancing Script", cursive;
+  text-align: center;
+}
+
+.sig-clear {
+  display: inline-block;
+  margin-top: 7px;
+  color: var(--brand-purple);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.xoomai-signature-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 135px;
+  border: 1px dashed rgba(26, 26, 46, 0.18);
+  border-radius: 8px;
+  background: #f7f6fb;
+  color: rgba(26, 26, 46, 0.48);
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.submit-wrap {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--brand-line);
+  text-align: center;
+}
+
+.submit-note {
+  max-width: 680px;
+  margin: 0 auto 18px;
+  color: var(--brand-ink-muted);
+  font-size: 0.78rem;
+}
+
+.submit-btn {
+  padding: 13px 26px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--brand-violet), #6d28d9);
+  box-shadow: 0 8px 25px rgba(107, 70, 193, 0.45);
+  color: #ffffff;
+  cursor: pointer;
+  font: 700 0.88rem "Montserrat", sans-serif;
+}
+
+.submit-btn:hover {
+  box-shadow: 0 12px 30px rgba(107, 70, 193, 0.56);
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  cursor: wait;
+  opacity: 0.65;
+  transform: none;
+}
+
+.status-box {
+  display: none;
+  max-width: 680px;
+  margin: 18px auto 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.status-box.loading {
+  border: 1px solid #c4b5fd;
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.status-box.success {
+  border: 1px solid #6ee7b7;
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-box.error {
+  border: 1px solid #fca5a5;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 760px) {
+  .signing-section {
+    padding: 18px;
+  }
+
+  .sig-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .signing-section {
+    break-before: page;
+    box-shadow: none;
+  }
+}

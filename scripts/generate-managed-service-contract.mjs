@@ -248,11 +248,31 @@ const personaliseTemplate = (template, config) => {
 
   if (config.customerName) {
     const customerName = escapeHtml(config.customerName);
+    const customerCompany = escapeHtml(
+      config.customerCompany || config.customerName,
+    );
+    const signatoryName = escapeHtml(config.signatoryName || "");
+    const signatoryTitle = escapeHtml(config.signatoryTitle || "");
+    const customerAbn = escapeHtml(config.customerAbn || "");
+    const customerEmail = escapeHtml(config.customerEmail || "");
+    const emailSubject = escapeHtml(
+      `${config.customerName} Managed Service Agreement`,
+    );
     personalised = personalised
       .replaceAll("CLIENT NAME", customerName)
-      .replaceAll(
-        "<em>Customer Name</em> representative",
-        `<em>${customerName}</em> representative`,
+      .replaceAll("{{CUSTOMER_NAME}}", customerCompany)
+      .replaceAll("{{SIGNATORY_NAME}}", signatoryName)
+      .replaceAll("{{SIGNATORY_TITLE}}", signatoryTitle)
+      .replaceAll("{{CUSTOMER_ABN}}", customerAbn)
+      .replaceAll("{{CUSTOMER_EMAIL}}", customerEmail)
+      .replaceAll("{{EMAIL_SUBJECT}}", emailSubject)
+      .replace(
+        `<p>Customer</p>
+</blockquote></td>
+<td></td>`,
+        `<p>Customer</p>
+</blockquote></td>
+<td class="customer-value">${customerCompany}</td>`,
       );
   }
 
@@ -327,6 +347,11 @@ const main = () => {
   writeFileSync(outputPath, outputHtml, "utf8");
 
   const generated = readFileSync(outputPath, "utf8");
+  if (config.customerName && /\{\{[A-Z_]+\}\}/.test(generated)) {
+    throw new Error(
+      "Generated agreement validation failed: unresolved customer placeholders remain.",
+    );
+  }
   const frozenPrefix = personalisedTemplate.slice(0, start);
   const frozenSuffix = personalisedTemplate.slice(
     end + EDITABLE_END.length,

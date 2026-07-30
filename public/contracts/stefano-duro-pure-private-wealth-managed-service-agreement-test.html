@@ -5,6 +5,10 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Xoom Cloud Managed Service Agreement Template</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;display=swap" rel="stylesheet" />
   <style>
 
 html {
@@ -868,6 +872,7 @@ vertical-align: middle;
     }
   }
 </style>
+<link href="/contracts/managed-service-signing.css" rel="stylesheet" />
 </head>
 <body>
 <div class="contract-toolbar">
@@ -1044,15 +1049,81 @@ standards and best practices.</p>
 </section>
 <!-- MANAGED_SERVICE_PROPOSED_SOLUTION_END -->
 <h2 id="acceptance">Acceptance</h2>
-<blockquote>
-<p><strong>EXECUTED BY THE AUTHORISED SIGNATORIES</strong></p>
-<p>The parties agree to the Terms and Conditions of this Proposal</p>
-<p><em>Stefano Duro — Pure Private Wealth</em> representative Xoom Cloud representative</p>
-<p>Date:</p>
-<p><strong>Date:</strong></p>
-<p>Vlad Nielsen</p>
-<p>Director</p>
-</blockquote>
+<section class="signing-section" id="signing-section" data-customer="Pure Private Wealth" data-email-subject="Stefano Duro — Pure Private Wealth Managed Service Agreement" aria-label="Sign managed service agreement">
+  <h3 class="signing-title">Sign Managed Service Agreement</h3>
+  <p class="signing-subtitle">Complete the customer fields, draw or type your signature, then submit the signed agreement.</p>
+  <div class="sig-grid">
+    <div class="sig-block">
+      <div class="sig-block-title">XoomCloud Pty Ltd trading as XoomAI</div>
+      <div class="field-group">
+        <label>ABN</label>
+        <input type="text" value="37 680 921 162" readonly />
+      </div>
+      <div class="field-group">
+        <label>Authorised signatory</label>
+        <input type="text" value="Vlad Nielsen" readonly />
+      </div>
+      <div class="field-group">
+        <label>Position</label>
+        <input type="text" value="Director" readonly />
+      </div>
+      <div class="field-group">
+        <label>Date</label>
+        <input type="date" id="xoomai-date" readonly />
+      </div>
+      <div class="sig-pad-label">Signature (XoomAI)</div>
+      <div class="xoomai-signature-placeholder">To be signed by XoomAI upon receipt</div>
+    </div>
+    <div class="sig-block">
+      <div class="sig-block-title">Pure Private Wealth</div>
+      <div class="field-group">
+        <label for="client-name">Full name *</label>
+        <input type="text" id="client-name" value="Stefano Duro" required />
+      </div>
+      <div class="field-group">
+        <label for="client-title">Position *</label>
+        <input type="text" id="client-title" value="" placeholder="e.g. Director, Owner" required />
+      </div>
+      <div class="field-group">
+        <label for="client-company">Customer *</label>
+        <input type="text" id="client-company" value="Pure Private Wealth" required />
+      </div>
+      <div class="field-group">
+        <label for="client-abn">ABN</label>
+        <input type="text" id="client-abn" value="" />
+      </div>
+      <div class="field-group">
+        <label for="client-date">Date *</label>
+        <input type="date" id="client-date" required />
+      </div>
+      <div class="sig-pad-label">
+        <span>Customer signature *</span>
+        <div class="sig-tabs">
+          <button type="button" class="sig-tab active" onclick="switchSignatureMode('draw', this)">Draw</button>
+          <button type="button" class="sig-tab" onclick="switchSignatureMode('type', this)">Type</button>
+        </div>
+      </div>
+      <div class="sig-canvas-wrap" id="client-canvas-wrap">
+        <canvas id="client-sig-canvas"></canvas>
+      </div>
+      <div class="sig-type-wrap" id="client-type-wrap">
+        <div class="sig-canvas-wrap">
+          <textarea class="sig-type-input" id="client-type-input" placeholder="Type your name"></textarea>
+        </div>
+      </div>
+      <span class="sig-clear" onclick="clearCustomerSignature()">Clear signature</span>
+    </div>
+  </div>
+  <div class="submit-wrap">
+    <p class="submit-note">By clicking <strong>Submit Signed Agreement</strong>, you confirm that you have read and agree to be bound by this Managed Service Agreement. A signed PDF will be downloaded and submitted to XoomAI, with a copy sent to the email address below.</p>
+    <div class="field-group" style="max-width:360px;margin:0 auto 18px;text-align:left;">
+      <label for="client-email">Customer email *</label>
+      <input type="email" id="client-email" value="" placeholder="name@company.com.au" required />
+    </div>
+    <button type="button" class="submit-btn" id="submit-btn" onclick="submitManagedServiceAgreement()">Submit Signed Agreement</button>
+    <div class="status-box" id="status-box" role="status" aria-live="polite"></div>
+  </div>
+</section>
 <h2 id="our-standard-rates">Our Standard Rates</h2>
 <blockquote>
 <p><strong>Standard Hourly Rates for out-of-scope services</strong></p>
@@ -1318,7 +1389,7 @@ and returned to the Supplier to be accepted by the Customer.</p>
 <td style="text-align: center;"><blockquote>
 <p>Customer</p>
 </blockquote></td>
-<td></td>
+<td class="customer-value">Pure Private Wealth</td>
 </tr>
 <tr>
 <td style="text-align: center;"><blockquote>
@@ -2175,5 +2246,6 @@ exclusions</p>
 <p>Where any of the Exception Factors apply (see section 16 of Appendix
 1), the Service Levels do not apply.</p>
 </blockquote>
+<script src="/contracts/managed-service-signing.js"></script>
 </body>
 </html>
