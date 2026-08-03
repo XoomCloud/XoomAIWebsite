@@ -5,6 +5,7 @@ import { StickyCta } from "@/components/landing/sticky-cta";
 import { RoiCalculator } from "@/components/landing/roi-calculator";
 import { Testimonials } from "@/components/landing/testimonials";
 import { HubspotForm } from "@/components/landing/hubspot-form";
+import { VslVideo } from "@/components/landing/vsl-video";
 import { SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { FAQ } from "@/components/sections/faq";
@@ -94,6 +95,23 @@ export default function YourAiEmployeePage() {
             {["OEMX Diesel", "Stirling Supports", "Avanti Book Keepers", "Acquira Wealth Partners", "Informed Design", "Elite Structures"].map((l) => (
               <span key={l} className="font-display text-sm font-semibold tracking-wide text-muted">{l}</span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video */}
+      <section className="py-14 md:py-20">
+        <div className="container-xa">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-6 text-center">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                Watch
+              </span>
+              <h2 className="mt-2 font-display text-2xl font-semibold text-foreground md:text-3xl">
+                See your AI employee in action
+              </h2>
+            </div>
+            <VslVideo src="https://pub-abfa0f53921343d5a25002dfc7628ddc.r2.dev/videos/xoomagent/XoomAgent-Presenter-VSL-v7-Full-Veo-AU.mp4" />
           </div>
         </div>
       </section>
