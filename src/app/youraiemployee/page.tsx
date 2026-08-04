@@ -5,7 +5,7 @@ import { StickyCta } from "@/components/landing/sticky-cta";
 import { RoiCalculator } from "@/components/landing/roi-calculator";
 import { Testimonials } from "@/components/landing/testimonials";
 import { HubspotForm } from "@/components/landing/hubspot-form";
-import { VslVideo } from "@/components/landing/vsl-video";
+import { HeyGenVideo } from "@/components/landing/heygen-video";
 import { SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { FAQ } from "@/components/sections/faq";
@@ -111,7 +111,7 @@ export default function YourAiEmployeePage() {
                 See your AI employee in action
               </h2>
             </div>
-            <VslVideo src="https://pub-abfa0f53921343d5a25002dfc7628ddc.r2.dev/videos/xoomagent/XoomAgent-Presenter-VSL-v7-Full-Veo-AU.mp4" />
+            <HeyGenVideo src="https://app.heygen.com/embeds/623a4bff1b1d4d3d9e031a35fa81cf51" title="XoomAI — meet your AI employee" />
           </div>
         </div>
       </section>
