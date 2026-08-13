@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>Pre-Call Workflow Questionnaire | XoomAI</title>
+  <meta name="description" content="Tell XoomAI where work slows down before your AI Workflow Audit so the meeting can focus on the highest-value opportunities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/sales/workflow-pages.css">
+</head>
+<body>
+  <header class="site-header"><div class="shell"><a href="/" aria-label="XoomAI home"><img class="logo" src="/images/xoomai-logo-dark.png" alt="XoomAI"></a><a class="back-link" href="/xoomagent">Explore XoomAgent™ →</a></div></header>
+  <main>
+    <section class="hero compact">
+      <div class="narrow">
+        <span class="eyebrow">Pre-call questionnaire</span>
+        <h1>Help us make the first conversation <span class="gradient-text">useful.</span></h1>
+        <p class="hero-lead">Five minutes here means less time explaining the basics and more time mapping the workflows that could return capacity to your team.</p>
+      </div>
+    </section>
+
+    <section class="form-shell">
+      <div class="narrow">
+        <form id="questionnaire" class="form-card">
+          <div class="form-intro"><div><h2>Before we meet</h2><p>Short answers are fine. We’ll use this only to prepare for your XoomAI conversation.</p></div><span class="eyebrow">About 5 minutes</span></div>
+
+          <div class="form-section">
+            <h3>1. About you</h3><p>So we understand who is joining and the operating context.</p>
+            <div class="fields">
+              <div class="field"><label for="name">Your name *</label><input id="name" name="name" autocomplete="name" maxlength="120" required></div>
+              <div class="field"><label for="email">Work email *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="160" required></div>
+              <div class="field"><label for="company">Organisation *</label><input id="company" name="company" autocomplete="organization" maxlength="160" required></div>
+              <div class="field"><label for="role">Your role *</label><input id="role" name="role" maxlength="120" required></div>
+              <div class="field"><label for="industry">Industry *</label><input id="industry" name="industry" maxlength="120" required></div>
+              <div class="field"><label for="team-size">Team size</label><select id="team-size" name="teamSize"><option value="">Select</option><option>1–5</option><option>6–15</option><option>16–50</option><option>51–200</option><option>200+</option></select></div>
+              <div class="honeypot"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>2. Where does work slow down?</h3><p>Select the areas you most want to improve.</p>
+            <div class="choice-grid">
+              <div class="choice"><input id="pain-email" name="pain" value="Email and inbox triage" type="checkbox"><label for="pain-email">Email and inbox triage</label></div>
+              <div class="choice"><input id="pain-leads" name="pain" value="Lead response and follow-up" type="checkbox"><label for="pain-leads">Lead response and follow-up</label></div>
+              <div class="choice"><input id="pain-docs" name="pain" value="Document and data processing" type="checkbox"><label for="pain-docs">Document and data processing</label></div>
+              <div class="choice"><input id="pain-crm" name="pain" value="CRM and system updates" type="checkbox"><label for="pain-crm">CRM and system updates</label></div>
+              <div class="choice"><input id="pain-service" name="pain" value="Customer service and enquiries" type="checkbox"><label for="pain-service">Customer service and enquiries</label></div>
+              <div class="choice"><input id="pain-reporting" name="pain" value="Reporting and management visibility" type="checkbox"><label for="pain-reporting">Reporting and management visibility</label></div>
+            </div>
+            <div class="fields" style="margin-top:18px"><div class="field full"><label for="repetitive">Which repetitive task would you remove first? *</label><textarea id="repetitive" name="repetitive" maxlength="500" required placeholder="Describe the task, who handles it and how often it happens."></textarea></div><div class="field"><label for="hours">Estimated team hours spent on it each week</label><select id="hours" name="hours"><option value="">Select</option><option>Under 5 hours</option><option>5–10 hours</option><option>11–20 hours</option><option>21–40 hours</option><option>More than 40 hours</option><option>Not sure</option></select></div><div class="field"><label for="impact">What happens when it is delayed or missed?</label><input id="impact" name="impact" maxlength="200" placeholder="Lost leads, rework, slow service, reporting gaps…"></div></div>
+          </div>
+
+          <div class="form-section">
+            <h3>3. Systems and information</h3><p>This helps us avoid recommending another disconnected tool.</p>
+            <div class="fields">
+              <div class="field full"><label for="systems">Which systems does your team use today? *</label><textarea id="systems" name="systems" maxlength="500" required placeholder="For example: Microsoft 365, Outlook, SharePoint, HubSpot, Xero, job management software…"></textarea></div>
+              <div class="field"><label for="source">Where does the work usually start?</label><input id="source" name="source" maxlength="160" placeholder="Inbox, website form, PDF, CRM, phone call…"></div>
+              <div class="field"><label for="destination">Where should the result end up?</label><input id="destination" name="destination" maxlength="160" placeholder="CRM, accounting, job system, report…"></div>
+              <div class="field full"><label for="data">Are there sensitive, regulated or client-confidential data considerations?</label><textarea id="data" name="data" maxlength="500" placeholder="Tell us about access limits, approvals, data location or compliance requirements."></textarea></div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>4. Success and decision-making</h3><p>We’ll align the discussion to a result you can actually assess.</p>
+            <div class="fields">
+              <div class="field full"><label for="success">What would make this project worthwhile in the first 90 days? *</label><textarea id="success" name="success" maxlength="500" required placeholder="For example: faster lead response, 15 hours returned weekly, fewer errors, current CRM data…"></textarea></div>
+              <div class="field"><label for="timeline">Preferred timing</label><select id="timeline" name="timeline"><option value="">Select</option><option>As soon as practical</option><option>Within 30 days</option><option>Within 3 months</option><option>This financial year</option><option>Researching only</option></select></div>
+              <div class="field"><label for="decision">Who else is involved in the decision?</label><input id="decision" name="decision" maxlength="200" placeholder="Owner, operations, IT, finance, compliance…"></div>
+              <div class="field full"><label for="questions">What must we answer on the call?</label><textarea id="questions" name="questions" maxlength="500" placeholder="Pricing, security, integrations, implementation, team impact…"></textarea></div>
+            </div>
+          </div>
+
+          <div class="form-actions"><button class="button" type="submit">Send my answers</button><span id="form-status" class="form-status" role="status" aria-live="polite">Your answers will be emailed securely to the XoomAI team.</span></div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="shell"><span>© 2026 XoomCloud Pty Ltd · ABN 37 680 921 162</span><span><a href="mailto:ai@xoomcloud.com.au">ai@xoomcloud.com.au</a> · 1300 040 225</span></div></footer>
+  <script src="/sales/pre-call-questionnaire.js" defer></script>
+</body>
+</html>
