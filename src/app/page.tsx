@@ -28,14 +28,14 @@ export const metadata: Metadata = {
 };
 
 const capabilities = [
-  { icon: "Inbox" as const, title: "Email & Inbox Triage", description: "Reads, sorts, drafts and routes incoming email so the right message reaches the right person in minutes." },
-  { icon: "UserCheck" as const, title: "Lead Qualification", description: "Engages and qualifies new leads instantly, then pushes them into your CRM ready for your team." },
-  { icon: "Headphones" as const, title: "Customer Support 24/7", description: "Answers enquiries day and night across web, email and chat, escalating anything that needs a human." },
-  { icon: "FileText" as const, title: "Document Processing", description: "Extracts, classifies and routes data from invoices, contracts, forms and PDFs — with review where it matters." },
-  { icon: "Database" as const, title: "CRM Updates", description: "Keeps contacts, deals, notes and statuses accurate automatically as work happens." },
-  { icon: "Workflow" as const, title: "Workflow Automation", description: "Connects your systems so a trigger in one tool updates the others — no manual hand-offs." },
-  { icon: "BarChart3" as const, title: "Reporting", description: "Compiles and sends scheduled reports automatically, so you always have a current picture." },
-  { icon: "BookOpen" as const, title: "Internal Knowledge Assistant", description: "Answers staff questions from your documents, SOPs and policies — accurately and on brand." },
+  { icon: "TrendingUp" as const, title: "Sales Representative", description: "Qualifies and follows up every lead in minutes, and keeps your CRM up to date and clean." },
+  { icon: "Headphones" as const, title: "Customer Service Rep", description: "Answers enquiries 24/7 across email, chat and phone, escalating anything that needs a human." },
+  { icon: "Briefcase" as const, title: "Executive Assistant", description: "Manages inboxes, calendars and the daily admin that quietly eats your team's week." },
+  { icon: "Banknote" as const, title: "Accounts Officer", description: "Processes invoices, reconciliations and payment follow-ups, ready for your review." },
+  { icon: "Workflow" as const, title: "Operations Coordinator", description: "Runs multi-step workflows across your systems — no copy-paste, no manual hand-offs." },
+  { icon: "Sparkles" as const, title: "Marketing Coordinator", description: "Drafts on-brand content, schedules campaigns and reports on what's working." },
+  { icon: "Users" as const, title: "HR & Recruitment", description: "Screens applicants, runs consistent onboarding and answers routine people questions." },
+  { icon: "BookOpen" as const, title: "Knowledge Assistant", description: "Answers staff questions from your documents, SOPs and policies — accurately and on brand." },
 ];
 
 const processSteps = [
@@ -76,12 +76,17 @@ export default function HomePage() {
 
       <Section id="workforce">
         <SectionHeading
-          eyebrow="What XoomAgent™ Can Do"
-          title="One AI employee. Eight jobs handled."
-          subtitle="XoomAgent™ takes the repetitive work off your team's plate and runs it 24/7 — securely connected to the tools you already use."
+          eyebrow="Build Your AI Workforce"
+          title="The right AI Employees for the work that matters"
+          subtitle="Don't settle for one do-everything bot. Choose the roles you need — each a purpose-built AI Employee with its own position description, working 24/7 inside the tools you already use."
         />
         <div className="mt-12">
           <FeatureGrid features={capabilities} columns={4} />
+        </div>
+        <div className="mt-8 text-center">
+          <Link href="/xoomagent" className="text-sm font-medium text-primary hover:underline">
+            Explore all 60 AI Employee roles across 10 categories →
+          </Link>
         </div>
       </Section>
 

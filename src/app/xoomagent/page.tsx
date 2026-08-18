@@ -7,7 +7,6 @@ import { FeatureGrid } from "@/components/sections/feature-grid";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { Integrations } from "@/components/sections/integrations";
 import { TrustSection } from "@/components/sections/trust-section";
-import { PricingCard } from "@/components/sections/pricing-card";
 import { TestimonialCard } from "@/components/sections/testimonial";
 import { FAQ } from "@/components/sections/faq";
 import { CTABlock } from "@/components/sections/cta-block";
@@ -18,27 +17,29 @@ import { JsonLd, productSchema } from "@/components/seo/json-ld";
 import { Bot, ArrowRight, Check, X } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "XoomAgent™ — Your Managed AI Employee for Australian Business",
+  title: "XoomAgent™ — Your Managed AI Employees for Australian Business",
   description:
-    "XoomAgent™ is a fully managed AI employee that runs 24/7 — an agent runtime connected to your inboxes, documents, CRM and tools. Dedicated infrastructure, no training on your data. From $2,399/month.",
+    "XoomAgent™ is a fully managed AI workforce that runs 24/7 — purpose-built AI Employees connected to your inboxes, documents, CRM and tools. Dedicated infrastructure, no training on your data.",
   alternates: { canonical: "/xoomagent" },
   openGraph: {
-    title: "XoomAgent™ — Your Managed AI Employee, Running 24/7",
+    title: "XoomAgent™ — Your Managed AI Employees, Running 24/7",
     description:
-      "Not just a chatbot — an agent runtime connected to your business tools, fully managed by XoomAI on dedicated Australian infrastructure.",
+      "Not just a chatbot — purpose-built AI Employees connected to your business tools, fully managed by XoomAI on dedicated Australian infrastructure.",
     url: "/xoomagent",
   },
 };
 
-const departments: { value: string; label: string; codename: string; icon: IconName; tasks: string[] }[] = [
-  { value: "management", label: "Management", codename: "Orchestrator", icon: "Briefcase", tasks: ["Routes tasks and prioritises work across the business", "Manages executive email and calendar", "Produces daily briefings and status summaries", "Coordinates the other agents and your team"] },
-  { value: "sales", label: "Sales & Growth", codename: "ORBIT", icon: "TrendingUp", tasks: ["Qualifies and follows up leads in minutes", "Drafts proposals and tailored outreach", "Researches accounts and market signals", "Keeps your pipeline and CRM up to date"] },
-  { value: "service", label: "Customer Service", codename: "PULSE", icon: "Headphones", tasks: ["Answers customer enquiries 24/7 across channels", "Triages and routes support tickets", "Monitors satisfaction and flags at-risk accounts", "Escalates complex cases to your team with context"] },
-  { value: "finance", label: "Finance", codename: "VAULT", icon: "Banknote", tasks: ["Processes invoices and extracts data", "Prepares bookkeeping and reconciliations for review", "Tracks cash flow and surfaces exceptions", "Assembles compliance documentation"] },
-  { value: "operations", label: "Operations & Admin", codename: "CRANK", icon: "Workflow", tasks: ["Automates multi-step workflows across systems", "Integrates your ERP, CRM and line-of-business tools", "Removes copy-paste and data-entry work", "Coordinates approvals and routing"] },
-  { value: "hr", label: "HR & People", codename: "TRIBE", icon: "Users", tasks: ["Screens applicants and schedules interviews", "Runs consistent onboarding workflows", "Handles leave requests and routine queries", "Maintains people records and compliance"] },
-  { value: "marketing", label: "Media Hub", codename: "LUMEN", icon: "Sparkles", tasks: ["Drafts on-brand content and campaigns", "Schedules and coordinates social posts", "Repurposes content across channels", "Reports on campaign performance"] },
-  { value: "data", label: "Data & Analytics", codename: "QUARTZ", icon: "BarChart3", tasks: ["Builds and updates dashboards", "Monitors KPIs and targets in real time", "Detects anomalies before they cost you", "Generates plain-English reports on demand"] },
+const roleCategories: { value: string; label: string; icon: IconName; roles: string[] }[] = [
+  { value: "core", label: "Core", icon: "Briefcase", roles: ["Sales Representative", "Customer Service Representative", "Executive Assistant", "Accounts Receivable Officer", "Accounts Payable Officer", "Recruitment Coordinator", "Marketing Coordinator", "Client Success Manager", "Operations Coordinator", "Office Administrator", "HR Coordinator", "IT Service Desk Agent", "Estimator / Quoting Officer", "Procurement Officer", "Compliance Coordinator"] },
+  { value: "legal", label: "Legal", icon: "Gavel", roles: ["Legal Intake Officer", "Paralegal", "Matter Coordinator", "Conveyancing Assistant", "Legal Compliance Officer"] },
+  { value: "financial", label: "Financial Services", icon: "Banknote", roles: ["Client Review Officer", "Fact-Find & Onboarding Officer", "Financial Administration Officer", "Advice Preparation Assistant", "Financial Compliance Officer"] },
+  { value: "logistics", label: "Logistics & Transport", icon: "Truck", roles: ["Dispatch Coordinator", "Shipment Tracking Officer", "Carrier Coordinator", "POD & Freight Administration Officer", "Fleet Compliance Coordinator"] },
+  { value: "healthcare", label: "Healthcare", icon: "HeartPulse", roles: ["Patient Services Coordinator", "Patient Intake Officer", "Recall Coordinator", "Referral Coordinator", "Practice Administration Officer"] },
+  { value: "realestate", label: "Real Estate", icon: "Home", roles: ["Buyer Agent Assistant", "Vendor Prospecting Agent", "Property Management Assistant", "Leasing Coordinator", "Listing Coordinator"] },
+  { value: "construction", label: "Construction", icon: "HardHat", roles: ["Estimating Coordinator", "Project Administrator", "Site Administration Officer", "Subcontractor Coordinator", "Construction Compliance Coordinator"] },
+  { value: "hospitality", label: "Hospitality", icon: "UtensilsCrossed", roles: ["Reservations Coordinator", "Guest Services Agent", "Events & Functions Coordinator", "Reputation Manager", "Venue Operations Coordinator"] },
+  { value: "retail", label: "Retail & E-commerce", icon: "ShoppingCart", roles: ["Shopping Assistant", "Order Support Officer", "Returns & Exchanges Officer", "Inventory Coordinator", "E-commerce Merchandising Coordinator"] },
+  { value: "professional", label: "Professional Services", icon: "Users", roles: ["Proposal Manager", "Client Onboarding Manager", "Project Coordinator", "Consultant Assistant", "Resource & Utilisation Coordinator"] },
 ];
 
 const capabilities = [
@@ -63,7 +64,7 @@ const faqs = [
   { q: "How is it different from using ChatGPT or Claude directly?", a: "Consumer AI tools don't know your business, can't securely access your systems and don't run on a schedule. XoomAgent™ is configured for your workflows, connected to your tools through secure connectors and MCP servers, runs 24/7, and is fully managed and monitored by XoomAI." },
   { q: "What does it integrate with?", a: "Microsoft 365, Google Workspace, HubSpot, Salesforce and other CRMs, SharePoint, calendars, inboxes, websites and almost anything with an API. It connects through MCP servers and connectors, and works with platforms including OpenAI, Anthropic, Google, Microsoft and AWS." },
   { q: "Is our data used to train AI models?", a: "Never. XoomAgent™ runs on dedicated, isolated infrastructure. Your data is never used to train AI models, access is permissioned and least-privilege, and every action is logged for audit." },
-  { q: "How much does it cost?", a: "Managed XoomAgent™ deployments start from $2,399/month — less than a part-time admin. Final scope and pricing are confirmed after a free AI Workflow Audit. Larger, multi-department rollouts are quoted as custom managed packages." },
+  { q: "How much does it cost?", a: "Pricing is tailored to the AI Employees you choose and the workflows involved. After a free AI Workflow Audit we'll recommend the right roles for your business and give you a clear, fully-managed quote — with no lock-in." },
   { q: "How do we get started and how long does it take?", a: "Start with a free 30-minute AI Workflow Audit. From there, an initial deployment is typically configured and integrated within a few weeks, beginning with your highest-impact workflows." },
 ];
 
@@ -73,15 +74,15 @@ export default function XoomAgentPage() {
       <Breadcrumbs items={[{ name: "XoomAgent™", href: "/xoomagent" }]} />
 
       <InnerHero
-        eyebrow="XoomAgent™ · Managed AI Employee"
-        title="Your Managed AI Employee, Running 24/7"
-        subtitle="XoomAgent™ isn't another chatbot. It's a managed agent runtime — connected to your inboxes, documents, CRM and tools — that executes real work across your business, around the clock, fully managed by XoomAI."
+        eyebrow="XoomAgent™ · Managed AI Employees"
+        title="Your Managed AI Employees, Running 24/7"
+        subtitle="XoomAgent™ isn't another chatbot. It's a managed AI workforce — purpose-built AI Employees connected to your inboxes, documents, CRM and tools — that execute real work across your business, around the clock, fully managed by XoomAI."
         primaryLabel="Book a Free AI Workflow Audit"
         secondaryLabel="Take the AI Readiness Quiz"
         secondaryHref="/ai-readiness"
         stats={[
           { value: "24/7", label: "Always working" },
-          { value: "From $2,399", label: "Per month" },
+          { value: "60", label: "Purpose-built roles" },
           { value: "Dedicated", label: "Isolated infrastructure" },
           { value: "No training", label: "On your data" },
         ]}
@@ -92,7 +93,7 @@ export default function XoomAgentPage() {
         <SectionHeading
           eyebrow="Agent, Not Chatbot"
           title="The difference between chatting and getting work done"
-          subtitle="A chatbot answers questions. An AI employee completes tasks across your systems — and that's the whole point of XoomAgent™."
+          subtitle="A chatbot answers questions. AI Employees complete tasks across your systems — and that's the whole point of XoomAgent™."
         />
         <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2">
           <Reveal className="card-surface rounded-2xl p-7">
@@ -152,38 +153,38 @@ export default function XoomAgentPage() {
         </Reveal>
       </Section>
 
-      {/* Department pillars */}
+      {/* AI Employees by role */}
       <Section>
         <SectionHeading
-          eyebrow="By Department"
-          title="One platform. A specialist agent for every department."
-          subtitle="Deploy a single AI employee or a coordinated workforce — each agent tuned to the work of a specific department."
+          eyebrow="Build Your AI Workforce"
+          title="The right AI Employees for the work that matters"
+          subtitle="Choose from 60 purpose-built AI Employees across 10 categories. Each comes with a defined position description, example workflows and secure system connections — and works 24/7 inside your business."
         />
         <Reveal className="mt-12 flex justify-center">
-          <Tabs defaultValue="management" className="w-full max-w-4xl">
+          <Tabs defaultValue="core" className="w-full max-w-4xl">
             <div className="flex justify-center">
               <TabsList>
-                {departments.map((d) => (
-                  <TabsTrigger key={d.value} value={d.value}>{d.label}</TabsTrigger>
+                {roleCategories.map((c) => (
+                  <TabsTrigger key={c.value} value={c.value}>{c.label}</TabsTrigger>
                 ))}
               </TabsList>
             </div>
-            {departments.map((d) => (
-              <TabsContent key={d.value} value={d.value}>
+            {roleCategories.map((c) => (
+              <TabsContent key={c.value} value={c.value}>
                 <div className="card-surface rounded-2xl p-7 md:p-9">
                   <div className="flex items-center gap-3">
                     <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary ring-1 ring-inset ring-primary/20">
-                      <Icon name={d.icon} className="size-5" />
+                      <Icon name={c.icon} className="size-5" />
                     </span>
                     <div>
-                      <h3 className="font-display text-xl font-semibold">{d.label}</h3>
-                      <p className="text-sm text-muted">XoomAgent™ pillar: <span className="text-primary">{d.codename}</span></p>
+                      <h3 className="font-display text-xl font-semibold">{c.label} AI Employees</h3>
+                      <p className="text-sm text-muted">{c.roles.length} purpose-built {c.roles.length === 1 ? "role" : "roles"}</p>
                     </div>
                   </div>
-                  <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {d.tasks.map((t) => (
-                      <li key={t} className="flex items-start gap-2.5 rounded-xl border border-border bg-background/40 p-4 text-sm text-foreground">
-                        <ArrowRight className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden /> {t}
+                  <ul className="mt-6 flex flex-wrap gap-2.5">
+                    {c.roles.map((r) => (
+                      <li key={r} className="flex items-center gap-2 rounded-full border border-border bg-background/40 px-4 py-2 text-sm text-foreground">
+                        <ArrowRight className="size-3.5 shrink-0 text-primary" aria-hidden /> {r}
                       </li>
                     ))}
                   </ul>
@@ -224,50 +225,6 @@ export default function XoomAgentPage() {
         </div>
       </Section>
 
-      {/* Pricing */}
-      <Section className="pt-0">
-        <SectionHeading
-          eyebrow="Pricing"
-          title="Transparent, managed pricing"
-          subtitle="Start with one department and scale into a coordinated AI workforce. Every plan is fully managed by XoomAI."
-        />
-        <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
-          <PricingCard
-            name="XoomAgent™ Managed"
-            price="$2,399"
-            period="/month"
-            blurb="A dedicated AI employee for your highest-impact department."
-            highlight
-            note="Final scope confirmed after a free AI Workflow Audit · 30-day satisfaction guarantee"
-            features={[
-              "Dedicated, isolated gateway",
-              "One department / workflow set configured",
-              "Secure integration with your core systems",
-              "Memory, knowledge & connectors included",
-              "Monitoring, audit trails & optimisation",
-              "Australian-based managed support",
-            ]}
-            ctaLabel="Book a Free AI Workflow Audit"
-          />
-          <PricingCard
-            name="Custom Managed Workforce"
-            price="Custom"
-            period=""
-            blurb="A coordinated, multi-department AI workforce for larger rollouts."
-            note="Tailored managed packages — scoped to your business"
-            features={[
-              "Multiple coordinated department agents",
-              "Advanced integrations & MCP servers",
-              "Custom workflows and guardrails",
-              "Enhanced governance & reporting",
-              "Dedicated onboarding & roadmap",
-              "Priority Australian-based support",
-            ]}
-            ctaLabel="Book a Consultation"
-          />
-        </div>
-      </Section>
-
       <Section className="pt-0">
         <TestimonialCard
           quote="It genuinely feels like we hired someone — except this team member works nights, weekends and never forgets a follow-up."
@@ -280,7 +237,7 @@ export default function XoomAgentPage() {
 
       <CTABlock
         title="See exactly what XoomAgent™ can automate for you"
-        subtitle="Book a free AI Workflow Audit. We'll map your highest-impact workflows and show you what your AI employee would handle — no obligation."
+        subtitle="Book a free AI Workflow Audit. We'll map your highest-impact workflows and recommend the right AI Employees for your business — no obligation."
       />
 
       <JsonLd data={productSchema()} />
