@@ -66,22 +66,10 @@ export function productSchema() {
     "@type": "Product",
     name: SITE.product,
     description:
-      "XoomAgent™ is a fully managed AI employee for Australian businesses — an agent runtime connected to your inboxes, documents, CRM and internal tools, deployed on dedicated infrastructure and managed by XoomAI.",
+      "XoomAgent™ is a fully managed AI workforce for Australian businesses — purpose-built AI Employees connected to your inboxes, documents, CRM and internal tools, deployed on dedicated infrastructure and managed by XoomAI.",
     brand: { "@type": "Brand", name: SITE.name },
     category: "AI Workforce Automation Platform",
-    offers: {
-      "@type": "Offer",
-      price: "2399",
-      priceCurrency: SITE.xoomAgentPriceCurrency,
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "2399",
-        priceCurrency: SITE.xoomAgentPriceCurrency,
-        unitText: "MONTH",
-      },
-      availability: "https://schema.org/InStock",
-      url: `${SITE.url}/xoomagent`,
-    },
+    url: `${SITE.url}/xoomagent`,
   };
 }
 

@@ -26,9 +26,6 @@ export const SITE = {
   bookingUrl:
     "https://outlook.office.com/bookwithme/user/2a9004d9695d44c8aefc7bf4ad7cda66@xoomcloud.com.au/meetingtype/zWfv__a03U-L3mz4vdp4Cg2?anonymous&ep=mlink",
   quizPath: "/ai-readiness",
-  // Pricing
-  xoomAgentFromPrice: "$2,399",
-  xoomAgentPriceCurrency: "AUD",
   social: {
     linkedin: "https://www.linkedin.com/company/xoomcloud",
   },

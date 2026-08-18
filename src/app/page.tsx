@@ -52,7 +52,7 @@ const homeFaqs = [
   { q: "Will AI replace my staff?", a: "No. It removes the repetitive admin your team dislikes so they can focus on customers, judgement and growth. Most clients redeploy time, not headcount." },
   { q: "How is our data kept secure?", a: "XoomAgent™ runs on dedicated, isolated infrastructure — not shared multi-tenant AI. Your data is never used to train AI models, access is permissioned and least-privilege, and every action is logged. XoomAI is a brand of XoomCloud, an Australian managed IT and security provider." },
   { q: "How do we get started?", a: "Book a free AI Workflow Audit. In 30 minutes we'll map where AI can save your team time and show you exactly what XoomAgent™ can automate — no obligation." },
-  { q: "How much does it cost?", a: "Managed XoomAgent™ deployments start from $2,399/month — less than a part-time admin — with scope confirmed in your free audit. Standalone builds like custom chatbots are quoted per project." },
+  { q: "How much does it cost?", a: "Pricing is tailored to the AI Employees you choose and the workflows involved — so you only pay for the roles you need. Book a free AI Workflow Audit and we'll recommend the right roles and give you a clear, fully-managed quote with no lock-in." },
 ];
 
 const industryCards: LinkCard[] = industries.map((i) => ({
