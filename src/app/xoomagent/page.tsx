@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { InnerHero } from "@/components/sections/inner-hero";
+import { RoleHub } from "@/components/sections/role-hub";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
@@ -73,17 +74,6 @@ export default function XoomAgentPage() {
     <>
       <Breadcrumbs items={[{ name: "XoomAgent™", href: "/xoomagent" }]} />
 
-      <div className="container-xa pt-3">
-        <Image
-          src="/images/XoomAgent_Horizontal.png"
-          alt="XoomAgent™ by XoomAI"
-          width={6093}
-          height={1384}
-          priority
-          className="h-11 w-auto md:h-14"
-        />
-      </div>
-
       <InnerHero
         eyebrow="XoomAgent™ · Managed AI Employees"
         title="Your Managed AI Employees, Running 24/7"
@@ -91,6 +81,7 @@ export default function XoomAgentPage() {
         primaryLabel="Book a Free AI Workflow Audit"
         secondaryLabel="Take the AI Readiness Quiz"
         secondaryHref="/ai-readiness"
+        aside={<RoleHub />}
         stats={[
           { value: "24/7", label: "Always working" },
           { value: "60", label: "Purpose-built roles" },
