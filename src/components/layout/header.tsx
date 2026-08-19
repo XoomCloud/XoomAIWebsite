@@ -34,10 +34,10 @@ export function Header() {
       <div className="container-xa flex h-16 items-center justify-between md:h-20">
         <Link href="/" className="flex items-center" aria-label="XoomAI home">
           <Image
-            src="/images/xoomai-logo-dark.png"
+            src="/images/XoomAI_Horizontal.png"
             alt="XoomAI — powering business intelligence"
-            width={991}
-            height={285}
+            width={5705}
+            height={1380}
             priority
             className="h-8 w-auto md:h-9"
           />

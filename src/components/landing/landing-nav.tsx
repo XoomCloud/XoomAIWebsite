@@ -25,10 +25,10 @@ export function LandingNav() {
     >
       <div className="container-xa flex h-16 items-center justify-between">
         <Image
-          src="/images/xoomai-logo-white.png"
+          src="/images/XoomAI_Horizontal.png"
           alt="XoomAI"
-          width={991}
-          height={285}
+          width={5705}
+          height={1380}
           priority
           className="h-8 w-auto"
         />

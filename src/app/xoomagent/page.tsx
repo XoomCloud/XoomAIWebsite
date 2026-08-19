@@ -73,6 +73,17 @@ export default function XoomAgentPage() {
     <>
       <Breadcrumbs items={[{ name: "XoomAgent™", href: "/xoomagent" }]} />
 
+      <div className="container-xa pt-3">
+        <Image
+          src="/images/XoomAgent_Horizontal.png"
+          alt="XoomAgent™ by XoomAI"
+          width={6093}
+          height={1384}
+          priority
+          className="h-11 w-auto md:h-14"
+        />
+      </div>
+
       <InnerHero
         eyebrow="XoomAgent™ · Managed AI Employees"
         title="Your Managed AI Employees, Running 24/7"
