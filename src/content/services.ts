@@ -120,7 +120,7 @@ export const services: ServiceContent[] = [
       { icon: "Server", title: "Fully managed", description: "We don't hand you a fragile script. XoomAI builds, monitors and optimises the automation as part of XoomAgent™." },
       { icon: "Gauge", title: "ROI-first scoping", description: "We automate the workflows with the biggest time-saving payoff first, so you see value fast." },
     ],
-    pricingNote: "Many automations are delivered as part of a managed XoomAgent™ subscription from $2,399/month. Standalone builds are quoted per project.",
+    pricingNote: "Automations are delivered as part of a managed XoomAgent™ engagement, tailored to your workflows. Book a free AI Workflow Audit for a scoped recommendation.",
     faqs: [
       { q: "Will automation replace my staff?", a: "No — it removes the repetitive work they dislike. Your team is freed to focus on customers, judgement calls and revenue-generating work. Most clients redeploy time rather than headcount." },
       { q: "What if a process needs a human to check it?", a: "We design human-in-the-loop steps wherever accuracy or judgement matters. The agent handles the heavy lifting and routes edge cases to a person for approval." },
@@ -334,7 +334,7 @@ export const services: ServiceContent[] = [
       { value: "24/7", label: "Always answering" },
       { value: "4–8 wks", label: "Typical build time" },
       { value: "CRM-connected", label: "Real integrations" },
-      { value: "From $8k", label: "Single use-case build" },
+      { value: "Tailored", label: "Scoped to your use case" },
     ],
     painTitle: "Generic chatbots frustrate customers and lose leads",
     painIntro:
@@ -371,7 +371,7 @@ export const services: ServiceContent[] = [
       { icon: "Brain", title: "Powered by Claude", description: "Natural, accurate conversations that understand context — not rigid decision trees." },
       { icon: "Settings", title: "Fully integrated & supported", description: "Connected to your systems and supported post-launch — including ongoing tuning and monitoring." },
     ],
-    pricingNote: "Chatbot development starts from $8,000 for a focused single-use-case build, up to $25,000+ for enterprise multi-channel solutions. Managed monthly options available.",
+    pricingNote: "Every chatbot is scoped to your use case and channels — from a focused single-use-case build to enterprise multi-channel solutions. Book a consultation for a tailored quote.",
     faqs: [
       { q: "How long does a chatbot take to build?", a: "A focused single-use-case bot is typically live in 4–8 weeks, depending on the depth of knowledge and the integrations required." },
       { q: "Can the bot hand over to a human?", a: "Yes. We design seamless human handoff so complex or sensitive conversations are routed to your team with full context." },

@@ -36,10 +36,10 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center" aria-label="XoomAI home">
               <Image
-                src="/images/xoomai-logo-white.png"
+                src="/images/XoomAI_Horizontal.png"
                 alt="XoomAI — powering business intelligence"
-                width={991}
-                height={285}
+                width={5705}
+                height={1380}
                 className="h-10 w-auto"
               />
             </Link>

@@ -227,7 +227,7 @@ export const industries: IndustryContent[] = [
     icon: "Home",
     metaTitle: "AI for Real Estate Agencies Australia | XoomAgent™ by XoomAI",
     metaDescription:
-      "AI for Australian real estate agencies. XoomAgent™ delivers instant listing enquiry responses, sub-5-minute lead follow-up, AI market reports and tenant comms — 24/7, from $2,399/month.",
+      "AI for Australian real estate agencies. XoomAgent™ delivers instant listing enquiry responses, sub-5-minute lead follow-up, AI market reports and tenant comms — 24/7, fully managed by XoomAI.",
     keyword: "AI for real estate agencies Australia",
     cardSummary: "Listing enquiries, instant lead follow-up, market reports and tenant communications for agencies and property managers.",
     h1: "Your Real Estate Agency Deserves an AI Employee",
@@ -237,7 +237,7 @@ export const industries: IndustryContent[] = [
       { value: "<5 min", label: "Lead follow-up" },
       { value: "24/7", label: "Enquiry capture" },
       { value: "Instant", label: "Listing responses" },
-      { value: "$2,399/mo", label: "From — less than part-time admin" },
+      { value: "Managed", label: "By an Australian team" },
     ],
     pains: [
       { title: "Listing enquiries go to voicemail", body: "Buyers enquire when agents are at inspections or with clients, and the lead goes cold before anyone calls back." },
@@ -271,7 +271,7 @@ export const industries: IndustryContent[] = [
     faqs: [
       { q: "How fast does it follow up on leads?", a: "Within minutes — typically under five — which is where the biggest lift in conversion comes from. The agent qualifies the lead and hands a warm, informed prospect to your salesperson." },
       { q: "Does it integrate with Rex, Agentbox or PropertyMe?", a: "Yes — XoomAgent™ is designed to work with the systems Australian agencies use, including Rex, Agentbox, PropertyMe, Palace and more. We confirm your stack during the audit." },
-      { q: "What does it cost?", a: "XoomAgent™ for Real Estate starts from $2,399/month — less than a part-time admin — and includes a 30-day satisfaction guarantee. Final scope is confirmed in your free audit." },
+      { q: "What does it cost?", a: "Pricing is tailored to the AI Employees you choose and the workflows involved. After a free AI Workflow Audit we'll recommend the right roles for your agency and give you a clear, fully-managed quote — with no lock-in." },
       { q: "Will buyers feel like they're talking to a bot?", a: "No. Conversations are natural, on brand and helpful, and anything sensitive — like negotiations — is handed straight to your agent." },
     ],
   },

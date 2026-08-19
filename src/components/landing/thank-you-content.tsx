@@ -28,7 +28,7 @@ export function ThankYouContent() {
       <div className="container-xa relative py-16 md:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <Link href="/" className="inline-flex" aria-label="XoomAI">
-            <Image src="/images/xoomai-logo-white.png" alt="XoomAI" width={991} height={285} className="mx-auto h-9 w-auto" priority />
+            <Image src="/images/XoomAI_Horizontal.png" alt="XoomAI" width={5705} height={1380} className="mx-auto h-9 w-auto" priority />
           </Link>
 
           <motion.div
