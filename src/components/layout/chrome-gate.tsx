@@ -5,7 +5,7 @@ import { Header } from "./header";
 import { Footer } from "./footer";
 
 /** Routes that render distraction-free (no site nav/footer) — e.g. paid landing pages. */
-const BARE_ROUTES = ["/youraiemployee", "/thank-you", "/book"];
+const BARE_ROUTES = ["/youraiemployee", "/thank-you", "/book", "/MSP-Partnership"];
 
 export function ChromeGate({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
