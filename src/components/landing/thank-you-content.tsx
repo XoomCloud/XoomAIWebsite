@@ -7,6 +7,7 @@ import Script from "next/script";
 import { motion, useReducedMotion } from "framer-motion";
 import { CalendarClock, Mail, Phone, ArrowUpRight } from "lucide-react";
 import { SITE } from "@/lib/site";
+import { BookingLeadTracker } from "./booking-lead-tracker";
 
 const MEETING_URL = process.env.NEXT_PUBLIC_HUBSPOT_MEETING_URL || "https://meetings.hubspot.com/vlad-nielsen";
 
@@ -22,6 +23,8 @@ export function ThankYouContent() {
 
   return (
     <div className="on-dark relative min-h-screen">
+      {/* Lead fires only on a confirmed booking — never on page load. */}
+      <BookingLeadTracker />
       <div className="fixed inset-0 -z-10 bg-[#06070b]" aria-hidden />
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-80" aria-hidden />
 
