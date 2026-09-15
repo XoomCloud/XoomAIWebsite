@@ -8,8 +8,8 @@ const REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION || "na1";
 
 /**
  * HubSpot embedded lead form. The embed script auto-renders any `.hs-form-frame`.
- * Redirect on submit is configured in HubSpot (→ /book), where the Meta Lead
- * event fires on load. This component does not fire Lead (avoids duplicate events).
+ * Redirect on submit is configured in HubSpot (→ /book). This component does not
+ * fire Lead — that only happens once a booking is confirmed (BookingLeadTracker).
  */
 export function HubspotForm() {
   return (
