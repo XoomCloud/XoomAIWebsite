@@ -50,3 +50,9 @@ Set `NEXT_PUBLIC_GA_ID` or `NEXT_PUBLIC_GTM_ID` to activate analytics. All CTAs 
 forms emit `dataLayer` events via `trackEvent()` — no code changes needed to wire conversions.
 
 See `REBUILD_SUMMARY.md` for the full changelog, SEO checklist and conversion checklist.
+
+## Conversion tracking
+
+`Lead` fires only on a confirmed booking, reported by both the browser Pixel and the
+Meta Conversions API and deduplicated via a shared `event_id`.
+See [docs/meta-conversions-api.md](docs/meta-conversions-api.md) for setup and env vars.
