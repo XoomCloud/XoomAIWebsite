@@ -14,6 +14,27 @@ export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "164330067
 /** Options passed as fbq's 4th argument (used for browser/CAPI deduplication). */
 export type MetaEventOptions = { eventID?: string };
 
+/** Wait for our base snippet; fbq then queues until Meta's library is loaded. */
+export function whenMetaReady(run: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  if (typeof window.fbq === "function") {
+    run();
+    return () => {};
+  }
+  const handler = () => {
+    if (typeof window.fbq !== "function") return;
+    window.removeEventListener("metaPixelReady", handler);
+    run();
+  };
+  window.addEventListener("metaPixelReady", handler);
+  return () => window.removeEventListener("metaPixelReady", handler);
+}
+
+/** CTA intent is a custom event, never a completed Lead. */
+export function trackMetaCustom(event: string, params?: Record<string, unknown>) {
+  whenMetaReady(() => window.fbq?.("trackCustom", event, params));
+}
+
 export function trackMeta(
   event: string,
   params?: Record<string, unknown>,

@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { extractBookingIdentity, bookingLeadEventId } from "@/lib/booking-lead";
 import { sendLeadToMetaCapi } from "@/lib/meta-capi";
-import { SITE } from "@/lib/site";
+import { bookingConversionMetadata } from "@/lib/booking-conversion";
 
 /**
  * HubSpot webhook → Meta Conversions API.
@@ -47,9 +47,11 @@ function hasValidHubSpotSignature(request: Request, rawBody: string, clientSecre
   const age = Date.now() - Number(timestamp);
   if (!Number.isFinite(age) || age > MAX_SIGNATURE_AGE_MS || age < -MAX_SIGNATURE_AGE_MS) return false;
 
+  // HubSpot v3 specifies decoding only this subset of URI escape sequences.
+  const uri = request.url.replace(/%(3A|2F|3F|40|21|24|27|28|29|2A|2C|3B)/gi, (encoded) => decodeURIComponent(encoded));
   const expected = crypto
     .createHmac("sha256", clientSecret)
-    .update(`POST${request.url}${rawBody}${timestamp}`, "utf8")
+    .update(`POST${uri}${rawBody}${timestamp}`, "utf8")
     .digest("base64");
 
   return safeEqual(signature, expected);
@@ -76,6 +78,7 @@ function toBookings(parsed: unknown): unknown[] {
 }
 
 export async function POST(request: Request) {
+  const receivedAt = Date.now();
   const configured = Boolean(process.env.HUBSPOT_WEBHOOK_SECRET || process.env.HUBSPOT_CLIENT_SECRET);
   if (!configured) {
     console.error("[meta-capi] webhook secret not configured — rejecting request");
@@ -94,31 +97,36 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Invalid JSON." }, { status: 400 });
   }
 
+  const bookings = toBookings(parsed);
+  if (!bookings.length || bookings.some((booking) => !booking || typeof booking !== "object" || Array.isArray(booking))) {
+    return NextResponse.json({ ok: false, error: "Expected booking object(s)." }, { status: 400 });
+  }
   const results: { eventId: string; sent: boolean; reason?: string }[] = [];
 
-  for (const booking of toBookings(parsed)) {
+  for (const booking of bookings) {
     const identity = extractBookingIdentity(booking);
     const eventId = bookingLeadEventId(identity);
 
-    // Without an email the event can't be attributed — skip rather than send noise.
-    if (!identity.email) {
-      results.push({ eventId, sent: false, reason: "no_identifiers" });
+    // Require the shared identity so webhook retries and browser events deduplicate.
+    if (!identity.email || !identity.startTime) {
+      results.push({ eventId, sent: false, reason: "incomplete_booking_identity" });
       continue;
     }
 
     const result = await sendLeadToMetaCapi({
       eventId,
       email: identity.email,
-      eventTimeMs: identity.startTime ? Number(identity.startTime) : Date.now(),
-      eventSourceUrl: `${SITE.url}/book`,
+      ...bookingConversionMetadata(booking, receivedAt),
     });
 
     if (!result.sent) {
-      console.error("[meta-capi] Lead not sent:", result.reason, result.detail ?? "");
+      console.error("[meta-capi] Lead not sent:", result.reason, result.status ?? "");
     }
     results.push({ eventId, sent: result.sent, ...(result.sent ? {} : { reason: result.reason }) });
   }
 
-  // Always 200 once authorised, so HubSpot doesn't retry on a tracking-side issue.
-  return NextResponse.json({ ok: true, results });
+  // Successful events keep the same id on retries, so partial batches can be retried safely.
+  const retryable = results.some((result) => result.reason === "not_configured" || result.reason === "request_failed");
+  const ok = results.every((result) => result.sent);
+  return NextResponse.json({ ok, results }, { status: retryable ? 503 : ok ? 200 : 422 });
 }

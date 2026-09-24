@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { trackLead } from "@/lib/meta";
+import { trackLead, whenMetaReady } from "@/lib/meta";
 import { isHubSpotOrigin, isBookingConfirmed, bookingEventId } from "@/lib/booking-lead";
 
 /**
@@ -46,28 +46,16 @@ function rememberFired(id: string): void {
   }
 }
 
-export function BookingLeadTracker() {
+export function BookingLeadTracker({ contentName = "AI Strategy Session" }: { contentName?: string }) {
   React.useEffect(() => {
     const firedThisSession = new Set<string>();
-    let pendingReadyHandler: (() => void) | null = null;
-
-    /** The pixel loads via next/script (afterInteractive); wait if it isn't up yet. */
-    function whenPixelReady(run: () => void) {
-      if (typeof window.fbq === "function") {
-        run();
-        return;
-      }
-      const handler = () => {
-        window.removeEventListener("metaPixelReady", handler);
-        pendingReadyHandler = null;
-        run();
-      };
-      pendingReadyHandler = handler;
-      window.addEventListener("metaPixelReady", handler);
-    }
+    const cancelPending: (() => void)[] = [];
 
     function onMessage(event: MessageEvent) {
       if (!isHubSpotOrigin(event.origin)) return;
+      const fromScheduler = Array.from(document.querySelectorAll<HTMLIFrameElement>("iframe"))
+        .some((frame) => frame.contentWindow === event.source && isHubSpotOrigin(frame.src));
+      if (!fromScheduler) return;
       if (!isBookingConfirmed(event.data)) return;
 
       const data = event.data as Record<string, unknown>;
@@ -77,27 +65,24 @@ export function BookingLeadTracker() {
       // Guard before firing so duplicate messages can't race through.
       if (firedThisSession.has(eventId) || alreadyFired(eventId)) return;
       firedThisSession.add(eventId);
-      rememberFired(eventId);
-
-      whenPixelReady(() => {
+      cancelPending.push(whenMetaReady(() => {
         trackLead(
           {
-            content_name: "AI Strategy Session",
+            content_name: contentName,
             content_category: "Booking",
-            value: 1,
-            currency: "AUD",
           },
           { eventID: eventId },
         );
-      });
+        rememberFired(eventId);
+      }));
     }
 
     window.addEventListener("message", onMessage);
     return () => {
       window.removeEventListener("message", onMessage);
-      if (pendingReadyHandler) window.removeEventListener("metaPixelReady", pendingReadyHandler);
+      cancelPending.forEach((cancel) => cancel());
     };
-  }, []);
+  }, [contentName]);
 
   return null;
 }
