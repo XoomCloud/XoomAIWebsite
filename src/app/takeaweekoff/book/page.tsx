@@ -32,11 +32,11 @@ export default async function CampaignBookingPage({ searchParams }: { searchPara
         <div className={styles.bookingCopy}>
           <p className={styles.eyebrow}>YOUR FIRST STEP TO MORE TIME BACK</p>
           <h1>Book a Free<br /><span>AI Workflow Audit.</span></h1>
-          <p>Let’s find the work you can hand over. Pick a time to talk through your biggest bottleneck with an XoomAI specialist.</p>
+          <p>Let’s find the work you can hand over. Pick a time to talk through your biggest bottleneck with a XoomAI specialist.</p>
           <div className={styles.bookingBadge}><Clock3 size={18} aria-hidden="true" /> Free · 45 minutes · No obligation</div>
           <ul className={styles.bookingChecklist}>
             <li><Check size={19} aria-hidden="true" /> Explore the work taking up your team’s time.</li>
-            <li><Check size={19} aria-hidden="true" /> Discuss a suitable first AI Employee role.</li>
+            <li><Check size={19} aria-hidden="true" /> Discuss a suitable first XoomAgent™ role.</li>
             <li><Check size={19} aria-hidden="true" /> Understand the systems, scope and next steps.</li>
           </ul>
           <p className={styles.bookingHelp}>Prefer to speak to us?<br /><a href={SITE.phoneHref}><Phone size={16} aria-hidden="true" /> {SITE.phone}</a></p>

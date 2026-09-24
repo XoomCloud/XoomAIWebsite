@@ -26,17 +26,17 @@ export const metadata: Metadata = {
 };
 
 const roles = [
-  { icon: Headset, title: "The enquiries that can’t wait.", role: "AI Sales & Customer Service", description: "Answer enquiries, qualify leads and follow up while your team gets on with the day.", tasks: "Calls · Email · Lead follow-up" },
-  { icon: FileText, title: "The admin that never ends.", role: "AI Administration & Accounts", description: "Prepare documents, process invoices and keep the everyday paperwork moving.", tasks: "Documents · Invoices · Records" },
-  { icon: Workflow, title: "The handovers that slow you down.", role: "AI Operations & Coordination", description: "Update your CRM, connect workflows and move information between your systems.", tasks: "CRM · Scheduling · Workflows" },
+  { icon: Headset, title: "The enquiries that can’t wait.", role: "Sales & Customer Service", description: "Answer enquiries, qualify leads and follow up while your team gets on with the day.", tasks: "Calls · Email · Lead follow-up" },
+  { icon: FileText, title: "The admin that never ends.", role: "Administration & Accounts", description: "Prepare documents, process invoices and keep the everyday paperwork moving.", tasks: "Documents · Invoices · Records" },
+  { icon: Workflow, title: "The handovers that slow you down.", role: "Operations & Coordination", description: "Update your CRM, connect workflows and move information between your systems.", tasks: "CRM · Scheduling · Workflows" },
 ];
 
 const faqs = [
-  ["What does an AI Employee actually do?", "An AI Employee takes on a defined role in your business. Depending on that role, it can handle enquiries, prepare documents, follow up missing information, update your CRM or coordinate a workflow. We scope the responsibilities and connect the systems it needs."],
+  ["What does a XoomAgent™ actually do?", "A XoomAgent™ takes on a defined role in your managed AI workforce. Depending on that role, it can handle enquiries, prepare documents, follow up missing information, update your CRM or coordinate a workflow. We scope the responsibilities and connect the systems it needs."],
   ["Will it work with the tools we already use?", "XoomAI works with platforms such as Microsoft 365, Google Workspace and CRMs. In the audit, we review your specific tools, available integrations and access requirements before recommending a role."],
-  ["How do we stay in control?", "Your team sets the rules, access permissions and approval points. We configure the AI Employee around those boundaries, including when work needs to be handed to a person. Access is scoped to the role and actions are logged."],
+  ["How do we stay in control?", "Your team sets the rules, access permissions and approval points. We configure your XoomAgent™ workforce around those boundaries, including when work needs to be handed to a person. Access is scoped to the role and actions are logged."],
   ["Do we have to replace staff or change everything at once?", "No. Start with one repeatable role or a workflow that is holding your team back. The aim is to give people capacity for customers, decisions and the work that needs their judgement. You can expand from there."],
-  ["What does fully managed include, and what does it cost?", "XoomAI scopes, configures and connects the AI Employee, then monitors and improves it as part of the managed service. Pricing depends on the role, workflows and integrations. The free audit helps us recommend a suitable starting point and discuss the scope before quoting."],
+  ["What does fully managed include, and what does it cost?", "XoomAI scopes, configures and connects your XoomAgent™ workforce, then monitors and improves it as part of the managed service. Pricing depends on the role, workflows and integrations. The free audit helps us recommend a suitable starting point and discuss the scope before quoting."],
 ];
 
 export default function TakeAWeekOffPage() {
@@ -49,9 +49,10 @@ export default function TakeAWeekOffPage() {
             <p className={styles.eyebrow}><span className={styles.eyebrowLine} /> YOUR FULLY MANAGED AI WORKFORCE</p>
             <h1 id="campaign-title" className={styles.heroTitle}>TAKE A<br />WEEK OFF.<br /><span>WE DARE YOU.</span></h1>
             <p className={styles.heroLead}>Your business shouldn’t need you<br className={styles.desktopBreak} /> for <em>every little thing.</em></p>
-            <p className={styles.heroDescription}>Hand repeatable work to AI Employees, managed by XoomAI. Your team sets the rules. You get room to breathe.</p>
+            <p className={styles.heroDescription}>Hand repeatable work to your managed XoomAgent™ workforce. Your team sets the rules. You get room to breathe.</p>
             <AuditLink placement="hero" />
             <p className={styles.reassurance}><Clock3 size={15} aria-hidden="true" /> 45 minutes. Free. No obligation.</p>
+            <p className={styles.qualification}>Best suited to established Australian businesses with 5+ staff and repeatable work across multiple systems.</p>
           </div>
           <div className={styles.heroVisual}>
             <Image src="/images/take-a-week-off/hero.webp" alt="A business owner leaving with his travel bag, held back by cables attached to office paperwork and everyday tasks." width={1122} height={1402} sizes="(max-width: 760px) 100vw, 55vw" preload className={styles.heroImage} />
@@ -93,9 +94,10 @@ export default function TakeAWeekOffPage() {
           <article className={`${styles.caseStudy} ${styles.financeCase}`} data-campaign-reveal>
             <div className={styles.caseCopy}>
               <p className={styles.caseLabel}>FINANCIAL ADVICE <span>CLIENT OUTCOME</span></p>
+              <p className={styles.clientName}>Pure Private Wealth</p>
               <h3>A week of preparation.<br />Back in about an hour.</h3>
-              <p>SOA preparation previously took more than a week. A Paraplanner AI Employee brought the firm’s information and templates into the preparation workflow.</p>
-              <div className={styles.roleTag}><FileCheck2 size={18} aria-hidden="true" /> Paraplanner AI Employee</div>
+              <p>SOA preparation previously took more than a week. A XoomAgent™ in a paraplanner role brought the firm’s information and templates into the preparation workflow.</p>
+              <div className={styles.roleTag}><FileCheck2 size={18} aria-hidden="true" /> Paraplanner XoomAgent™</div>
               <p className={styles.caseDetail}>Controlled access to systems, files, meeting transcripts and templates.</p>
             </div>
             <div className={styles.financeResult}>
@@ -109,9 +111,10 @@ export default function TakeAWeekOffPage() {
           <article className={`${styles.caseStudy} ${styles.ndisCase}`} data-campaign-reveal>
             <div className={styles.caseCopy}>
               <p className={styles.caseLabel}>NDIS PROVIDER <span>CLIENT OUTCOME</span></p>
+              <p className={styles.clientName}>Stirling Supports</p>
               <h3>Less chasing notes.<br />More time accounted for.</h3>
-              <p>Missing or incomplete shift notes created a constant admin backlog. An AI Practice Administration Officer followed up missing notes, helped staff turn their notes into descriptions and verified shift-time entries.</p>
-              <div className={styles.roleTag}><FileText size={18} aria-hidden="true" /> AI Practice Administration Officer</div>
+              <p>Missing or incomplete shift notes created a constant admin backlog. A XoomAgent™ Practice Administration Officer followed up missing notes, helped staff turn their notes into descriptions and verified shift-time entries.</p>
+              <div className={styles.roleTag}><FileText size={18} aria-hidden="true" /> Practice Administration XoomAgent™</div>
             </div>
             <div className={styles.ndisResults}>
               <div><strong>25–30 <small>hrs</small></strong><p>Administrative time saved every week</p></div>
@@ -119,11 +122,11 @@ export default function TakeAWeekOffPage() {
             </div>
           </article>
           <article className={styles.constructionCase} data-campaign-reveal>
-            <div><p className={styles.caseLabel}>CONSTRUCTION <span>WORKFLOW EXAMPLE</span></p><h3>Two roles.<br />One connected workflow.</h3><p>An AI Project Administrator assisted with RFIs, variations, meeting minutes and client correspondence, collaborating with an AI Project Coordinator.</p></div>
-            <div className={styles.collaborationDiagram} aria-label="AI Project Administrator collaborating with AI Project Coordinator on RFIs, variations, minutes and correspondence">
-              <div className={styles.diagramRole}><FileText size={23} aria-hidden="true" /><span>AI Project<br /><strong>Administrator</strong></span></div>
+            <div><p className={styles.caseLabel}>CONSTRUCTION <span>WORKFLOW EXAMPLE</span></p><p className={styles.clientName}>Elite Structures</p><h3>Two roles.<br />One connected workflow.</h3><p>A XoomAgent™ Project Administrator assisted with RFIs, variations, meeting minutes and client correspondence, collaborating with a XoomAgent™ Project Coordinator.</p></div>
+            <div className={styles.collaborationDiagram} aria-label="XoomAgent Project Administrator collaborating with XoomAgent Project Coordinator on RFIs, variations, minutes and correspondence">
+              <div className={styles.diagramRole}><FileText size={23} aria-hidden="true" /><span>Project<br /><strong>Administrator</strong></span></div>
               <div className={styles.diagramConnection}><span /><ArrowRight size={18} aria-hidden="true" /><span /></div>
-              <div className={styles.diagramRole}><Layers3 size={23} aria-hidden="true" /><span>AI Project<br /><strong>Coordinator</strong></span></div>
+              <div className={styles.diagramRole}><Layers3 size={23} aria-hidden="true" /><span>Project<br /><strong>Coordinator</strong></span></div>
               <p>RFIs <span>·</span> Variations <span>·</span> Minutes <span>·</span> Correspondence</p>
             </div>
           </article>
@@ -137,20 +140,20 @@ export default function TakeAWeekOffPage() {
           <div className={styles.controlList}>
             <div><LockKeyhole aria-hidden="true" /><h3>Access with boundaries.</h3><p>Permissioned access to the systems and information each role needs.</p></div>
             <div><CheckCheck aria-hidden="true" /><h3>Approvals where they matter.</h3><p>Agreed checkpoints and handovers keep human judgement in the workflow.</p></div>
-            <div><Settings2 aria-hidden="true" /><h3>Managed beyond launch.</h3><p>We set up, integrate, monitor and improve your AI Employees as part of the service.</p></div>
+            <div><Settings2 aria-hidden="true" /><h3>Managed beyond launch.</h3><p>We set up, integrate, monitor and improve your XoomAgent™ workforce as part of the service.</p></div>
           </div>
         </div>
       </section>
 
       <section className={`${styles.section} ${styles.start}`} aria-labelledby="start-title">
         <div className={styles.container}>
-          <div className={styles.sectionIntro}><div><p className={styles.eyebrow}>04 / START WITH ONE ROLE</p><h2 id="start-title">Start where the<br />work gets <span>stuck.</span></h2></div><p>You don’t need to transform everything at once. Find one meaningful bottleneck, put the right AI Employee to work, then expand.</p></div>
+          <div className={styles.sectionIntro}><div><p className={styles.eyebrow}>04 / START WITH ONE ROLE</p><h2 id="start-title">Start where the<br />work gets <span>stuck.</span></h2></div><p>You don’t need to transform everything at once. Find one meaningful bottleneck, put your first XoomAgent™ to work, then expand.</p></div>
           <div className={styles.steps}>
             <div><span>01</span><h3>Find the friction.</h3><p>In your free audit, we look at where repeatable work is holding your team back.</p></div>
-            <div><span>02</span><h3>Define the first role.</h3><p>Discuss what an AI Employee could take on, the systems it needs and your approval points.</p></div>
+            <div><span>02</span><h3>Define the first role.</h3><p>Discuss what a XoomAgent™ could take on, the systems it needs and your approval points.</p></div>
             <div><span>03</span><h3>Build from there.</h3><p>Agree the scope before implementation. We configure, connect and manage the role with you.</p></div>
           </div>
-          <div className={styles.auditNote}><Clock3 size={20} aria-hidden="true" /><p><strong>It starts with a conversation.</strong> 45 minutes with an XoomAI specialist. Free, with no obligation.</p></div>
+          <div className={styles.auditNote}><Clock3 size={20} aria-hidden="true" /><p><strong>It starts with a conversation.</strong> 45 minutes with a XoomAI specialist. Free, with no obligation.</p></div>
         </div>
       </section>
 

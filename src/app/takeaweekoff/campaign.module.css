@@ -6,13 +6,14 @@
   background: #fff;
   color: var(--ink);
   overflow: clip;
+  font-family: var(--font-campaign-body), sans-serif;
   font-size: 1rem;
   line-height: 1.6;
 }
 .campaign :where(h1, h2, h3, p) { margin: 0; overflow-wrap: anywhere; }
 .heroGrid > *, .caseStudy > *, .constructionCase > *, .roleGrid > *, .ndisSecondary > *, .collaborationDiagram > * { min-width: 0; }
 .campaign :where(a, button):focus-visible { outline: 3px solid #6d3bf5; outline-offset: 5px; }
-.campaign :where(h1, h2, h3) { font-family: var(--font-space-grotesk), sans-serif; }
+.campaign :where(h1, h2, h3) { font-family: var(--font-campaign-heading), sans-serif; }
 .campaign h2 { font-size: clamp(2.25rem, 3.7vw, 3.25rem); line-height: 1.12; letter-spacing: -.045em; font-weight: 600; }
 .campaign h2 span { color: var(--purple); }
 .campaign section[id] { scroll-margin-top: 2rem; }
@@ -42,6 +43,7 @@
 .heroDescription { color: var(--muted); font-size: 1rem; max-width: 26rem; margin-block: 1rem 1.75rem !important; line-height: 1.7; }
 .reassurance { display: flex; align-items: center; gap: .45rem; color: var(--muted); font-size: .8125rem; margin-top: 1rem !important; }
 .reassurance svg { color: var(--purple); flex-shrink: 0; }
+.qualification { max-width: 29rem; margin-top: 1.25rem !important; font-size: .8125rem; line-height: 1.65; color: var(--muted); }
 .heroVisual { position: relative; align-self: center; min-width: 0; height: 685px; display: flex; align-items: center; }
 .heroImage { width: 112%; max-width: none; height: 100%; object-fit: contain; margin-left: -4%; mix-blend-mode: multiply; }
 .heroAnnotation { position: absolute; bottom: 2.2rem; right: -.5rem; display: grid; grid-template-columns: 1fr auto; background: #fff; padding: 1rem 1.1rem; border: 1px solid var(--line); box-shadow: 0 10px 30px #19182e08; border-radius: 4px; font-size: .75rem; letter-spacing: .08em; font-weight: 600; line-height: 1.5; }
@@ -75,6 +77,7 @@
 .caseLabel span { border: 1px solid #dcd8e8; border-radius: 4px; padding: .2rem .45rem; font-size: .75rem; letter-spacing: .03em; }
 .caseCopy h3, .constructionCase h3 { font-size: 2rem; line-height: 1.15; letter-spacing: -.04em; margin-bottom: 1.25rem; }
 .caseCopy > p:not(.caseLabel), .constructionCase > div > p:not(.caseLabel) { color: var(--muted); line-height: 1.65; font-size: 1rem; }
+.caseCopy .clientName, .constructionCase > div > .clientName { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: .75rem; }
 .roleTag { display: flex; align-items: center; gap: .55rem; font-size: .875rem; font-weight: 600; margin-top: 1.75rem; }
 .roleTag svg { color: var(--purple); flex-shrink: 0; }
 .caseCopy .caseDetail { font-size: .8125rem !important; margin-top: .7rem; max-width: 24rem; }
@@ -82,20 +85,21 @@
 .beforeMetric { display: flex; align-items: baseline; flex-wrap: wrap; gap: 1rem; }
 .beforeMetric > span, .afterMetric > span { font-size: .75rem; font-weight: 600; letter-spacing: .1em; }
 .beforeMetric > span { color: #645b7b; }
-.beforeMetric strong { font-family: var(--font-space-grotesk); font-size: 1.75rem; font-weight: 500; color: #6c617e; }
+.beforeMetric strong { font-family: var(--font-campaign-heading), sans-serif; font-size: 1.75rem; font-weight: 600; color: #6c617e; }
 .metricArrow { margin: .75rem 0; color: #8e6acb; }
 .afterMetric { display: flex; flex-direction: column; color: #602ad9; }
-.afterMetric strong { font-family: var(--font-space-grotesk); font-size: 5.4rem; font-weight: 600; letter-spacing: -.065em; line-height: 1.15; overflow-wrap: anywhere; }
+.afterMetric strong { font-family: var(--font-campaign-heading), sans-serif; font-size: 5.4rem; font-weight: 600; letter-spacing: -.065em; line-height: 1.15; overflow-wrap: anywhere; }
 .afterMetric small { font-size: .62em; }
 .financeResult > p { font-size: .9375rem; color: #625770; }
 .metricCaption { border-top: 1px solid #dcd2f4; margin-top: 1.75rem; padding-top: 1rem; display: flex; gap: .5rem; align-items: center; font-size: .75rem; color: #635871; width: 100%; }
 .ndisCase { background: #19182e; color: #fff; border-color: #19182e; }
 .ndisCase .caseCopy > p:not(.caseLabel) { color: #c9c6d7; }
+.ndisCase .caseCopy .clientName { color: #fff; }
 .ndisCase .caseLabel { color: #bba8ff; }
 .ndisCase .caseLabel span { border-color: #514665; }
 .ndisCase .roleTag svg { color: #bba8ff; }
 .ndisResults { border-left: 1px solid #ffffff1a; padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
-.ndisResults > div > strong { font-family: var(--font-space-grotesk); font-size: 4.2rem; line-height: 1.1; font-weight: 600; letter-spacing: -.055em; color: #67dfed; overflow-wrap: anywhere; }
+.ndisResults > div > strong { font-family: var(--font-campaign-heading), sans-serif; font-size: 4.2rem; line-height: 1.1; font-weight: 600; letter-spacing: -.055em; color: #67dfed; overflow-wrap: anywhere; }
 .ndisResults small { font-size: .45em; letter-spacing: -.025em; }
 .ndisResults p { color: #d2ccdf; font-size: .9375rem; margin-top: .6rem; }
 .ndisSecondary { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-top: 2rem; border-top: 1px solid #ffffff25; padding-top: 1.5rem; }
@@ -132,7 +136,7 @@
 .controlList p { color: #c5bfd2; font-size: 1rem; max-width: 25rem; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
 .steps > div { border-top: 1px solid var(--line); padding-top: 1.5rem; }
-.steps > div > span { color: var(--purple); font-family: var(--font-space-grotesk); font-size: 1rem; font-weight: 600; }
+.steps > div > span { color: var(--purple); font-family: var(--font-campaign-heading), sans-serif; font-size: 1rem; font-weight: 600; }
 .steps h3 { font-size: 1.5rem; margin: 1.1rem 0 .75rem; letter-spacing: -.03em; }
 .steps p { color: var(--muted); font-size: 1rem; }
 .auditNote { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: #f5f2fd; border-radius: 8px; margin-top: 2.5rem; }
@@ -159,7 +163,7 @@
 .emailLink { display: inline-flex; gap: .5rem; align-items: center; font-size: .875rem; color: var(--muted); margin-top: 1.5rem; }
 .footer { border-top: 1px solid var(--line); padding-block: 2rem; background: #fff; }
 .footerInner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-.footer strong { font-size: 1.15rem; font-weight: 600; font-family: var(--font-space-grotesk); }
+.footer strong { font-size: 1.15rem; font-weight: 600; font-family: var(--font-campaign-heading), sans-serif; }
 .footer p { font-size: .75rem; color: var(--muted); margin-top: .5rem; line-height: 1.75; }
 .footerContact { display: grid; gap: .2rem; font-size: .875rem; }
 .footerContact a:hover, .emailLink:hover { color: var(--purple); }

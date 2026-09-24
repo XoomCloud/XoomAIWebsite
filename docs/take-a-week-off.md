@@ -2,9 +2,11 @@
 
 Routes: `/takeaweekoff` and `/takeaweekoff/book`.
 
-The campaign is isolated through CSS Modules and the existing `ChromeGate`. It keeps the original XoomAI logo and uses existing brand colours and fonts. The landing page is statically rendered; the booking page forwards allowlisted UTM parameters to the existing HubSpot meeting calendar. Audit links record `cta_book_audit` in dataLayer and `AuditBookingClick` in Meta with campaign and placement. The `BookingLeadTracker` handles confirmed bookings as `Lead` with content name `Free AI Workflow Audit`; CTA clicks never fire Lead. See `docs/meta-conversions-api.md` for required server setup and test instructions.
+The campaign is isolated through CSS Modules and the existing `ChromeGate`. It keeps the original XoomAI logo and brand colours, with the approved Poppins/Montserrat typography system: Poppins headings and metrics, Montserrat body text and controls. Fonts are self-hosted with `next/font` in the campaign layout, covering both campaign routes. The landing page is statically rendered; the booking page forwards allowlisted UTM parameters to the existing HubSpot meeting calendar. Audit links record `cta_book_audit` in dataLayer and `AuditBookingClick` in Meta with campaign and placement. The `BookingLeadTracker` handles confirmed bookings as `Lead` with content name `Free AI Workflow Audit`; CTA clicks never fire Lead. See `docs/meta-conversions-api.md` for required server setup and test instructions.
 
 The financial adviser and NDIS outcomes were supplied by the client. Keep the SOA result scoped to preparation and the NDIS uplift scoped to billable time. Construction is explicitly a workflow example with no invented numerical outcome.
+
+Client names supplied for the proof section: Pure Private Wealth (financial advice), Stirling Supports (NDIS, 20 support workers), and Elite Structures (construction workflow example). Retain the outcomes disclaimer. The main CTA includes the established Australian business / 5+ staff qualification. Campaign copy uses XoomAgent™ and managed AI workforce consistently.
 
 ## Artwork
 
