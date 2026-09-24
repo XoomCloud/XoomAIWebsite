@@ -16,8 +16,8 @@ export const SITE = {
   // NAP
   phone: "1300 040 225",
   phoneHref: "tel:1300040225",
-  email: "xoomagent@xoomai.com.au",
-  emailHref: "mailto:xoomagent@xoomai.com.au",
+  email: "support@xoomai.com.au",
+  emailHref: "mailto:support@xoomai.com.au",
   abn: "37 680 921 162",
   parent: "XoomCloud Pty Ltd",
   areaServed: ["Brisbane", "Gold Coast", "Queensland", "Australia"],
