@@ -27,7 +27,7 @@ export default async function CampaignBookingPage({ searchParams }: { searchPara
   return (
     <div className={styles.campaign}>
       <CampaignHeader booking />
-      <BookingLeadTracker />
+      <BookingLeadTracker contentName="Free AI Workflow Audit" />
       <section className={`${styles.container} ${styles.bookingGrid}`}>
         <div className={styles.bookingCopy}>
           <p className={styles.eyebrow}>YOUR FIRST STEP TO MORE TIME BACK</p>

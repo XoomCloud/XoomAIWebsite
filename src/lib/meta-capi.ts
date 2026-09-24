@@ -2,7 +2,8 @@
  * Meta Conversions API (server-side events).
  *
  * Complements the browser Pixel: the Pixel misses conversions blocked by ad
- * blockers / ITP, while a server event always lands. Both send the SAME
+ * blockers / ITP. Configured server events provide a second reporting path.
+ * Both must send the SAME
  * `event_id` for a booking, so Meta collapses the pair instead of double-counting.
  *
  * Server-only — never import from a client component. Requires
@@ -10,6 +11,7 @@
  */
 
 import crypto from "node:crypto";
+import { META_PIXEL_ID } from "./meta";
 
 const GRAPH_VERSION = "v21.0";
 
@@ -39,24 +41,29 @@ export type CapiLeadInput = {
   /** Epoch milliseconds. Defaults to now. */
   eventTimeMs?: number;
   eventSourceUrl?: string;
+  contentName?: string;
   value?: number;
   currency?: string;
 };
 
 export type CapiResult =
   | { sent: true; status: number; eventId: string }
-  | { sent: false; reason: "not_configured" | "no_identifiers" | "request_failed"; status?: number; detail?: string };
+  | { sent: false; reason: "not_configured" | "no_identifiers" | "invalid_event_time" | "request_failed"; status?: number; detail?: string };
 
 /**
  * Send a single `Lead` event to the Conversions API.
- * Returns a result object rather than throwing — a tracking failure must never
- * break the webhook response to HubSpot.
+ * Returns a result so the webhook can distinguish retryable delivery failures.
  */
 export async function sendLeadToMetaCapi(input: CapiLeadInput): Promise<CapiResult> {
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN;
-  const pixelId = process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const pixelId = process.env.META_PIXEL_ID || META_PIXEL_ID;
 
   if (!accessToken || !pixelId) return { sent: false, reason: "not_configured" };
+  const now = Date.now();
+  const eventTimeMs = input.eventTimeMs ?? now;
+  if (!Number.isFinite(eventTimeMs) || eventTimeMs > now || eventTimeMs < now - 7 * 24 * 60 * 60 * 1000) {
+    return { sent: false, reason: "invalid_event_time" };
+  }
 
   const em = hashNormalised(input.email);
   const ph = hashPhone(input.phone);
@@ -76,16 +83,15 @@ export async function sendLeadToMetaCapi(input: CapiLeadInput): Promise<CapiResu
     data: [
       {
         event_name: "Lead",
-        event_time: Math.floor((input.eventTimeMs ?? Date.now()) / 1000),
+        event_time: Math.floor(eventTimeMs / 1000),
         event_id: input.eventId,
         action_source: "website",
         ...(input.eventSourceUrl ? { event_source_url: input.eventSourceUrl } : {}),
         user_data: userData,
         custom_data: {
-          content_name: "AI Strategy Session",
+          content_name: input.contentName ?? "AI Strategy Session",
           content_category: "Booking",
-          value: input.value ?? 1,
-          currency: input.currency ?? "AUD",
+          ...(input.value !== undefined ? { value: input.value, currency: input.currency ?? "AUD" } : {}),
         },
       },
     ],
@@ -95,24 +101,25 @@ export async function sendLeadToMetaCapi(input: CapiLeadInput): Promise<CapiResu
 
   try {
     const res = await fetch(
-      `https://graph.facebook.com/${GRAPH_VERSION}/${pixelId}/events?access_token=${encodeURIComponent(accessToken)}`,
+      `https://graph.facebook.com/${GRAPH_VERSION}/${pixelId}/events`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify(body),
         cache: "no-store",
+        signal: AbortSignal.timeout(10000),
       },
     );
     if (!res.ok) {
-      const detail = await res.text().catch(() => "");
-      return { sent: false, reason: "request_failed", status: res.status, detail: detail.slice(0, 500) };
+      return { sent: false, reason: "request_failed", status: res.status };
     }
+    const receipt = await res.json() as { events_received?: number };
+    if (receipt.events_received !== 1) return { sent: false, reason: "request_failed", status: res.status };
     return { sent: true, status: res.status, eventId: input.eventId };
-  } catch (error) {
+  } catch {
     return {
       sent: false,
       reason: "request_failed",
-      detail: error instanceof Error ? error.message : String(error),
     };
   }
 }

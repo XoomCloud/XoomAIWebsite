@@ -2,7 +2,9 @@
 
 import { useEffect, useState, type MouseEvent } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { trackEvent, ConversionEvents } from "@/lib/analytics";
+import { trackMetaCustom } from "@/lib/meta";
 import { CTA } from "@/lib/site";
 import styles from "./campaign.module.css";
 
@@ -10,6 +12,7 @@ const BOOKING_PATH = "/takeaweekoff/book";
 const CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
 
 export function AuditLink({ placement, className = "" }: { placement: string; className?: string }) {
+  const router = useRouter();
   function onClick(event: MouseEvent<HTMLAnchorElement>) {
     const destination = new URL(BOOKING_PATH, window.location.origin);
     const incoming = new URLSearchParams(window.location.search);
@@ -23,6 +26,16 @@ export function AuditLink({ placement, className = "" }: { placement: string; cl
       placement,
       destination: destination.pathname,
     });
+    trackMetaCustom("AuditBookingClick", {
+      campaign: "take-a-week-off",
+      placement,
+      destination: destination.pathname,
+    });
+    // Keep the pixel's queue alive during normal same-tab navigation.
+    if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) {
+      event.preventDefault();
+      router.push(`${destination.pathname}${destination.search}`);
+    }
   }
 
   return (

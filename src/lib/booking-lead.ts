@@ -14,7 +14,8 @@ import { stableEventId } from "./meta";
 /** Only trust postMessages that genuinely come from the booking provider. */
 export function isHubSpotOrigin(origin: string): boolean {
   try {
-    return /(^|\.)hubspot\.com$/i.test(new URL(origin).hostname);
+    const url = new URL(origin);
+    return url.protocol === "https:" && /(^|\.)hubspot\.com$/i.test(url.hostname);
   } catch {
     return false;
   }
@@ -101,7 +102,8 @@ export function normaliseStartTime(value: string | number | undefined | null): s
   if (/^\d+$/.test(raw)) {
     const n = Number(raw);
     // < 1e12 is almost certainly epoch seconds, not milliseconds
-    return String(n < 1e12 ? n * 1000 : n);
+    const ms = n < 1e12 ? n * 1000 : n;
+    return Number.isFinite(ms) && !Number.isNaN(new Date(ms).getTime()) ? String(ms) : undefined;
   }
   const parsed = Date.parse(raw);
   return Number.isNaN(parsed) ? undefined : String(parsed);
@@ -109,7 +111,7 @@ export function normaliseStartTime(value: string | number | undefined | null): s
 
 const EMAIL_KEYS = ["email", "emailaddress"];
 // Start-time keys, most specific first (covers `hs_meeting_start_time`, `startTime`, `dateTime`).
-const START_KEYS = ["starttime", "startdate", "startsat", "start", "datetime", "when", "timestamp"];
+const START_KEYS = ["starttime", "startdate", "startsat", "start", "datetime", "when"];
 const BOOKING_ID_KEYS = ["bookingid", "meetingid", "eventid", "confirmationid", "engagementid"];
 
 /** Pull the attendee email, start time and booking id out of any payload shape. */
