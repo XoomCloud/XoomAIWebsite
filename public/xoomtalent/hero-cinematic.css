@@ -1,0 +1,61 @@
+.hero{min-height:0;background:radial-gradient(ellipse at 76% 48%,#173d3d35,transparent 55%),#0b1925}
+.hero-content{padding-top:35px;padding-bottom:23px;max-width:1440px;padding-left:5.4%;padding-right:4%}
+.hero-grid{display:grid;grid-template-columns:.94fr 1.06fr;gap:16px;align-items:center}
+.hero-message{position:relative;z-index:2;padding-top:8px}
+.hero h1{font-size:clamp(46px,4.5vw,68px);line-height:1.075;letter-spacing:-.055em;margin-bottom:26px}
+.hero .eyebrow{font-size:9px;letter-spacing:1.2px;margin-bottom:27px}
+.hero-copy{font-size:21px;line-height:1.5;margin-bottom:18px}
+.hero-detail{max-width:430px;font-size:13px;line-height:1.8;margin-bottom:0;color:#b6c6cc}
+.hero .actions{flex-direction:row;flex-wrap:wrap;max-width:none;gap:27px;margin-top:28px;align-items:center}
+.hero-pricing-link{font-size:12px;color:#d4e3df;border-bottom:1px solid #526c65;padding:9px 0;display:inline-flex;gap:18px;align-items:center}
+.hero-pricing-link:hover{color:#a9e7d3}
+.hero-entry{font-size:11px;color:#b3c5ca;margin:19px 0 0}
+.hero-entry strong{color:#dce9e5;font-weight:500}
+.hero-entry span{margin-left:4px;font-size:10px}
+.hero-bottom{margin-top:8px;padding-top:16px;gap:26px;align-items:center}
+.hero-bottom .text-button{margin-left:auto;margin-right:0;padding:0;font-size:11px;white-space:nowrap;min-height:38px;flex-shrink:0}
+.hero-bottom .text-button .play{width:25px;height:25px;letter-spacing:0;flex-shrink:0}
+.hero-bottom .motion-toggle{position:static;flex-shrink:0;width:34px;height:38px;background:transparent;font-size:13px;border:1px solid #a9e7d32a;border-radius:50%}
+.talent-showcase{margin:0;position:relative;min-width:0;outline-offset:-5px;--rotation:0deg;--radius:150px}
+.talent-scene{height:565px;position:relative;isolation:isolate}
+.ribbon-backdrop{position:absolute;width:119%;max-width:none;height:auto;left:-7%;top:-40px;pointer-events:none;mask-image:radial-gradient(ellipse at center,black 42%,transparent 72%);animation:ribbonDrift 15s ease-in-out infinite alternate;opacity:.95;z-index:-1}
+.portrait-stage{position:absolute;inset:46px 0 62px;perspective:1050px;transform-style:preserve-3d}
+.portrait-slot{position:absolute;left:calc(50% - 126px);top:0;width:252px;height:360px;transform-style:preserve-3d;transform:rotateY(calc(var(--angle) + var(--rotation))) translateZ(var(--radius));transition:transform 1.8s cubic-bezier(.22,.7,.16,1);will-change:transform}
+.portrait-slot:nth-child(1){--angle:0deg}.portrait-slot:nth-child(2){--angle:120deg}.portrait-slot:nth-child(3){--angle:240deg}
+.portrait-card{position:relative;width:100%;height:100%;border:1px solid #d3f4e871;border-radius:13px;overflow:hidden;background:#10232e;transform:rotateY(calc(-1 * (var(--angle) + var(--rotation))));transition:transform 1.8s cubic-bezier(.22,.7,.16,1),filter 1.5s,opacity 1.5s;box-shadow:0 24px 38px #00000060,inset 0 0 25px #acdec922;backface-visibility:hidden;opacity:.52;filter:brightness(.68)}
+.portrait-slot[data-active="true"] .portrait-card{opacity:1;filter:brightness(1);border-color:#c7e8dcaa;box-shadow:0 28px 55px #00000060,0 0 22px #b1efda12}
+.portrait-photo{position:absolute;width:100%;height:100%;object-fit:cover;object-position:center 27%;transform:scale(1.03)}
+.portrait-shade{position:absolute;inset:0;background:linear-gradient(180deg,#071c2660,transparent 27%,transparent 40%,#081d2899 65%,#071b26 98%)}
+.portrait-brand{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:8px;font-size:13px;letter-spacing:-.5px;color:#f4f8ef}
+.portrait-brand img{width:21px;height:21px}
+.portrait-caption{position:absolute;bottom:22px;left:23px;right:16px;color:#f5f1e5}
+.portrait-caption>span{display:block;font-size:7px;letter-spacing:1.8px;color:#b3d5c7;margin-bottom:9px}
+.portrait-caption h2{font-family:Georgia,serif;font-size:35px;letter-spacing:-1.4px;font-weight:400;line-height:1.02;margin:0 0 12px}
+.portrait-caption p{font-size:10px;line-height:1.5;margin:0;color:#d9e4de}
+.ability-stack{position:absolute;top:263px;right:-9px;z-index:3;display:flex;flex-direction:column;align-items:flex-end;gap:11px;pointer-events:none}
+.ability-chip{border:1px solid #c1e9d55c;border-top-color:#d1eee5a3;border-radius:10px;background:linear-gradient(145deg,#3c655d9e,#0b222dde);backdrop-filter:blur(18px);box-shadow:0 10px 24px #00000040,inset 0 1px 12px #c8efdb0d;width:182px;min-height:54px;padding:12px 13px;display:flex;gap:12px;align-items:center;transform:rotate(3deg);color:#f1f5ee;font-size:11px;line-height:1.35;animation:chipFloat 7s ease-in-out infinite alternate}
+.ability-chip:nth-child(2){margin-right:-7px;animation-delay:-2s}.ability-chip:nth-child(3){margin-right:1px;animation-delay:-4s}
+.ability-icon{width:25px;flex-shrink:0;color:#a9e7d3;font-size:25px;line-height:1;font-weight:300;text-align:center}
+.ability-stack[data-changing="true"] [data-ability]{animation:abilityIn .7s ease both}
+.talent-showcase figcaption{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:-33px;padding-bottom:21px}
+.talent-tagline{font:italic 23px Georgia,serif;color:#eaeade;letter-spacing:-.4px}
+.talent-controls{display:flex;align-items:center;gap:10px}
+.talent-arrow{width:40px;height:40px;display:grid;place-items:center;font-size:21px;color:#bddbce;border-radius:50%;transition:background .2s}
+.talent-arrow:hover{background:#a9e7d317;color:#fff}
+.talent-dots{display:flex;gap:3px}
+.talent-dots button{width:29px;height:40px;display:grid;place-items:center;padding:0}
+.talent-dots button span{width:5px;height:5px;background:#728e85;border-radius:6px;transition:width .5s,background .5s}
+.talent-dots button[aria-pressed="true"] span{width:22px;background:#b0e8d2}
+.talent-showcase figcaption small{font-size:8px;color:#9aacae;letter-spacing:.6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.talent-showcase[data-suspended="true"] .ribbon-backdrop,.talent-showcase[data-suspended="true"] .ability-chip{animation-play-state:paused}
+@keyframes ribbonDrift{from{transform:rotate(-5deg) scale(.97)}to{transform:rotate(6deg) scale(1.03)}}
+@keyframes chipFloat{from{transform:translateY(-3px) rotate(2deg)}to{transform:translateY(4px) rotate(4deg)}}
+@keyframes abilityIn{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1600px){.hero-content{padding-top:60px;padding-bottom:25px}.talent-scene{height:605px}.portrait-stage{top:65px}.hero h1{font-size:70px}.ability-stack{top:282px}.ribbon-backdrop{top:-30px}}
+@media(max-width:1150px) and (min-width:861px){.hero-content{padding-left:35px;padding-right:28px;padding-top:42px}.hero-grid{gap:10px;grid-template-columns:1fr 1fr}.hero h1{font-size:49px}.hero .eyebrow{font-size:8px;letter-spacing:.8px}.hero-copy{font-size:19px}.hero-detail{font-size:12px;max-width:380px}.talent-showcase{--radius:112px}.portrait-slot{width:218px;height:330px;left:calc(50% - 109px)}.portrait-caption h2{font-size:30px}.portrait-stage{top:65px}.ability-stack{top:284px;right:0}.ability-chip{width:154px;font-size:10px;min-height:48px;padding:10px;gap:7px}.ability-icon{font-size:22px;width:22px}.ribbon-backdrop{top:30px}.hero .actions{gap:20px}.hero .actions .button{font-size:12px;padding:15px 18px}.hero-pricing-link{font-size:11px;gap:12px}.talent-scene{height:545px}}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:5px}.hero-content{padding:45px 35px 22px}.hero-message{max-width:630px}.hero h1{font-size:60px}.hero-detail{max-width:530px}.talent-showcase{width:100%;max-width:600px;justify-self:center}.talent-scene{height:565px}.hero-bottom{margin-top:12px;gap:18px}.hero-bottom>span:nth-child(2){display:none}.ability-stack{right:8px}.ribbon-backdrop{top:-22px}.portrait-stage{top:60px}.hero h1 br:first-of-type{display:block}}
+@media(max-width:600px){.hero-content{padding:36px 24px 20px}.hero h1{font-size:clamp(40px,8.8vw,53px)}.hero .eyebrow{font-size:7.6px;letter-spacing:.65px;margin-bottom:23px}.hero-copy{font-size:20px}.hero-detail{font-size:12px}.hero .actions{gap:20px;align-items:center;flex-direction:row}.hero .actions .button{font-size:11px;padding:16px 18px;gap:15px}.hero-pricing-link{font-size:11px;gap:12px}.hero-entry{font-size:10px}.hero-entry span{font-size:9px}.hero-grid{gap:17px}.talent-showcase{--radius:100px;width:calc(100% + 28px);max-width:none;justify-self:center}.talent-scene{height:455px}.portrait-stage{top:38px;perspective:850px}.portrait-slot{width:200px;height:299px;left:calc(50% - 100px)}.portrait-brand{top:15px;left:15px;font-size:11px;gap:7px}.portrait-brand img{width:17px;height:17px}.portrait-caption{left:17px;bottom:19px}.portrait-caption h2{font-size:29px;margin-bottom:9px}.portrait-caption>span{font-size:6px;letter-spacing:1.3px}.portrait-caption p{font-size:8px}.ribbon-backdrop{width:134%;left:-17%;top:0;opacity:.85}.ability-stack{top:249px;right:0;gap:8px}.ability-chip{width:140px;min-height:40px;font-size:9px;padding:9px;gap:7px;border-radius:8px}.ability-icon{font-size:19px;width:20px}.ability-chip:nth-child(2){margin-right:0}.talent-tagline{font-size:22px}.talent-showcase figcaption{margin-top:-37px;padding-bottom:10px;gap:5px}.hero-bottom{gap:9px;flex-wrap:wrap;align-items:center;margin-top:15px}.hero-bottom>span:first-child{width:auto;font-size:7px;letter-spacing:1px}.hero-bottom .text-button{font-size:9px;gap:7px}.hero-bottom .text-button .play{width:23px;height:23px}.hero-bottom .motion-toggle{width:28px;height:32px;font-size:11px}.talent-showcase figcaption small{font-size:7px}}
+@media(max-width:370px){.hero .actions{gap:14px}.hero .actions .button{padding:15px 13px}.talent-showcase{--radius:86px}.portrait-slot{width:188px;left:calc(50% - 94px)}.ability-chip{width:126px;font-size:8px}.portrait-caption h2{font-size:27px}}
+@media(max-width:600px){.talent-scene{height:494px}.ability-stack{top:371px;left:9px;right:9px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.ability-chip{width:auto;min-height:65px;flex-direction:column;justify-content:center;gap:6px;text-align:center;padding:8px 5px;font-size:9px;line-height:1.3}.ability-chip:nth-child(2),.ability-chip:nth-child(3){margin-right:0}.ability-icon{font-size:20px}.talent-showcase figcaption{margin-top:-32px}.ribbon-backdrop{mask-image:radial-gradient(ellipse at center,black 37%,transparent 70%)}}
+@media(prefers-reduced-motion:reduce){.ribbon-backdrop,.ability-chip{animation:none!important}.portrait-slot,.portrait-card,.talent-dots button span{transition:none!important}}

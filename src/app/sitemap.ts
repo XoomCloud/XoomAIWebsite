@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: { path: string; priority: number; freq: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
     { path: "/", priority: 1, freq: "weekly" },
     { path: "/xoomagent", priority: 0.95, freq: "weekly" },
+    { path: "/xoomtalent", priority: 0.85, freq: "monthly" },
     { path: "/industries", priority: 0.8, freq: "monthly" },
     { path: "/ai-readiness", priority: 0.8, freq: "monthly" },
     { path: "/guides", priority: 0.6, freq: "monthly" },

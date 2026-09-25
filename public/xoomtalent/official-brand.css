@@ -1,0 +1,11 @@
+/* Display the supplied JPG unchanged; the viewport hides its empty outer margin. */
+.official-logo{position:relative;display:block;width:250px;aspect-ratio:1200/340;overflow:hidden;flex-shrink:0}
+.official-logo img,.footer .brand .official-logo img,.portrait-brand .official-logo img,.partner-art .official-logo img{position:absolute;display:block;width:106.666667%;height:auto;max-width:none;left:-3.333333%;top:-55.882353%;filter:none;transform:none;mix-blend-mode:screen}
+.header .brand{display:block;line-height:1}
+.footer .brand{background:#0b1925;padding:14px;border-radius:6px;display:inline-block;justify-self:start}
+.footer .official-logo{width:225px}
+.portrait-brand{top:12px;left:15px;right:15px}
+.portrait-brand .official-logo{width:140px}
+.partner-art .official-logo{width:min(100%,360px);z-index:1;transform:rotate(-7deg)}
+@media(max-width:720px){.header .official-logo{width:195px}.header{gap:14px}.portrait-brand{top:10px;left:12px}.portrait-brand .official-logo{width:124px}.footer .official-logo{width:220px}}
+@media(max-width:380px){.header .official-logo{width:180px}.prose h1{font-size:37px}}

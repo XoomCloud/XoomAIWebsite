@@ -23,6 +23,17 @@ const nextConfig: NextConfig = {
       { source: "/claude-ai-consulting", destination: "/claude-integration", permanent: true },
       // Readiness page consolidation
       { source: "/ai-readiness.html", destination: "/ai-readiness", permanent: true },
+      // XoomTalent clean URLs
+      { source: "/xoomtalent/index.html", destination: "/xoomtalent", permanent: true },
+      { source: "/xoomtalent/partners.html", destination: "/xoomtalent/partners", permanent: true },
+      { source: "/xoomtalent/privacy.html", destination: "/xoomtalent/privacy", permanent: true },
+    ];
+  },
+  async rewrites() {
+    return [
+      { source: "/xoomtalent", destination: "/xoomtalent/index.html" },
+      { source: "/xoomtalent/partners", destination: "/xoomtalent/partners.html" },
+      { source: "/xoomtalent/privacy", destination: "/xoomtalent/privacy.html" },
     ];
   },
   async headers() {

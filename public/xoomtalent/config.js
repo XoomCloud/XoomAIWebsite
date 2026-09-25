@@ -1,0 +1,1 @@
+window.XOOM_CONFIG = Object.freeze({email:'support@xoomai.com.au',phone:'1300040225',phoneDisplay:'1300 040 225',bookingUrl:'https://www.xoomai.com.au/contact',parentUrl:'https://www.xoomai.com.au'});
