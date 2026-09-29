@@ -12,8 +12,8 @@ const styles = new Proxy(css as Record<string, string>, {
 });
 
 const PACKAGES = {
-  foundation: { name: "AI Foundation", employees: 4, monthly: 1399 },
-  workforce: { name: "AI Workforce", employees: 8, monthly: 2399 },
+  foundation: { name: "AI Foundation", employees: 4, monthly: 1399, onboarding: 3000, partnerUpfront: 1000 },
+  workforce: { name: "AI Workforce", employees: 8, monthly: 2399, onboarding: 5000, partnerUpfront: 2000 },
 };
 
 const roles = [
@@ -144,9 +144,10 @@ export function PartnerPage() {
   const model = useMemo(() => {
     const pkg = PACKAGES[packageKey];
     const annualClientRevenue = pkg.monthly * 12 * clients;
-    const onboarding = 1000 * clients;
+    const clientOnboarding = pkg.onboarding * clients;
+    const partnerUpfront = pkg.partnerUpfront * clients;
     const profitShare = annualClientRevenue * 0.75 * 0.2;
-    return { pkg, annualClientRevenue, onboarding, profitShare, total: onboarding + profitShare };
+    return { pkg, annualClientRevenue, clientOnboarding, partnerUpfront, profitShare, total: partnerUpfront + profitShare };
   }, [packageKey, clients]);
 
   return (
@@ -171,7 +172,7 @@ export function PartnerPage() {
               <a className={cx("button", "buttonGhost")} href="#economics">See the commercial model</a>
             </div>
             <div className={styles.heroProof}>
-              <div><strong>$1,000</strong><span>onboarding payment</span></div>
+              <div><strong>$1K–$2K</strong><span>upfront partner payment</span></div>
               <div><strong>20%</strong><span>agreed profit share</span></div>
               <div><strong>60</strong><span>AI Employee roles ready to go</span></div>
             </div>
@@ -227,8 +228,8 @@ export function PartnerPage() {
       <section className={cx("section", "darkSection")} id="packages">
         <div className={cx("sectionHeading", "centered")}><p className={styles.sectionKicker}>60 AI Employee roles ready to go</p><h2>Build the workforce each client actually needs.</h2><p>Start with four or eight role-specific AI Employees, selected from a catalogue of 60 roles and configured around real workflows, approved systems and measurable outcomes.</p></div>
         <div className={styles.packageGrid}>
-          <article className={styles.packageCard}><div><p className={styles.miniLabel}>Entry package</p><h3>AI Foundation</h3><p className={styles.employeeCount}>4 AI Employees</p></div><div className={styles.price}><strong>$1,399</strong><span>+ GST / month</span></div><ul><li>Four role-specific AI agents</li><li>Configured around priority tasks</li><li>Guided onboarding</li><li>Ongoing optimisation</li></ul></article>
-          <article className={cx("packageCard", "featured")}><div className={styles.popular}>Typical client package</div><div><p className={styles.miniLabel}>Broader deployment</p><h3>AI Workforce</h3><p className={styles.employeeCount}>8 AI Employees</p></div><div className={styles.price}><strong>$2,399</strong><span>+ GST / month</span></div><ul><li>Eight role-specific AI agents</li><li>Cross-workflow deployment</li><li>Structured onboarding</li><li>Ongoing optimisation</li></ul></article>
+          <article className={styles.packageCard}><div><p className={styles.miniLabel}>Entry package</p><h3>AI Foundation</h3><p className={styles.employeeCount}>4 AI Employees</p></div><div className={styles.price}><strong>$1,399</strong><span>+ GST / month</span></div><ul><li>$3,000 + GST client onboarding</li><li>$1,000 paid upfront to the MSP</li><li>Four role-specific AI agents</li><li>Configured around priority tasks</li><li>Ongoing optimisation</li></ul></article>
+          <article className={cx("packageCard", "featured")}><div className={styles.popular}>Typical client package</div><div><p className={styles.miniLabel}>Broader deployment</p><h3>AI Workforce</h3><p className={styles.employeeCount}>8 AI Employees</p></div><div className={styles.price}><strong>$2,399</strong><span>+ GST / month</span></div><ul><li>$5,000 + GST client onboarding</li><li>$2,000 paid upfront to the MSP</li><li>Eight role-specific AI agents</li><li>Cross-workflow deployment</li><li>Ongoing optimisation</li></ul></article>
         </div>
         <div className={styles.roleGrid}>{roles.map(([title, body], i) => <article key={title}><span>{String(i + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p>{body}</p></div></article>)}</div>
         <p className={styles.roleDisclaimer}>Eight examples from a catalogue of 60 AI Employee roles. Final workforce composition, integrations and delivery scope are confirmed with each client.</p>
@@ -240,15 +241,20 @@ export function PartnerPage() {
           <div className={styles.calculatorControls}>
             <label>Typical client package<select value={packageKey} onChange={(event) => setPackageKey(event.target.value as keyof typeof PACKAGES)}><option value="foundation">AI Foundation · 4 Employees</option><option value="workforce">AI Workforce · 8 Employees</option></select></label>
             <label>Clients referred <output>{clients}</output><input type="range" min="1" max="20" value={clients} onChange={(event) => setClients(Number(event.target.value))} /></label>
+            <div className={styles.packageCommercials}>
+              <div><span>Client onboarding</span><strong>{money.format(model.pkg.onboarding)} + GST</strong></div>
+              <div><span>MSP paid upfront</span><strong>{money.format(model.pkg.partnerUpfront)} per client</strong></div>
+            </div>
             <div className={styles.fixedAssumption}><span>Fixed assumption</span><strong>75% gross margin rate</strong><p>Used only to illustrate the 20% partner profit share below.</p></div>
             <p className={styles.calculatorNote}>Actual partner payments use the profit definition and reporting schedule in the executed agreement.</p>
           </div>
           <div className={styles.calculatorResults}>
             <p className={styles.miniLabel}>Illustrative first-year partner value · based on 75% margin</p><strong className={styles.totalValue}>{money.format(model.total)}</strong>
-            <div className={styles.resultRow}><span>Upfront onboarding payments</span><b>{money.format(model.onboarding)}</b></div>
+            <div className={styles.resultRow}><span>Upfront MSP payments ({money.format(model.pkg.partnerUpfront)} × {clients})</span><b>{money.format(model.partnerUpfront)}</b></div>
             <div className={styles.resultRow}><span>20% share of 75% gross profit</span><b>{money.format(model.profitShare)}</b></div>
+            <div className={cx("resultRow", "muted")}><span>Client onboarding fees ({money.format(model.pkg.onboarding)} × {clients})</span><b>{money.format(model.clientOnboarding)}</b></div>
             <div className={cx("resultRow", "muted")}><span>Annual client revenue under management</span><b>{money.format(model.annualClientRevenue)}</b></div>
-            <p>{clients} × {model.pkg.name} client{clients > 1 ? "s" : ""} at {money.format(model.pkg.monthly)} per month, excluding GST.</p>
+            <p>{clients} × {model.pkg.name} client{clients > 1 ? "s" : ""} at {money.format(model.pkg.monthly)} per month, plus {money.format(model.pkg.onboarding)} onboarding per client. All figures exclude GST.</p>
           </div>
         </div>
       </section>
@@ -276,7 +282,7 @@ export function PartnerPage() {
           <details><summary>Does XoomAI replace the MSP in the client relationship?<span>+</span></summary><p>No. The program is designed to add specialist AI capability while the MSP remains the trusted technology adviser and relationship owner.</p></details>
           <details><summary>How is an opportunity protected?<span>+</span></summary><p>The lead is registered before engagement. Account ownership, communication and delivery rules are then confirmed under the partner agreement.</p></details>
           <details><summary>Can delivery be co-branded or behind the scenes?<span>+</span></summary><p>Yes. The appropriate delivery model can be agreed based on the MSP’s positioning, client expectations and operational requirements.</p></details>
-          <details><summary>How are partner payments calculated?<span>+</span></summary><p>The MSP receives $1,000 at the agreed onboarding milestone plus 20% of the profit defined in the executed agreement. Reporting and payment timing are documented upfront.</p></details>
+          <details><summary>How are partner payments calculated?<span>+</span></summary><p>The MSP receives $1,000 upfront for each AI Foundation client or $2,000 upfront for each AI Workforce client, plus 20% of the profit defined in the executed agreement. Reporting and payment timing are documented upfront.</p></details>
           <details><summary>What does the MSP need to deliver?<span>+</span></summary><p>The MSP introduces the client and provides account context. XoomAI can lead discovery, design, configuration, onboarding and ongoing optimisation.</p></details>
         </div>
       </section>

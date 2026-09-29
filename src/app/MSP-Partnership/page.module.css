@@ -127,6 +127,10 @@
 .calculator-controls select { min-height: 48px; margin-top: 6px; }
 .partner-page input[type='range'] { padding: 0; height: 22px; accent-color: var(--purple); background: transparent; box-shadow: none; border: 0; }
 .calculator-note { margin: 0; color: #858b98; font-size: 9px; line-height: 1.5; }
+.package-commercials { overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid #d9dde5; border-radius: 12px; background: white; }
+.package-commercials div { display: grid; gap: 5px; padding: 16px; }.package-commercials div + div { border-left: 1px solid #e4e6eb; }
+.package-commercials span { color: #858b98; font-size: 9px; font-weight: 740; text-transform: uppercase; letter-spacing: .07em; }
+.package-commercials strong { color: var(--ink); font-family: var(--font-space-grotesk); font-size: 15px; }
 .fixed-assumption { display: grid; gap: 5px; padding: 18px; border: 1px solid #ded7ef; border-radius: 12px; background: #eee9fa; }
 .fixed-assumption span { color: var(--purple); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
 .fixed-assumption strong { font-family: var(--font-space-grotesk); font-size: 20px; }
