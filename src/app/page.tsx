@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroV2 } from "@/components/sections/hero-v2";
+import { OmiTeaser } from "@/components/sections/omi-teaser";
 import { Section, SectionHeading } from "@/components/sections/section";
 import { FeatureGrid } from "@/components/sections/feature-grid";
 import { CardGrid, type LinkCard } from "@/components/sections/card-grid";
@@ -89,6 +90,8 @@ export default function HomePage() {
           </Link>
         </div>
       </Section>
+
+      <OmiTeaser />
 
       {/* Built for Australian SMBs */}
       <Section className="pt-0">

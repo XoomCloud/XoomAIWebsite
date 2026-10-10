@@ -66,6 +66,7 @@ export const INDUSTRIES_NAV: NavChild[] = [
 
 export const MAIN_NAV: NavItem[] = [
   { label: "XoomAgent™", href: "/xoomagent" },
+  { label: "Omi", href: "/omi" },
   { label: "XoomTalent", href: "/xoomtalent" },
   { label: "Services", href: "/#services", children: SERVICES_NAV },
   { label: "Industries", href: "/industries", children: INDUSTRIES_NAV },
