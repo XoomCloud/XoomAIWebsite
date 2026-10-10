@@ -30,7 +30,7 @@ const moments = [
   ] },
 ];
 
-export function OmiBookingLink({ placement, children = "Book an integration call", className = "" }: { placement: string; children?: React.ReactNode; className?: string }) {
+export function OmiBookingLink({ placement, children = "Book your setup call", className = "" }: { placement: string; children?: React.ReactNode; className?: string }) {
   return <a className={`${styles.button} ${className}`} href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={() => {
     trackEvent("omi_integration_booking_click", { placement, destination: SITE.bookingUrl });
     trackMetaCustom("OmiIntegrationBookingClick", { placement });
@@ -52,7 +52,7 @@ export function DayExplorer() {
       <blockquote>“{moment.quote}”</blockquote>
       <div className={styles.memory}><span><Workflow size={18} aria-hidden="true" /> XoomAgent™ understands the context</span><p>{moment.memory}</p></div>
       <div className={styles.taskList}>{moment.tasks.map(task => <div key={task.role} className={styles.task}><span className={styles.taskCheck}><Check size={16} aria-hidden="true" /></span><div><small>{task.role}</small><h3>{task.action}</h3><p>{task.detail}</p></div></div>)}</div>
-      <p className={styles.previewNote}>Planned experience. Actions depend on your connected systems, configured roles and approval rules.</p>
+      <p className={styles.previewNote}>Example workflow. Actions follow your connected systems, configured roles and approval rules.</p>
     </div>
   </div>;
 }
