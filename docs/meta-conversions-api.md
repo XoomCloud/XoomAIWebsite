@@ -1,8 +1,32 @@
 # Meta conversion tracking (Pixel + Conversions API)
 
-Booking tracking uses browser Pixel and server Conversions API events. Matching
-event names and IDs allow Meta to deduplicate them; verify the actual HubSpot
-payloads and Meta receipt during the end-to-end booking test.
+Booking tracking fires the browser Pixel after a confirmed HubSpot booking.
+Meta also operates a hosted web Conversions API connection for this dataset.
+The repository contains an optional custom webhook path; its presence does not
+mean it is configured in production.
+
+## Verified account state — 13 October 2026
+
+- Active dataset: **XoomLanding / 1643300670067276**.
+- Events Manager shows **Meta-hosted web Conversions API connected**, opted in
+  on 30 June 2026. Automatic website matching is on; automatic events are off.
+- The custom `/api/hubspot/meeting-booked` endpoint returns 503 because its
+  production secrets are not configured. This does **not** mean all CAPI is off.
+- The CRM Conversions API setup remains incomplete. A booking signal does not
+  establish attendance, qualification or a won sale.
+- Lead source charts showed browser and Meta-hosted copies. These are receipt
+  counts, not proven unique leads; the deduplication panel was still processing.
+  Verify matching IDs before adding another server reporting path.
+- Both `/book` and `/takeaweekoff/book` forward the six allowlisted UTM fields
+  to the same Vlad Nielsen calendar, including their fallback links. Other query
+  parameters are not forwarded. The calendar duration is **45 minutes**.
+- The campaign ad editor had empty URL campaign tags at audit time. Website
+  forwarding cannot reconstruct missing ad IDs. Add campaign/ad attribution in
+  Ads Manager separately, without publishing unrelated saved drafts.
+
+The configuration guidance below applies to the optional custom webhook. Do not
+enable it alongside Meta-hosted reporting without checking end-to-end event IDs
+and deduplication. No new CAPI token or CRM data sharing was enabled in this audit.
 
 ## The rule
 
@@ -12,7 +36,7 @@ the separate custom event `AuditBookingClick` with campaign, placement and
 destination (no email, phone or URL query). Use confirmed `Lead` for conversion
 optimisation, not the CTA click event.
 
-## The two reporting paths
+## Repository reporting paths
 
 | Path | Trigger | File |
 |---|---|---|
@@ -23,10 +47,11 @@ The browser path is blocked for a meaningful share of users (ad blockers, Safari
 ITP). A configured server path provides another reporting channel; credentials,
 HubSpot workflow delivery and Meta acceptance must all work.
 
-## Why they don't double-count
+## Deduplication contract for the optional custom webhook
 
-Both paths derive the **same `event_id`** for a booking, and Meta deduplicates
-events that share an `event_id` + event name.
+The repository's browser and webhook implementations derive the **same
+`event_id`** when they receive the same booking identity. This is a code contract,
+not proof of live deduplication or of the IDs used by Meta-hosted reporting.
 
 The id comes from `bookingLeadEventId()` in `src/lib/booking-lead.ts`:
 
