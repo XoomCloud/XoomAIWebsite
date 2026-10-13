@@ -9,7 +9,7 @@ import { CTA } from "@/lib/site";
 import styles from "./campaign.module.css";
 
 const BOOKING_PATH = "/takeaweekoff/book";
-const CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
+const CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "utm_id", "fbclid"];
 
 export function AuditLink({ placement, className = "" }: { placement: string; className?: string }) {
   const router = useRouter();

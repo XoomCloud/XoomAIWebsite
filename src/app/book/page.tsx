@@ -3,17 +3,19 @@ import { LandingNav } from "@/components/landing/landing-nav";
 import { MeetingEmbed } from "@/components/landing/meeting-embed";
 import { BookingLeadTracker } from "@/components/landing/booking-lead-tracker";
 import { SITE } from "@/lib/site";
+import { meetingUrls, type BookingSearchParams } from "@/lib/meeting-url";
 import { CalendarClock, ShieldCheck, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: { absolute: "Book Your AI Strategy Session | XoomAI" },
   description:
-    "Book your free 30-minute AI Strategy Session with XoomAI. Pick a time that suits you and we'll map out your first AI employee — no obligation.",
+    "Book your free 45-minute AI Strategy Session with XoomAI. Pick a time that suits you and we'll discuss your first XoomAgent role — no obligation.",
   robots: { index: false, follow: false },
   alternates: { canonical: "/book" },
 };
 
-export default function BookPage() {
+export default async function BookPage({ searchParams }: { searchParams: Promise<BookingSearchParams> }) {
+  const scheduler = meetingUrls(await searchParams);
   return (
     <div className="on-dark relative min-h-screen">
       {/* Lead fires only on a confirmed booking — never on page load. */}
@@ -26,7 +28,7 @@ export default function BookPage() {
         <div className="container-xa relative">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-medium text-primary">
-              <Clock className="size-3.5" aria-hidden /> Free · 30 minutes · No obligation
+              <Clock className="size-3.5" aria-hidden /> Free · 45 minutes · No obligation
             </span>
             <h1 className="mt-5 font-display text-4xl font-semibold tracking-[-0.03em] text-foreground md:text-5xl">
               Book your <span className="text-gradient">AI strategy session</span>
@@ -40,10 +42,17 @@ export default function BookPage() {
           <div className="mx-auto mt-10 max-w-3xl">
             <div className="ring-gradient rounded-3xl">
               <div className="overflow-hidden rounded-3xl border border-border bg-white/[0.02] p-4 backdrop-blur-sm md:p-6">
-                <MeetingEmbed />
+                <MeetingEmbed src={scheduler.embed} />
               </div>
             </div>
           </div>
+
+          <p className="mx-auto mt-6 max-w-xl text-center text-sm text-muted">
+            After booking, check your inbox and accept the calendar invitation. Bring one workflow you want to improve and the systems your team uses.
+          </p>
+          <p className="mt-3 text-center text-sm text-muted">
+            Calendar not loading? <a href={scheduler.fallback} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline">Open the booking calendar</a>
+          </p>
 
           <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted">
             <span className="flex items-center gap-1.5"><ShieldCheck className="size-4 text-primary" aria-hidden /> Australian owned · security-led</span>
