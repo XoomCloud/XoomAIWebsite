@@ -4,6 +4,7 @@ export const FORM_ID = 'd5bbb02f-27ce-4869-8428-3f9268bfe5d5';
 export const SOURCE_URL = 'https://xoomai.com.au/youraiemployee';
 export const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 export const TOKEN_TTL_SECONDS = 900;
+export const FORM_SESSION_SECONDS = 7 * 86400;
 export const RETENTION_SECONDS = 7 * 86400;
 export type Claim = { v: 1; id: string; nonce: string; formId: string; sourceUrl: string; createdAt: number; iat: number; exp: number };
 export type Submission = { token: string; eventUuid: string; formId: string; sourceUrl: string; submittedAt: string; email: string };
@@ -20,7 +21,8 @@ export function issueIdentity(secret: string, now = Date.now(), prior?: Pick<Cla
   const claim: Claim = { v: 1, id: prior?.id || randomUUID(), nonce: prior?.nonce || randomUUID(), createdAt: prior?.createdAt ?? iat, formId: FORM_ID, sourceUrl: SOURCE_URL, iat, exp: iat + TOKEN_TTL_SECONDS };
   const payload = Buffer.from(JSON.stringify(claim)).toString('base64url');
   const signature = createHmac('sha256', secret).update(payload).digest('base64url');
-  return { eventUuid: claim.id, token: `${payload}.${signature}`, expiresAt: claim.exp * 1000, sourceUrl: SOURCE_URL, formId: FORM_ID };
+  return { eventUuid: claim.id, token: `${payload}.${signature}`, expiresAt: claim.exp * 1000,
+    validUntil: (claim.createdAt + FORM_SESSION_SECONDS) * 1000, sourceUrl: SOURCE_URL, formId: FORM_ID };
 }
 
 export function readClaim(token: string, secret: string, now = Date.now(), allowExpired = false): Claim | null {
@@ -34,7 +36,7 @@ export function readClaim(token: string, secret: string, now = Date.now(), allow
     const seconds = Math.floor(now / 1000);
     if (c.v !== 1 || typeof c.id !== 'string' || !UUID.test(c.id) || typeof c.nonce !== 'string' || !UUID.test(c.nonce)
       || c.formId !== FORM_ID || c.sourceUrl !== SOURCE_URL || !Number.isSafeInteger(c.iat) || !Number.isSafeInteger(c.exp)
-      || !Number.isSafeInteger(c.createdAt) || c.createdAt > c.iat || c.iat - c.createdAt > RETENTION_SECONDS
+      || !Number.isSafeInteger(c.createdAt) || c.createdAt > c.iat || c.iat - c.createdAt > FORM_SESSION_SECONDS
       || c.iat > seconds || (!allowExpired && c.exp <= seconds) || c.exp - c.iat !== TOKEN_TTL_SECONDS) return null;
     return c;
   } catch { return null; }
@@ -43,7 +45,7 @@ export function readClaim(token: string, secret: string, now = Date.now(), allow
 /** Renew the token lease, preserving the canonical event UUID and nonce. */
 export function renewIdentity(token: string, secret: string, now = Date.now()) {
   const prior = readClaim(token, secret, now, true);
-  if (!prior || Math.floor(now / 1000) - prior.createdAt >= RETENTION_SECONDS) return null;
+  if (!prior || Math.floor(now / 1000) - prior.createdAt >= FORM_SESSION_SECONDS) return null;
   return issueIdentity(secret, now, prior);
 }
 
@@ -55,11 +57,12 @@ export async function verifySubmission(input: unknown, secret: string, store: No
     || s.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email) || typeof s.submittedAt !== 'string') return null;
   const submitted = Date.parse(s.submittedAt);
   if (!Number.isFinite(submitted) || submitted > now || now - submitted >= RETENTION_SECONDS * 1000) return null;
-  // The token must have been valid at authenticated submission time. A later
-  // delivery retry need not occur before the original 15-minute lease expires.
-  const claim = readClaim(s.token, secret, submitted);
+  // The signed identity is valid for the fixed form-session window. The
+  // 15-minute deadline requests refresh; it cannot invalidate a submission
+  // made while refresh is in flight with the previous token already captured.
+  const claim = readClaim(s.token, secret, submitted, true);
   if (!claim || claim.id !== s.eventUuid
-    || submitted < claim.iat * 1000 || submitted >= claim.exp * 1000) return null;
+    || submitted < claim.iat * 1000 || submitted >= (claim.createdAt + FORM_SESSION_SECONDS) * 1000) return null;
   const eventId = `hs_form_${claim.id}`;
   const binding = createHash('sha256').update(JSON.stringify([eventId, FORM_ID, SOURCE_URL, submitted, s.email.trim().toLowerCase()])).digest('hex');
   const ttl = Math.ceil((submitted + RETENTION_SECONDS * 1000 - now) / 1000) + 60;

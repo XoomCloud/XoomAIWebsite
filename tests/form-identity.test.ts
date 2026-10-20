@@ -73,3 +73,12 @@ test('renewal preserves canonical event and nonce, including recovery after a su
 test('retry beyond Meta delivery retention is rejected',async()=>{
  const now=Date.now(),f=fixture(now);assert.equal(await verifySubmission(f,secret,store(),now+7*86400000),null);
 });
+
+test('the old token captured by HubSpot remains verifiable when submission races renewal',async()=>{
+ const now=Date.now(),original=issueIdentity(secret,now),submitted=now+16*60000;
+ const body={...original,email:'test@example.com',submittedAt:new Date(submitted).toISOString()};
+ const renewed=renewIdentity(original.token,secret,submitted)!;assert.equal(renewed.eventUuid,original.eventUuid);assert.equal(renewed.validUntil,original.validUntil);
+ const s=store(),r=await verifySubmission(body,secret,s,submitted+1000);assert.equal(r?.eventId,'hs_form_'+original.eventUuid);
+ assert.deepEqual(await verifySubmission(body,secret,s,submitted+3600000),r);
+ assert.equal(await verifySubmission({...body,submittedAt:new Date(original.validUntil).toISOString()},secret,store(),original.validUntil+1000),null);
+});

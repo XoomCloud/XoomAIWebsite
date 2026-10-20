@@ -57,11 +57,15 @@
       var request = { method: 'POST', credentials: 'same-origin', cache: 'no-store' };
       if (entry.token) { request.headers = { 'Content-Type': 'application/json' }; request.body = JSON.stringify({ token: entry.token }); }
       var response = await w.fetch('/api/hubspot/identity/issue', request);
+      if (entry.submitted) return;
       if (!response.ok) throw new Error('Identity renewal unavailable');
       var issued = await response.json();
+      if (entry.submitted) return;
       if (!issued.ok || typeof issued.eventUuid !== 'string' || !uuid.test(issued.eventUuid) || typeof issued.token !== 'string'
         || (entry.id && issued.eventUuid !== entry.id) || issued.formId !== formId || issued.sourceUrl !== sourceUrl
-        || !Number.isFinite(issued.expiresAt) || issued.expiresAt <= Date.now()) throw new Error('Invalid identity renewal');
+        || !Number.isFinite(issued.expiresAt) || issued.expiresAt <= Date.now()
+        || !Number.isFinite(issued.validUntil) || issued.validUntil <= Date.now()
+        || (entry.validUntil && issued.validUntil !== entry.validUntil)) throw new Error('Invalid identity renewal');
       // Preserve the identity even if field writes fail; a retry must renew it,
       // never silently substitute another UUID for this form instance.
       entry.id = issued.eventUuid; entry.token = issued.token;
@@ -70,10 +74,11 @@
       entry.form.setFieldValue(fields.source, [sourceUrl]);
       if (scalar(await entry.form.getFieldValue(fields.id)) !== entry.id || scalar(await entry.form.getFieldValue(fields.token)) !== entry.token
         || scalar(await entry.form.getFieldValue(fields.source)) !== sourceUrl) throw new Error('Identity fields unavailable');
-      entry.expiresAt = issued.expiresAt; entry.ready = true;
+      entry.expiresAt = issued.expiresAt; entry.validUntil = issued.validUntil; entry.ready = true;
+      if (entry.submitted) return;
       scheduleRefresh(entry, Math.max(1000, entry.expiresAt - Date.now() - 120000));
     } catch (_) {
-      unavailable(); scheduleRefresh(entry, 5000);
+      if (!entry.submitted) { unavailable(); scheduleRefresh(entry, 5000); }
     } finally { entry.inFlight = false; }
   }
   w.addEventListener('hs-form-event:on-ready', async function (event) {
@@ -106,7 +111,7 @@
       var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
       if (!form || form.getFormId() !== formId) return;
       var identity = identities[event.detail.instanceId];
-      if (!identity || !identity.ready || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.expiresAt <= Date.now()) { unavailable(); return; }
+      if (!identity || !identity.ready || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.validUntil <= Date.now()) { unavailable(); return; }
       identity.submitted = true;
       if (identity.timer && typeof w.clearTimeout === 'function') w.clearTimeout(identity.timer);
       var id = 'hs_form_' + identity.id;
