@@ -41,31 +41,63 @@
     save();
   }
   function scalar(value) { return Array.isArray(value) && value.length === 1 ? value[0] : value; }
+  function unavailable() {
+    if (typeof w.CustomEvent === 'function' && typeof w.dispatchEvent === 'function') {
+      w.dispatchEvent(new w.CustomEvent('xoomFormIdentityUnavailable', { detail: { formId: formId, source_page_path: sourcePath } }));
+    }
+  }
+  function scheduleRefresh(entry, delay) {
+    if (entry.timer && typeof w.clearTimeout === 'function') w.clearTimeout(entry.timer);
+    entry.timer = w.setTimeout(function () { refresh(entry); }, delay);
+  }
+  async function refresh(entry) {
+    if (entry.inFlight || entry.submitted) return;
+    entry.inFlight = true;
+    try {
+      var request = { method: 'POST', credentials: 'same-origin', cache: 'no-store' };
+      if (entry.token) { request.headers = { 'Content-Type': 'application/json' }; request.body = JSON.stringify({ token: entry.token }); }
+      var response = await w.fetch('/api/hubspot/identity/issue', request);
+      if (!response.ok) throw new Error('Identity renewal unavailable');
+      var issued = await response.json();
+      if (!issued.ok || typeof issued.eventUuid !== 'string' || !uuid.test(issued.eventUuid) || typeof issued.token !== 'string'
+        || (entry.id && issued.eventUuid !== entry.id) || issued.formId !== formId || issued.sourceUrl !== sourceUrl
+        || !Number.isFinite(issued.expiresAt) || issued.expiresAt <= Date.now()) throw new Error('Invalid identity renewal');
+      // Preserve the identity even if field writes fail; a retry must renew it,
+      // never silently substitute another UUID for this form instance.
+      entry.id = issued.eventUuid; entry.token = issued.token;
+      entry.form.setFieldValue(fields.id, [entry.id]);
+      entry.form.setFieldValue(fields.token, [entry.token]);
+      entry.form.setFieldValue(fields.source, [sourceUrl]);
+      if (scalar(await entry.form.getFieldValue(fields.id)) !== entry.id || scalar(await entry.form.getFieldValue(fields.token)) !== entry.token
+        || scalar(await entry.form.getFieldValue(fields.source)) !== sourceUrl) throw new Error('Identity fields unavailable');
+      entry.expiresAt = issued.expiresAt; entry.ready = true;
+      scheduleRefresh(entry, Math.max(1000, entry.expiresAt - Date.now() - 120000));
+    } catch (_) {
+      unavailable(); scheduleRefresh(entry, 5000);
+    } finally { entry.inFlight = false; }
+  }
   w.addEventListener('hs-form-event:on-ready', async function (event) {
     if (!event.detail || event.detail.formId !== formId || w.location.pathname !== sourcePath) return;
     var instance = event.detail.instanceId;
     if (typeof instance !== 'string' || identities[instance]) return;
     sources[instance] = sourcePath;
-    identities[instance] = { preparing: true };
+    var entry = identities[instance] = { ready: false };
     try {
       var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
       if (!form || form.getFormId() !== formId || typeof form.setFieldValue !== 'function') return;
       var current = await form.getFormFieldValues();
-      if (!Object.keys(fields).every(function (k) { return current.some(function (f) { return f.name === fields[k]; }); })) return;
-      var response = await w.fetch('/api/hubspot/identity/issue', { method: 'POST', credentials: 'same-origin', cache: 'no-store' });
-      if (!response.ok) return;
-      var issued = await response.json();
-      if (!issued.ok || typeof issued.eventUuid !== 'string' || !uuid.test(issued.eventUuid) || typeof issued.token !== 'string'
-        || issued.formId !== formId || issued.sourceUrl !== sourceUrl || !Number.isFinite(issued.expiresAt) || issued.expiresAt <= Date.now()) return;
-      // The supported HubSpot API accepts string arrays for hidden fields.
-      form.setFieldValue(fields.id, [issued.eventUuid]);
-      form.setFieldValue(fields.token, [issued.token]);
-      form.setFieldValue(fields.source, [sourceUrl]);
-      if (scalar(await form.getFieldValue(fields.id)) !== issued.eventUuid || scalar(await form.getFieldValue(fields.token)) !== issued.token
-        || scalar(await form.getFieldValue(fields.source)) !== sourceUrl) return;
-      identities[instance] = { id: issued.eventUuid, expiresAt: issued.expiresAt };
-    } catch (_) { /* Form submission remains available; incomplete identity cannot emit a conversion. */ }
+      if (!Object.keys(fields).every(function (k) { return current.some(function (f) { return f.name === fields[k]; }); })) { unavailable(); return; }
+      entry.form = form; await refresh(entry);
+    } catch (_) { unavailable(); }
   });
+  function refreshDue() {
+    Object.keys(identities).forEach(function (key) {
+      var entry = identities[key];
+      if (entry.form && !entry.submitted && (!entry.ready || entry.expiresAt - Date.now() <= 120000)) refresh(entry);
+    });
+  }
+  w.addEventListener('focus', refreshDue);
+  if (w.document) w.document.addEventListener('visibilitychange', refreshDue);
   w.addEventListener('hs-form-event:on-submission:success', function (event) {
     if (!event.detail || event.detail.formId !== formId) return;
     var path = sources[event.detail.instanceId] || w.location.pathname;
@@ -74,7 +106,9 @@
       var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
       if (!form || form.getFormId() !== formId) return;
       var identity = identities[event.detail.instanceId];
-      if (!identity || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.expiresAt <= Date.now()) return;
+      if (!identity || !identity.ready || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.expiresAt <= Date.now()) { unavailable(); return; }
+      identity.submitted = true;
+      if (identity.timer && typeof w.clearTimeout === 'function') w.clearTimeout(identity.timer);
       var id = 'hs_form_' + identity.id;
       if (state.sentMeta.includes(id) || state.pending.some(function (entry) { return entry.id === id; })) return;
       state.pending.push({ id: id, path: path, at: Date.now() });
