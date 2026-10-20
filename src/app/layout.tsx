@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <ChromeGate>{children}</ChromeGate>
         <JsonLd data={[organizationSchema(), professionalServiceSchema()]} />
+        <Script src="/booking-click-tracking.js" strategy="afterInteractive" />
         <Analytics />
         <MetaPixel />
       </body>
