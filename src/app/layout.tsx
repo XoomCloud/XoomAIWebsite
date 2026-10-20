@@ -71,6 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <ChromeGate>{children}</ChromeGate>
         <JsonLd data={[organizationSchema(), professionalServiceSchema()]} />
+        <Script src="/hubspot-form-tracking.js" strategy="beforeInteractive" />
         <Script src="/booking-click-tracking.js" strategy="afterInteractive" />
         <Analytics />
         <MetaPixel />

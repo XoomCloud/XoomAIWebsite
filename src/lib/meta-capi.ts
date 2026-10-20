@@ -6,7 +6,7 @@
  * Both must send the SAME
  * `event_id` for a booking, so Meta collapses the pair instead of double-counting.
  *
- * Server-only — never import from a client component. Requires
+ * Server-only ; never import from a client component. Requires
  * META_CAPI_ACCESS_TOKEN (a secret; do NOT prefix with NEXT_PUBLIC_).
  */
 
@@ -31,7 +31,7 @@ function hashPhone(value: string | undefined | null): string | undefined {
   return digits ? sha256(digits) : undefined;
 }
 
-export type CapiLeadInput = {
+export type CapiScheduleInput = {
   /** Must match the browser Pixel event id for this booking. */
   eventId: string;
   email?: string;
@@ -51,10 +51,10 @@ export type CapiResult =
   | { sent: false; reason: "not_configured" | "no_identifiers" | "invalid_event_time" | "request_failed"; status?: number; detail?: string };
 
 /**
- * Send a single `Lead` event to the Conversions API.
+ * Send a single `Schedule` event to the Conversions API.
  * Returns a result so the webhook can distinguish retryable delivery failures.
  */
-export async function sendLeadToMetaCapi(input: CapiLeadInput): Promise<CapiResult> {
+export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<CapiResult> {
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN;
   const pixelId = process.env.META_PIXEL_ID || META_PIXEL_ID;
 
@@ -82,7 +82,7 @@ export async function sendLeadToMetaCapi(input: CapiLeadInput): Promise<CapiResu
   const body: Record<string, unknown> = {
     data: [
       {
-        event_name: "Lead",
+        event_name: "Schedule",
         event_time: Math.floor(eventTimeMs / 1000),
         event_id: input.eventId,
         action_source: "website",

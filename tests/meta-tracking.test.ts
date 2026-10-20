@@ -38,7 +38,7 @@ function request(body: unknown = booking, secret = "test-only-secret") {
   return new Request(endpoint, { method: "POST", headers: { "x-webhook-secret": secret }, body: JSON.stringify(body) });
 }
 
-test("confirmed booking sends hashed Lead with receipt time, canonical campaign URL and shared Pixel id", async () => {
+test("confirmed booking sends hashed Schedule with receipt time, canonical campaign URL and shared Pixel id", async () => {
   const before = Math.floor(Date.now() / 1000);
   const response = await POST(request());
   assert.equal(response.status, 200);
@@ -47,7 +47,7 @@ test("confirmed booking sends hashed Lead with receipt time, canonical campaign 
   const event = body.data[0];
   assert.ok(event.event_time >= before && event.event_time <= Math.floor(Date.now() / 1000));
   assert.notEqual(event.event_time, Date.parse(appointment) / 1000);
-  assert.equal(event.event_name, "Lead");
+  assert.equal(event.event_name, "Schedule");
   assert.equal(event.event_source_url, "https://xoomai.com.au/takeaweekoff/book");
   assert.equal(event.custom_data.content_name, "Free AI Workflow Audit");
   assert.equal(event.custom_data.value, undefined);

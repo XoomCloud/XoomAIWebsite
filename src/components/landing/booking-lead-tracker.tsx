@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { trackLead, whenMetaReady } from "@/lib/meta";
+import { trackMeta, whenMetaReady } from "@/lib/meta";
 import { isHubSpotOrigin, isBookingConfirmed, bookingEventId } from "@/lib/booking-lead";
 
 /**
- * Fires the Meta `Lead` event ONLY after a HubSpot meeting is successfully
- * booked and confirmed — never on page load and never on a button click.
+ * Fires the Meta `Schedule` event ONLY after a HubSpot meeting is successfully
+ * booked and confirmed ; never on page load and never on a button click.
  *
  * The scheduler is a cross-origin iframe (meetings.hubspot.com), but HubSpot's
  * embed posts a `window.postMessage` on success, which is the provider's
@@ -42,7 +42,7 @@ function rememberFired(id: string): void {
     list.push(id);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(-MAX_REMEMBERED)));
   } catch {
-    /* storage unavailable (private mode) — the in-memory guard still applies */
+    /* storage unavailable (private mode) ; the in-memory guard still applies */
   }
 }
 
@@ -66,7 +66,8 @@ export function BookingLeadTracker({ contentName = "AI Strategy Session" }: { co
       if (firedThisSession.has(eventId) || alreadyFired(eventId)) return;
       firedThisSession.add(eventId);
       cancelPending.push(whenMetaReady(() => {
-        trackLead(
+        trackMeta(
+          "Schedule",
           {
             content_name: contentName,
             content_category: "Booking",

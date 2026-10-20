@@ -7,9 +7,9 @@ const FORM_ID = process.env.NEXT_PUBLIC_HUBSPOT_FORM_ID || "d5bbb02f-27ce-4869-8
 const REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION || "na1";
 
 /**
- * HubSpot embedded lead form. The embed script auto-renders any `.hs-form-frame`.
- * Redirect on submit is configured in HubSpot (→ /book). This component does not
- * fire Lead — that only happens once a booking is confirmed (BookingLeadTracker).
+ * HubSpot confirms submissions through its global form events. The root
+ * hubspot-form-tracking.js listener sends one Lead for a confirmed submission
+ * on /youraiemployee. Completed meetings are reported separately as Schedule.
  */
 export function HubspotForm() {
   return (

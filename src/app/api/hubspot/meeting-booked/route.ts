@@ -1,13 +1,13 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { extractBookingIdentity, bookingLeadEventId } from "@/lib/booking-lead";
-import { sendLeadToMetaCapi } from "@/lib/meta-capi";
+import { sendScheduleToMetaCapi } from "@/lib/meta-capi";
 import { bookingConversionMetadata } from "@/lib/booking-conversion";
 
 /**
  * HubSpot webhook → Meta Conversions API.
  *
- * Fires a server-side `Lead` when a meeting is booked, using the SAME event id
+ * Fires a server-side `Schedule` when a meeting is booked, using the SAME event id
  * the browser Pixel derives for that booking, so Meta deduplicates the pair.
  * This recovers conversions the browser Pixel loses to ad blockers / ITP.
  *
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
   const receivedAt = Date.now();
   const configured = Boolean(process.env.HUBSPOT_WEBHOOK_SECRET || process.env.HUBSPOT_CLIENT_SECRET);
   if (!configured) {
-    console.error("[meta-capi] webhook secret not configured — rejecting request");
+    console.error("[meta-capi] webhook secret not configured ; rejecting request");
     return NextResponse.json({ ok: false, error: "Webhook not configured." }, { status: 503 });
   }
 
@@ -113,14 +113,14 @@ export async function POST(request: Request) {
       continue;
     }
 
-    const result = await sendLeadToMetaCapi({
+    const result = await sendScheduleToMetaCapi({
       eventId,
       email: identity.email,
       ...bookingConversionMetadata(booking, receivedAt),
     });
 
     if (!result.sent) {
-      console.error("[meta-capi] Lead not sent:", result.reason, result.status ?? "");
+      console.error("[meta-capi] Schedule not sent:", result.reason, result.status ?? "");
     }
     results.push({ eventId, sent: result.sent, ...(result.sent ? {} : { reason: result.reason }) });
   }
