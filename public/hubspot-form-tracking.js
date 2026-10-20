@@ -4,9 +4,13 @@
   w.__xoomHubSpotFormTrackingInstalled = true;
   var formId = 'd5bbb02f-27ce-4869-8428-3f9268bfe5d5';
   var sourcePath = '/youraiemployee';
-  var key = 'xoomai:hubspot-form-conversions:v1';
+  var key = 'xoomai:hubspot-form-conversions:v2';
   var state = { sentMeta: [], sentGa: [], pending: [] };
-  var sources = {};
+  var sources = Object.create(null);
+  var identities = Object.create(null);
+  var uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+  var sourceUrl = 'https://xoomai.com.au' + sourcePath;
+  var fields = { id: '0-1/xoom_tracking_uuid', token: '0-1/xoom_tracking_token', source: '0-1/xoom_tracking_source_url' };
   var allowGaHere = false;
   try {
     var saved = JSON.parse(w.sessionStorage.getItem(key));
@@ -20,7 +24,7 @@
   }
   function flush() {
     state.pending = state.pending.filter(function (entry) {
-      if (!entry || !/^hs_form_[0-9a-f-]{36}$/i.test(entry.id) || entry.path !== sourcePath || !Number.isFinite(entry.at) || Date.now() - entry.at > 86400000 || entry.at > Date.now()) return false;
+      if (!entry || typeof entry.id !== 'string' || !entry.id.startsWith('hs_form_') || !uuid.test(entry.id.slice(8)) || entry.path !== sourcePath || !Number.isFinite(entry.at) || Date.now() - entry.at > 86400000 || entry.at > Date.now()) return false;
       var params = { form_id: formId, source_page_path: entry.path, conversion_type: 'hubspot_form_submission' };
       if (w.__xoomGaReady && (w.location.pathname !== sourcePath || allowGaHere) && !state.sentGa.includes(entry.id)) {
         w.dataLayer = w.dataLayer || [];
@@ -36,8 +40,31 @@
     });
     save();
   }
-  w.addEventListener('hs-form-event:on-ready', function (event) {
-    if (event.detail && event.detail.formId === formId && w.location.pathname === sourcePath) sources[event.detail.instanceId] = sourcePath;
+  function scalar(value) { return Array.isArray(value) && value.length === 1 ? value[0] : value; }
+  w.addEventListener('hs-form-event:on-ready', async function (event) {
+    if (!event.detail || event.detail.formId !== formId || w.location.pathname !== sourcePath) return;
+    var instance = event.detail.instanceId;
+    if (typeof instance !== 'string' || identities[instance]) return;
+    sources[instance] = sourcePath;
+    identities[instance] = { preparing: true };
+    try {
+      var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
+      if (!form || form.getFormId() !== formId || typeof form.setFieldValue !== 'function') return;
+      var current = await form.getFormFieldValues();
+      if (!Object.keys(fields).every(function (k) { return current.some(function (f) { return f.name === fields[k]; }); })) return;
+      var response = await w.fetch('/api/hubspot/identity/issue', { method: 'POST', credentials: 'same-origin', cache: 'no-store' });
+      if (!response.ok) return;
+      var issued = await response.json();
+      if (!issued.ok || typeof issued.eventUuid !== 'string' || !uuid.test(issued.eventUuid) || typeof issued.token !== 'string'
+        || issued.formId !== formId || issued.sourceUrl !== sourceUrl || !Number.isFinite(issued.expiresAt) || issued.expiresAt <= Date.now()) return;
+      // The supported HubSpot API accepts string arrays for hidden fields.
+      form.setFieldValue(fields.id, [issued.eventUuid]);
+      form.setFieldValue(fields.token, [issued.token]);
+      form.setFieldValue(fields.source, [sourceUrl]);
+      if (scalar(await form.getFieldValue(fields.id)) !== issued.eventUuid || scalar(await form.getFieldValue(fields.token)) !== issued.token
+        || scalar(await form.getFieldValue(fields.source)) !== sourceUrl) return;
+      identities[instance] = { id: issued.eventUuid, expiresAt: issued.expiresAt };
+    } catch (_) { /* Form submission remains available; incomplete identity cannot emit a conversion. */ }
   });
   w.addEventListener('hs-form-event:on-submission:success', function (event) {
     if (!event.detail || event.detail.formId !== formId) return;
@@ -46,15 +73,15 @@
     try {
       var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
       if (!form || form.getFormId() !== formId) return;
-      var conversionId = form.getConversionId();
-      if (typeof conversionId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(conversionId)) return;
-      var id = 'hs_form_' + conversionId.toLowerCase();
+      var identity = identities[event.detail.instanceId];
+      if (!identity || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.expiresAt <= Date.now()) return;
+      var id = 'hs_form_' + identity.id;
       if (state.sentMeta.includes(id) || state.pending.some(function (entry) { return entry.id === id; })) return;
       state.pending.push({ id: id, path: path, at: Date.now() });
       save();
       flush();
       w.setTimeout(function () { allowGaHere = true; flush(); }, 1000);
-    } catch (_) { /* Only a confirmed provider conversion can produce a Lead. */ }
+    } catch (_) { /* Only HubSpot success with a prepared signed identity can produce a Lead. */ }
   });
   w.addEventListener('metaPixelReady', flush);
   w.addEventListener('ga4Ready', flush);
