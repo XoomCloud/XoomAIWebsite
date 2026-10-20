@@ -8,7 +8,7 @@ export function Analytics() {
   return (
     <>
       <Script id="ga4" strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${ga}');`}
+        {`window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${ga}');window.__xoomGaReady=true;window.dispatchEvent(new Event('ga4Ready'));`}
       </Script>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}

@@ -7,6 +7,7 @@
   var key = 'xoomai:hubspot-form-conversions:v1';
   var state = { sentMeta: [], sentGa: [], pending: [] };
   var sources = {};
+  var allowGaHere = false;
   try {
     var saved = JSON.parse(w.sessionStorage.getItem(key));
     if (saved && Array.isArray(saved.sentMeta) && Array.isArray(saved.sentGa) && Array.isArray(saved.pending)) state = saved;
@@ -21,7 +22,7 @@
     state.pending = state.pending.filter(function (entry) {
       if (!entry || !/^hs_form_[0-9a-f-]{36}$/i.test(entry.id) || entry.path !== sourcePath || !Number.isFinite(entry.at) || Date.now() - entry.at > 86400000 || entry.at > Date.now()) return false;
       var params = { form_id: formId, source_page_path: entry.path, conversion_type: 'hubspot_form_submission' };
-      if (!state.sentGa.includes(entry.id)) {
+      if (w.__xoomGaReady && (w.location.pathname !== sourcePath || allowGaHere) && !state.sentGa.includes(entry.id)) {
         w.dataLayer = w.dataLayer || [];
         w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
         w.gtag('event', 'generate_lead', Object.assign({ send_to: 'G-T3NZH8T5H7', event_id: entry.id, transport_type: 'beacon' }, params));
@@ -31,7 +32,7 @@
         w.fbq('trackSingle', '1643300670067276', 'Lead', params, { eventID: entry.id });
         state.sentMeta.push(entry.id);
       }
-      return !state.sentMeta.includes(entry.id);
+      return !state.sentMeta.includes(entry.id) || !state.sentGa.includes(entry.id);
     });
     save();
   }
@@ -52,8 +53,10 @@
       state.pending.push({ id: id, path: path, at: Date.now() });
       save();
       flush();
+      w.setTimeout(function () { allowGaHere = true; flush(); }, 1000);
     } catch (_) { /* Only a confirmed provider conversion can produce a Lead. */ }
   });
   w.addEventListener('metaPixelReady', flush);
+  w.addEventListener('ga4Ready', flush);
   flush();
 })(window);
