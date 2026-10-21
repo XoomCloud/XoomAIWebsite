@@ -1,0 +1,18 @@
+{
+  "sourcePage": "https://www.fieldy.ai/",
+  "retrievedAt": "2026-10-21",
+  "assets": [
+    {
+      "file": "fieldy-hero.webp",
+      "url": "https://www.fieldy.ai/fieldy3-assets/static/fieldy-hero-var1.webp"
+    },
+    {
+      "file": "fieldy-detail.webp",
+      "url": "https://www.fieldy.ai/fieldy3-assets/static/tech-specs-battery.webp"
+    },
+    {
+      "file": "fieldy-film.mp4",
+      "url": "https://content.fieldy.ai/assets/web/fieldy3-assets/video/stack.mp4"
+    }
+  ]
+}
