@@ -94,7 +94,7 @@ export function Footer() {
           <nav aria-label="Company">
             <h3 className="text-sm font-semibold text-foreground">Company</h3>
             <ul className="mt-4 space-y-2.5 text-sm">
-              <li><Link href="/omi" className="text-muted hover:text-primary">Omi + XoomAgent™</Link></li>
+              <li><Link href="/fieldy" className="text-muted hover:text-primary">Fieldy + XoomAgent™</Link></li>
               <li><Link href="/industries" className="text-muted hover:text-primary">All Industries</Link></li>
               <li><Link href="/ai-readiness" className="text-muted hover:text-primary">AI Readiness Quiz</Link></li>
               <li><Link href="/contact" className="text-muted hover:text-primary">Contact &amp; Booking</Link></li>

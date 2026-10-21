@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, AudioLines, Check, ChevronRight, Play, Workflow } from "lucide-react";
+import { ArrowUpRight, AudioLines, Check, ChevronRight, Play, Workflow, X } from "lucide-react";
 import { SITE } from "@/lib/site";
 import { trackEvent } from "@/lib/analytics";
 import { trackMetaCustom } from "@/lib/meta";
-import styles from "./omi.module.css";
+import styles from "./fieldy.module.css";
 
 const moments = [
   { time: "09:15", title: "The client conversation", context: "Client meeting · New proposal", quote: "Send Alex the revised proposal. Include the installation option, and follow up on Friday.", memory: "Alex needs the revised scope and installation option before making a decision.", tasks: [
@@ -30,10 +30,10 @@ const moments = [
   ] },
 ];
 
-export function OmiBookingLink({ placement, children = "Book your setup call", className = "" }: { placement: string; children?: React.ReactNode; className?: string }) {
+export function FieldyBookingLink({ placement, children = "Book your setup call", className = "" }: { placement: string; children?: React.ReactNode; className?: string }) {
   return <a className={`${styles.button} ${className}`} href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer" onClick={() => {
-    trackEvent("omi_integration_booking_click", { placement, destination: SITE.bookingUrl });
-    trackMetaCustom("OmiIntegrationBookingClick", { placement });
+    trackEvent("fieldy_integration_booking_click", { placement, destination: SITE.bookingUrl });
+    trackMetaCustom("FieldyIntegrationBookingClick", { placement });
   }}>{children}<ArrowUpRight size={18} aria-hidden="true" /></a>;
 }
 
@@ -42,12 +42,12 @@ export function DayExplorer() {
   const moment = moments[selected];
   return <div className={styles.explorer}>
     <div className={styles.momentList} aria-label="Choose a workflow example">
-      {moments.map((item, i) => <button key={item.time} type="button" aria-pressed={selected === i} aria-controls="omi-workflow-preview" className={selected === i ? styles.momentActive : ""} onClick={() => setSelected(i)}>
+      {moments.map((item, i) => <button key={item.time} type="button" aria-pressed={selected === i} aria-controls="fieldy-workflow-preview" className={selected === i ? styles.momentActive : ""} onClick={() => setSelected(i)}>
         <span>{item.time}</span><strong>{item.title}</strong><ChevronRight size={17} aria-hidden="true" />
       </button>)}
       <p>One day. Connected context.<br />A workforce ready for the next step.</p>
     </div>
-    <div id="omi-workflow-preview" className={styles.preview} aria-live="polite" aria-atomic="true">
+    <div id="fieldy-workflow-preview" className={styles.preview} aria-live="polite" aria-atomic="true">
       <div className={styles.previewTop}><span><AudioLines size={16} aria-hidden="true" /> {moment.context}</span><span>Illustrative workflow</span></div>
       <blockquote>“{moment.quote}”</blockquote>
       <div className={styles.memory}><span><Workflow size={18} aria-hidden="true" /> XoomAgent™ understands the context</span><p>{moment.memory}</p></div>
@@ -59,8 +59,8 @@ export function DayExplorer() {
 
 export function ProductFilm() {
   const [playing, setPlaying] = useState(false);
-  if (playing) return <video className={styles.productVideo} controls autoPlay muted playsInline preload="metadata" poster="/images/omi/omi-hero.webp" aria-label="Omi pendant product film">
-    <source src="/images/omi/omi-film.mp4" type="video/mp4" />Your browser does not support video. <a href="https://www.omi.me/">See Omi’s product film.</a>
-  </video>;
+  if (playing) return <><video className={styles.productVideo} controls autoPlay muted playsInline preload="metadata" poster="/images/fieldy/fieldy-hero.webp" aria-label="Fieldy 3 pendant and wrist wearable demonstration">
+    <source src="/images/fieldy/fieldy-film.mp4" type="video/mp4" />Your browser does not support video. <a href="https://www.fieldy.ai/">See Fieldy’s product film.</a>
+  </video><button type="button" className={styles.closeFilm} aria-label="Close product film" onClick={() => setPlaying(false)}><X size={20} aria-hidden="true" /></button></>;
   return <button type="button" className={styles.filmButton} onClick={() => setPlaying(true)}><Play size={15} aria-hidden="true" fill="currentColor" /> See the wearable</button>;
 }
