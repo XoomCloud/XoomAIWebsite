@@ -20,7 +20,7 @@ All values are server-only Vercel configuration supplied through approved compan
 
 - `HUBSPOT_IDENTITY_SIGNING_KEY`: at least 32 random bytes, retained only by the website.
 - `HUBSPOT_IDENTITY_VERIFIER_KEY`: a different secret with at least 32 random bytes, shared only with the trusted Make HTTP module.
-- `HUBSPOT_IDENTITY_REDIS_URL` and `HUBSPOT_IDENTITY_REDIS_TOKEN`: HTTPS REST endpoint and least-privilege credential for an approved persistent nonce store.
+- `HUBSPOT_IDENTITY_REDIS_URL` and `HUBSPOT_IDENTITY_REDIS_TOKEN`: HTTPS REST endpoint and least-privilege credential for an approved persistent nonce store. Each canonical variable takes priority when nonempty; otherwise the server uses the corresponding Vercel Marketplace variable `KV_REST_API_URL` or `KV_REST_API_TOKEN`. Marketplace-managed protected values do not need to be copied or renamed. An invalid selected URL, missing endpoint/credential, or missing/invalid signing or verifier key leaves the service unavailable with HTTP 503. A malformed canonical URL is rejected rather than silently replaced by a fallback. All four REST variable names remain server-only.
 
 The REST adapter is compatible with the documented Upstash command-in-body format. No database/account was created or selected by this draft. Systems must provide an approved storage connection or review an alternative persistent atomic adapter before deployment. Do not use a disposable test database or unauthorised operator credentials.
 

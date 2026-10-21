@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import { FORM_ID, SOURCE_URL, issueIdentity, renewIdentity, readClaim, verifySubmission, redisNonceStore, type NonceStore } from '../src/lib/form-identity';
-import { issueResponse, verifyResponse } from '../src/lib/form-identity-http';
+import { identityConfig, issueResponse, verifyResponse } from '../src/lib/form-identity-http';
 const secret = 'unit-test-signing-key-not-a-production-secret';
 const verifierKey = 'unit-test-verifier-key-not-a-production-secret';
 function store(): NonceStore { const bindings = new Map<string,string>(); return { async bind(n,h) { if(bindings.has(n)) return bindings.get(n)===h; bindings.set(n,h); return true; } }; }
@@ -81,4 +81,61 @@ test('the old token captured by HubSpot remains verifiable when submission races
  const s=store(),r=await verifySubmission(body,secret,s,submitted+1000);assert.equal(r?.eventId,'hs_form_'+original.eventUuid);
  assert.deepEqual(await verifySubmission(body,secret,s,submitted+3600000),r);
  assert.equal(await verifySubmission({...body,submittedAt:new Date(original.validUntil).toISOString()},secret,store(),original.validUntil+1000),null);
+});
+
+
+const configEnvNames = ['HUBSPOT_IDENTITY_SIGNING_KEY', 'HUBSPOT_IDENTITY_VERIFIER_KEY', 'HUBSPOT_IDENTITY_REDIS_URL', 'HUBSPOT_IDENTITY_REDIS_TOKEN', 'KV_REST_API_URL', 'KV_REST_API_TOKEN'];
+async function withConfigEnv(values: Record<string, string>, check: () => Promise<void>) {
+ const saved = configEnvNames.map(name => process.env[name]);
+ const originalFetch = globalThis.fetch;
+ try {
+  for (const name of configEnvNames) delete process.env[name];
+  Object.assign(process.env, { HUBSPOT_IDENTITY_SIGNING_KEY: secret, HUBSPOT_IDENTITY_VERIFIER_KEY: verifierKey }, values);
+  await check();
+ } finally {
+  configEnvNames.forEach((name, i) => { if (saved[i] === undefined) delete process.env[name]; else process.env[name] = saved[i]; });
+  globalThis.fetch = originalFetch;
+ }
+}
+async function assertConfiguredStore(url: string, token: string) {
+ let calls = 0;
+ globalThis.fetch = async (input, init) => {
+  calls++; assert.equal(String(input), url); assert.equal((init?.headers as Record<string,string>).Authorization, 'Bearer ' + token);
+  return Response.json({ result: 'OK' });
+ };
+ const config = identityConfig(); assert.ok(config);
+ assert.equal(await config.store.bind('test-nonce', 'test-binding', 60), true); assert.equal(calls, 1);
+}
+test('identity config uses protected Vercel Marketplace REST variables as fallback', async () => {
+ await withConfigEnv({ KV_REST_API_URL: 'https://marketplace.example.test/', KV_REST_API_TOKEN: 'marketplace-test-token' }, async () => {
+  await assertConfiguredStore('https://marketplace.example.test/', 'marketplace-test-token');
+ });
+});
+test('identity config canonical REST names take priority over Marketplace values', async () => {
+ await withConfigEnv({ HUBSPOT_IDENTITY_REDIS_URL: 'https://canonical.example.test/', HUBSPOT_IDENTITY_REDIS_TOKEN: 'canonical-test-token', KV_REST_API_URL: 'https://marketplace.example.test/', KV_REST_API_TOKEN: 'marketplace-test-token' }, async () => {
+  await assertConfiguredStore('https://canonical.example.test/', 'canonical-test-token');
+ });
+});
+test('identity config applies fallback independently to each absent or empty canonical value', async () => {
+ await withConfigEnv({ HUBSPOT_IDENTITY_REDIS_URL: 'https://canonical.example.test/', HUBSPOT_IDENTITY_REDIS_TOKEN: '', KV_REST_API_TOKEN: 'marketplace-test-token' }, async () => {
+  await assertConfiguredStore('https://canonical.example.test/', 'marketplace-test-token');
+ });
+ await withConfigEnv({ HUBSPOT_IDENTITY_REDIS_URL: '', HUBSPOT_IDENTITY_REDIS_TOKEN: 'canonical-test-token', KV_REST_API_URL: 'https://marketplace.example.test/' }, async () => {
+  await assertConfiguredStore('https://marketplace.example.test/', 'canonical-test-token');
+ });
+});
+test('identity config fallback fails closed for missing configuration, invalid selected URLs and invalid server keys', async () => {
+ const fallback = { KV_REST_API_URL: 'https://marketplace.example.test/', KV_REST_API_TOKEN: 'marketplace-test-token' };
+ for (const values of [{}, { KV_REST_API_URL: fallback.KV_REST_API_URL }, { KV_REST_API_TOKEN: fallback.KV_REST_API_TOKEN },
+  { ...fallback, KV_REST_API_URL: 'http://marketplace.example.test/' },
+  { ...fallback, HUBSPOT_IDENTITY_REDIS_URL: 'not-a-url' },
+  { ...fallback, HUBSPOT_IDENTITY_SIGNING_KEY: '' }, { ...fallback, HUBSPOT_IDENTITY_VERIFIER_KEY: 'short' },
+  { ...fallback, HUBSPOT_IDENTITY_VERIFIER_KEY: secret }]) {
+  await withConfigEnv(values, async () => {
+   globalThis.fetch = async () => { throw new Error('Configuration validation must not make a network request'); };
+   assert.equal(identityConfig(), null);
+   const request = () => new Request('https://xoomai.com.au/api', { method: 'POST', headers: { origin: 'https://xoomai.com.au' } });
+   assert.equal((await issueResponse(request())).status, 503); assert.equal((await verifyResponse(request())).status, 503);
+  });
+ }
 });

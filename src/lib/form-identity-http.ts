@@ -4,7 +4,8 @@ type Config = { signingKey: string; verifierKey: string; store: NonceStore };
 export function identityConfig(): Config | null {
   const signingKey = process.env.HUBSPOT_IDENTITY_SIGNING_KEY || '';
   const verifierKey = process.env.HUBSPOT_IDENTITY_VERIFIER_KEY || '';
-  const url = process.env.HUBSPOT_IDENTITY_REDIS_URL || '', token = process.env.HUBSPOT_IDENTITY_REDIS_TOKEN || '';
+  const url = process.env.HUBSPOT_IDENTITY_REDIS_URL || process.env.KV_REST_API_URL || '';
+  const token = process.env.HUBSPOT_IDENTITY_REDIS_TOKEN || process.env.KV_REST_API_TOKEN || '';
   if (signingKey.length < 32 || verifierKey.length < 32 || equalSecret(signingKey, verifierKey) || !url || !token) return null;
   try { return { signingKey, verifierKey, store: redisNonceStore(url, token) }; } catch { return null; }
 }
