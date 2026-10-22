@@ -1,5 +1,7 @@
 # XOO-323 signed form identity, draft for review
 
+XOO-427 superseding operational and returning-visitor review: see [form-identity-operations.md](form-identity-operations.md). The new consumer and success read-back replace the earlier custom-event-only monitoring gap. Published form settings remain under read-only Systems inspection; do not demand an owner edit without a verified unsafe setting. Fresh empty fields do not prove global prefill is disabled. The earlier base and rollback references below are historical PR32 context; current-main preservation and release gates in the new document take precedence.
+
 This draft replaces browser provider-UUID tracking with a company-issued UUID for both browser and server. It does not send Meta from either endpoint, provision infrastructure, alter HubSpot configuration or deploy. Base: production commit 5ac528ca89dc937621b09967f3f88485ab8be2a5. PR 31's direct-CAPI handler is not part of this change.
 
 ## Trust boundary

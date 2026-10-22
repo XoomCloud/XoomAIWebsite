@@ -15,12 +15,12 @@
   try {
     var saved = JSON.parse(w.sessionStorage.getItem(key));
     if (saved && Array.isArray(saved.sentMeta) && Array.isArray(saved.sentGa) && Array.isArray(saved.pending)) state = saved;
-  } catch (_) { /* In-memory duplicate protection remains available. */ }
+  } catch { /* In-memory duplicate protection remains available. */ }
   function save() {
     state.sentMeta = state.sentMeta.slice(-50);
     state.sentGa = state.sentGa.slice(-50);
     state.pending = state.pending.slice(-50);
-    try { w.sessionStorage.setItem(key, JSON.stringify(state)); } catch (_) { /* Storage may be disabled. */ }
+    try { w.sessionStorage.setItem(key, JSON.stringify(state)); } catch { /* Storage may be disabled. */ }
   }
   function flush() {
     state.pending = state.pending.filter(function (entry) {
@@ -41,6 +41,28 @@
     save();
   }
   function scalar(value) { return Array.isArray(value) && value.length === 1 ? value[0] : value; }
+  // Operational delivery has no dependency on either conversion provider.
+  var reportKey = 'xoomai:identity-failure-reports:v1';
+  var reportBudget = { at: 0, count: 0 };
+  try {
+    var previous = JSON.parse(w.sessionStorage.getItem(reportKey));
+    if (previous && Number.isFinite(previous.at) && previous.at <= Date.now() && previous.at >= 0
+      && Number.isInteger(previous.count) && previous.count >= 0 && previous.count <= 3) reportBudget = previous;
+  } catch { /* Per-page limits still apply without storage. */ }
+  w.addEventListener('xoomFormIdentityUnavailable', function (event) {
+    if (!event.detail || event.detail.formId !== formId || event.detail.source_page_path !== sourcePath) return;
+    if (reportBudget.count >= 3 || (reportBudget.count && Date.now() - reportBudget.at < 300000)) return;
+    reportBudget = { at: Date.now(), count: reportBudget.count + 1 };
+    try { w.sessionStorage.setItem(reportKey, JSON.stringify(reportBudget)); } catch { /* No identifiers are persisted. */ }
+    try {
+      var delivery = w.fetch('/api/telemetry/form-identity', {
+        method: 'POST', credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer', keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'identity_unavailable', form: 'enquiry', source: sourcePath })
+      });
+      if (delivery && typeof delivery.catch === 'function') delivery.catch(function () { /* No unbounded telemetry retries. */ });
+    } catch { /* Telemetry failure must not break the enquiry form. */ }
+  });
   function unavailable() {
     if (typeof w.CustomEvent === 'function' && typeof w.dispatchEvent === 'function') {
       w.dispatchEvent(new w.CustomEvent('xoomFormIdentityUnavailable', { detail: { formId: formId, source_page_path: sourcePath } }));
@@ -77,7 +99,7 @@
       entry.expiresAt = issued.expiresAt; entry.validUntil = issued.validUntil; entry.ready = true;
       if (entry.submitted) return;
       scheduleRefresh(entry, Math.max(1000, entry.expiresAt - Date.now() - 120000));
-    } catch (_) {
+    } catch {
       if (!entry.submitted) { unavailable(); scheduleRefresh(entry, 5000); }
     } finally { entry.inFlight = false; }
   }
@@ -93,7 +115,7 @@
       var current = await form.getFormFieldValues();
       if (!Object.keys(fields).every(function (k) { return current.some(function (f) { return f.name === fields[k]; }); })) { unavailable(); return; }
       entry.form = form; await refresh(entry);
-    } catch (_) { unavailable(); }
+    } catch { unavailable(); }
   });
   function refreshDue() {
     Object.keys(identities).forEach(function (key) {
@@ -103,7 +125,7 @@
   }
   w.addEventListener('focus', refreshDue);
   if (w.document) w.document.addEventListener('visibilitychange', refreshDue);
-  w.addEventListener('hs-form-event:on-submission:success', function (event) {
+  w.addEventListener('hs-form-event:on-submission:success', async function (event) {
     if (!event.detail || event.detail.formId !== formId) return;
     var path = sources[event.detail.instanceId] || w.location.pathname;
     if (path !== sourcePath) return;
@@ -112,15 +134,23 @@
       if (!form || form.getFormId() !== formId) return;
       var identity = identities[event.detail.instanceId];
       if (!identity || !identity.ready || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.validUntil <= Date.now()) { unavailable(); return; }
+      if (identity.checking || identity.submitted) return;
+      identity.checking = true;
+      // Freeze renewal before asynchronous read-back, including duplicate callbacks.
       identity.submitted = true;
       if (identity.timer && typeof w.clearTimeout === 'function') w.clearTimeout(identity.timer);
-      var id = 'hs_form_' + identity.id;
+      var expectedId = identity.id, expectedToken = identity.token;
+      var actual;
+      try { actual = await Promise.all([form.getFieldValue(fields.id), form.getFieldValue(fields.token), form.getFieldValue(fields.source)]); }
+      catch { unavailable(); return; }
+      if (scalar(actual[0]) !== expectedId || scalar(actual[1]) !== expectedToken || scalar(actual[2]) !== sourceUrl) { unavailable(); return; }
+      var id = 'hs_form_' + expectedId;
       if (state.sentMeta.includes(id) || state.pending.some(function (entry) { return entry.id === id; })) return;
       state.pending.push({ id: id, path: path, at: Date.now() });
       save();
       flush();
       w.setTimeout(function () { allowGaHere = true; flush(); }, 1000);
-    } catch (_) { /* Only HubSpot success with a prepared signed identity can produce a Lead. */ }
+    } catch { /* Provider analytics failures do not imply identity failure. */ }
   });
   w.addEventListener('metaPixelReady', flush);
   w.addEventListener('ga4Ready', flush);

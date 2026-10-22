@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "contract:generate": "node scripts/generate-managed-service-contract.mjs",
-    "test:tracking": "node --import tsx --test tests/form-identity.test.ts tests/hubspot-form-tracking.test.mjs tests/booking-click-tracking.test.mjs tests/meta-tracking.test.ts"
+    "test:tracking": "node --import tsx --test tests/form-identity.test.ts tests/form-identity-telemetry.test.ts tests/hubspot-form-tracking.test.mjs tests/booking-click-tracking.test.mjs tests/meta-tracking.test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
