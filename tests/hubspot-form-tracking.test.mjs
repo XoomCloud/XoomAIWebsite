@@ -3,53 +3,80 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 const script=readFileSync(new URL('../public/hubspot-form-tracking.js',import.meta.url),'utf8');
-const formId='d5bbb02f-27ce-4869-8428-3f9268bfe5d5';
-const guid='01234567-89ab-4cde-8f01-23456789abcd';
-function harness({ready=true,store=new Map(),path='/youraiemployee',conversion=guid,apiFormId=formId}={}){
- const listeners={},meta=[],timers=[];
- const window={__xoomGaReady:true,setTimeout:fn=>timers.push(fn),location:{pathname:path},sessionStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>{listeners[name]=fn;},HubSpotFormsV4:{getFormFromEvent:()=>({getFormId:()=>apiFormId,getConversionId:()=>conversion})}};
+const formId='d5bbb02f-27ce-4869-8428-3f9268bfe5d5',guid='01234567-89ab-4cde-8f01-23456789abcd';
+const fieldNames=['0-1/xoom_tracking_uuid','0-1/xoom_tracking_token','0-1/xoom_tracking_source_url'];
+function harness({ready=true,store=new Map(),path='/youraiemployee',missingField=false,apiFailure=false,expired=false,wrongId=false}={}){
+ const listeners={},meta=[],timers=[],values={},requests=[],events=[],clock={now:Date.now()},control={apiFailure},sessionUntil=clock.now+7*86400000;
+ class ClockDate extends Date { static now(){return clock.now;} }
+ const form={getFormId:()=>formId,getFormFieldValues:async()=>fieldNames.filter((_,i)=>!missingField||i!==0).map(name=>({name,value:values[name]||''})),setFieldValue:(name,value)=>values[name]=value,getFieldValue:async name=>values[name],getConversionId:()=> 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee'};
+ const window={__xoomGaReady:true,CustomEvent:class {constructor(type,options){this.type=type;this.detail=options.detail;}},dispatchEvent:e=>events.push(e),setTimeout:(fn,ms)=>{const t={fn,ms,cancelled:false};timers.push(t);return t;},clearTimeout:t=>t.cancelled=true,location:{pathname:path},sessionStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners[name]=fn,
+ fetch:async(url,init)=>{requests.push({url,init});if(requests.length>1&&control.renewalGate)await control.renewalGate;return {ok:!control.apiFailure,json:async()=>({ok:true,eventUuid:wrongId?'invalid':guid,token:'unit.test-token-'+requests.length,expiresAt:clock.now+(expired?-1000:900000),validUntil:sessionUntil,formId,sourceUrl:'https://xoomai.com.au/youraiemployee'})};},HubSpotFormsV4:{getFormFromEvent:()=>form}};
  if(ready)window.fbq=(...args)=>meta.push(args);
- const context=vm.createContext({window});vm.runInContext(script,context);
- const emit=(name,detail={formId,instanceId:'instance1'})=>listeners[name]?.({detail});
- return{window,meta,emit,store,context,timers};
+ const context=vm.createContext({window,Date:ClockDate});vm.runInContext(script,context);
+ const emit=(name,detail={formId,instanceId:'instance1'})=>listeners[name]?.({detail});return{window,meta,emit,store,context,timers,values,requests,clock,control,events};
 }
-test('only confirmed form success emits one Lead and one generate_lead with matching ID and attribution',()=>{
- const b=harness();b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');
- assert.equal(b.meta.length,1);assert.equal(b.meta[0][0],'trackSingle');assert.equal(b.meta[0][1],'1643300670067276');assert.equal(b.meta[0][2],'Lead');assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');assert.equal(b.meta[0][3].form_id,formId);assert.equal(b.meta[0][3].conversion_type,'hubspot_form_submission');assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);
- b.window.location.pathname='/book';b.emit('ga4Ready');assert.equal(b.window.dataLayer.length,1);assert.equal(b.window.dataLayer[0][1],'generate_lead');assert.equal(b.window.dataLayer[0][2].event_id,b.meta[0][4].eventID);
+test('prepares one signed identity in hidden fields and sends only after success',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');await b.emit('hs-form-event:on-ready');assert.equal(b.requests.length,1);assert.equal(b.meta.length,0);assert.equal(b.values[fieldNames[0]][0],guid);
+ b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');assert.equal(b.meta[0][1],'1643300670067276');
+ b.window.location.pathname='/book';b.emit('ga4Ready');assert.equal(b.window.dataLayer[0][2].event_id,b.meta[0][4].eventID);
 });
-test('page load, submit attempts and validation failures do not produce conversions',()=>{
- const b=harness();b.emit('hs-form-event:on-ready');b.emit('submit');b.emit('hs-form-event:on-submission:failed');assert.equal(b.meta.length,0);assert.equal(b.window.dataLayer,undefined);
+test('attempts, failed validation and missing readiness produce no conversions',async()=>{
+ const b=harness();b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);await b.emit('hs-form-event:on-ready');b.emit('submit');b.emit('hs-form-event:on-submission:failed');assert.equal(b.meta.length,0);
 });
-test('duplicate success, script execution and Meta-ready notifications do not repeat events',()=>{
- const b=harness();b.emit('hs-form-event:on-submission:success');vm.runInContext(script,b.context);b.emit('hs-form-event:on-submission:success');b.emit('metaPixelReady');assert.equal(b.meta.length,1);b.timers[0]();assert.equal(b.window.dataLayer.length,1);
+test('missing fields, issue failure, expiry or invalid identity never fall back to provider ID',async()=>{
+ for(const options of [{missingField:true},{apiFailure:true},{expired:true},{wrongId:true}]){const b=harness(options);await b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);}
 });
-test('completed conversion stays deduplicated after reload',()=>{
- const b=harness();b.emit('hs-form-event:on-submission:success');b.timers[0]();const c=harness({store:b.store});c.emit('hs-form-event:on-submission:success');assert.equal(c.meta.length,0);assert.equal(c.window.dataLayer,undefined);
+test('duplicate success, ready notifications and script loading emit once',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');b.emit('hs-form-event:on-submission:success');b.emit('metaPixelReady');vm.runInContext(script,b.context);assert.equal(b.meta.length,1);b.timers.find(t=>t.ms===1000).fn();assert.equal(b.window.dataLayer.length,1);
 });
-test('wrong form, wrong provider form instance and other landing pages are ignored',()=>{
- const b=harness();b.emit('hs-form-event:on-submission:success',{formId:'other',instanceId:'1'});assert.equal(b.meta.length,0);
- const c=harness({apiFormId:'other'});c.emit('hs-form-event:on-submission:success');assert.equal(c.meta.length,0);
- const d=harness({path:'/book'});d.emit('hs-form-event:on-submission:success');assert.equal(d.meta.length,0);
+test('wrong form and other landing pages are ignored',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready',{formId:'other',instanceId:'1'});b.emit('hs-form-event:on-submission:success');assert.equal(b.requests.length,0);assert.equal(b.meta.length,0);const c=harness({path:'/book'});await c.emit('hs-form-event:on-ready');assert.equal(c.requests.length,0);
 });
-test('missing or malformed provider conversion IDs do not fabricate events',()=>{
- for(const conversion of [undefined,'',null,'private@example.com','unconfirmed']){const b=harness({conversion:conversion===undefined?'':conversion});b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);}
+test('pending identity survives redirect without duplicate platform events after reload',async()=>{
+ const b=harness({ready:false});await b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');const c=harness({store:b.store,path:'/book'});assert.equal(c.meta.length,1);assert.equal(c.window.dataLayer.length,1);c.emit('metaPixelReady');c.emit('ga4Ready');assert.equal(c.meta.length,1);const d=harness({store:b.store,path:'/book'});assert.equal(d.meta.length,0);assert.equal(d.window.dataLayer,undefined);
 });
-test('pending confirmed event survives redirect until Meta becomes ready, then fires once',()=>{
- const b=harness({ready:false});b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');b.emit('hs-form-event:on-submission:success');b.timers[0]();assert.equal(b.window.dataLayer.length,1);
- const c=harness({ready:false,store:b.store,path:'/book'});c.window.fbq=(...a)=>c.meta.push(a);c.emit('metaPixelReady');c.emit('metaPixelReady');assert.equal(c.meta.length,1);assert.equal(c.meta[0][3].source_page_path,'/youraiemployee');assert.equal(c.window.dataLayer,undefined);
+test('ready source survives navigation before success callback',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.window.location.pathname='/book';b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');
 });
-test('source captured on form-ready is retained if location changes before success handler',()=>{
- const b=harness();b.emit('hs-form-event:on-ready');b.window.location.pathname='/book';b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');
+test('Google waits for destination or inline timeout',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.emit('hs-form-event:on-submission:success');assert.equal(b.window.dataLayer,undefined);b.timers.find(t=>t.ms===1000).fn();b.emit('ga4Ready');assert.equal(b.window.dataLayer.length,1);
 });
-test('expired pending conversions are discarded',()=>{
- const b=harness({ready:false});b.emit('hs-form-event:on-submission:success');const key='xoomai:hubspot-form-conversions:v1';const saved=JSON.parse(b.store.get(key));saved.pending[0].at=Date.now()-90000000;b.store.set(key,JSON.stringify(saved));const c=harness({store:b.store,path:'/book'});assert.equal(c.meta.length,0);
+test('old provider identity queue is not replayed during identity migration',()=>{
+ const store=new Map([['xoomai:hubspot-form-conversions:v1',JSON.stringify({sentMeta:[],sentGa:[],pending:[{id:'hs_form_'+guid,path:'/youraiemployee',at:Date.now()}]})]]);const b=harness({store,path:'/book'});assert.equal(b.meta.length,0);
 });
 
-test('Google waits until the redirect document has initialized its tag',()=>{
- const b=harness();b.emit('hs-form-event:on-submission:success');assert.equal(b.window.dataLayer,undefined);
- const c=harness({store:b.store,path:'/book'});assert.equal(c.window.dataLayer.length,1);c.emit('ga4Ready');assert.equal(c.window.dataLayer.length,1);
+test('a form submitted after the original 15-minute window retains its canonical identity',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');const original=b.values[fieldNames[0]][0];
+ b.clock.now+=13*60000;const refresh=b.timers.find(t=>!t.cancelled&&t.ms>1000);await refresh.fn();await new Promise(setImmediate);
+ assert.equal(b.requests.length,2);assert.equal(JSON.parse(b.requests[1].init.body).token,'unit.test-token-1');
+ assert.equal(b.values[fieldNames[0]][0],original);b.clock.now+=3*60000;b.emit('hs-form-event:on-submission:success');
+ assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+original);
 });
-test('inline success sends Google once after the redirect opportunity has passed',()=>{
- const b=harness();b.emit('hs-form-event:on-submission:success');assert.equal(b.window.dataLayer,undefined);b.timers[0]();b.emit('ga4Ready');assert.equal(b.window.dataLayer.length,1);
+test('focus renews a suspended tab with the same identity before submission',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.clock.now+=16*60000;b.emit('focus');await new Promise(setImmediate);
+ b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.requests.length,2);
+});
+test('transient renewal failure retries without replacing the identity',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.clock.now+=13*60000;b.control.apiFailure=true;b.emit('focus');await new Promise(setImmediate);
+ const retry=b.timers.find(t=>!t.cancelled&&t.ms===5000);assert.ok(retry);b.control.apiFailure=false;await retry.fn();await new Promise(setImmediate);
+ b.clock.now+=3*60000;b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);
+});
+test('unavailable identity emits a non-personal operational signal instead of silently inventing a conversion',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.clock.now+=7*86400000;b.control.apiFailure=true;b.emit('focus');await new Promise(setImmediate);b.emit('hs-form-event:on-submission:success');
+ assert.equal(b.meta.length,0);assert.ok(b.events.length>0);assert.equal(b.events[0].type,'xoomFormIdentityUnavailable');assert.equal(b.events[0].detail.formId,formId);assert.deepEqual(Object.keys(b.events[0].detail).sort(),['formId','source_page_path']);
+});
+
+test('confirmed success during held focus renewal emits once with the original identity and survives redirect',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');const capturedToken=b.values[fieldNames[1]][0];
+ let release;b.control.renewalGate=new Promise(resolve=>release=resolve);b.clock.now+=16*60000;b.emit('focus');
+ assert.equal(b.requests.length,2);b.emit('hs-form-event:on-submission:success');b.emit('hs-form-event:on-submission:success');
+ assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);
+ b.window.location.pathname='/book';b.emit('ga4Ready');assert.equal(b.window.dataLayer.length,1);
+ release();await new Promise(setImmediate);b.emit('metaPixelReady');b.emit('ga4Ready');assert.equal(b.meta.length,1);assert.equal(b.window.dataLayer.length,1);
+ assert.equal(b.values[fieldNames[1]][0],capturedToken);assert.equal(b.timers.filter(t=>!t.cancelled&&t.ms>1000).length,0);
+ const c=harness({store:b.store,path:'/book'});assert.equal(c.meta.length,0);assert.equal(c.window.dataLayer,undefined);
+});
+test('a failed renewal does not invalidate a prepared identity within its supported session',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');b.clock.now+=16*60000;b.control.apiFailure=true;b.emit('focus');await new Promise(setImmediate);
+ b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);
 });
