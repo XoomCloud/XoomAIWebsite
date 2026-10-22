@@ -12,7 +12,7 @@ export function createIdentityTelemetry(now = Date.now, log: Log = console.info)
     const start = Math.floor(time / WINDOW_MS) * WINDOW_MS;
     if (start !== windowStart) { windowStart = start; accepted = 0; healthLogged = false; }
   }
-  function record(time: number, status: 'identity_unavailable' | 'consumer_ready', count: number) {
+  function record(time: number, status: 'identity_unavailable' | 'attribution_unavailable' | 'consumer_ready', count: number) {
     log(JSON.stringify({ marker: TELEMETRY_MARKER, event: 'form_identity_status', form: FORM, source: PATH,
       time: new Date(time).toISOString(), service_status: status, failure_count: count }));
   }
@@ -52,13 +52,13 @@ export function createIdentityTelemetry(now = Date.now, log: Log = console.info)
       finally { reader.releaseLock(); }
       if (!input || typeof input !== 'object' || Array.isArray(input)) return response(422);
       const data = input as Record<string, unknown>;
-      if (Object.keys(data).sort().join(',') !== 'event,form,source' || data.event !== 'identity_unavailable'
+      if (Object.keys(data).sort().join(',') !== 'event,form,source' || (data.event !== 'identity_unavailable' && data.event !== 'attribution_unavailable')
         || data.form !== FORM || data.source !== PATH) return response(422);
       // Recheck after stream reads, since multiple invocations can finish concurrently.
       const receivedAt = now(); reset(receivedAt);
       if (accepted >= MAX_REPORTS) return response(429);
       accepted++;
-      record(receivedAt, 'identity_unavailable', 1);
+      record(receivedAt, data.event as 'identity_unavailable' | 'attribution_unavailable', 1);
       return response(204);
     },
   };

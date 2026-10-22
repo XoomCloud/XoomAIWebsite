@@ -55,7 +55,19 @@ test('browser custom event is consumed by first-party route and produces sanitiz
  HubSpotFormsV4:{getFormFromEvent:()=>({getFormId:()=> 'd5bbb02f-27ce-4869-8428-3f9268bfe5d5',setFieldValue:()=>{},getFormFieldValues:async()=>[]})}};
  runInNewContext(readFileSync(new URL('../public/hubspot-form-tracking.js',import.meta.url),'utf8'),{window});
  await listeners['hs-form-event:on-ready']({detail:{formId:'d5bbb02f-27ce-4869-8428-3f9268bfe5d5',instanceId:'synthetic-local-instance'}});
- assert.ok(delivery);assert.equal((await delivery).status,204);assert.equal(lines.length,1);
+ assert.ok(delivery);assert.equal((await delivery).status,204);assert.equal(lines.length,2);
+ assert.deepEqual(lines.map(line=>JSON.parse(line).service_status).sort(),['attribution_unavailable','identity_unavailable']);
  assert.equal(JSON.parse(lines[0]).marker,TELEMETRY_MARKER);assert.equal(JSON.parse(lines[0]).failure_count,1);
  assert.equal(lines[0].includes('synthetic-local-instance'),false);
+});
+test('attribution reports use the same strict sanitized contract and shared server rate limit',async()=>{
+ const lines:string[]=[];const ops=createIdentityTelemetry(()=>0,line=>lines.push(line));
+ const attribution={...valid,event:'attribution_unavailable'};
+ assert.equal((await ops.report(request({...attribution,campaign:'private'}))).status,422);
+ assert.equal((await ops.report(request({...attribution,event:['attribution_unavailable']}))).status,422);
+ for(let i=0;i<6;i++)assert.equal((await ops.report(request(attribution))).status,204);
+ for(let i=0;i<6;i++)assert.equal((await ops.report(request(valid))).status,204);
+ assert.equal((await ops.report(request(attribution))).status,429);
+ assert.equal(lines.length,12);assert.equal(JSON.parse(lines[0]).service_status,'attribution_unavailable');
+ assert.deepEqual(Object.keys(JSON.parse(lines[0])).sort(),['event','failure_count','form','marker','service_status','source','time']);
 });
