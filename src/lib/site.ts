@@ -5,7 +5,7 @@
 
 export const SITE = {
   name: "XoomAI",
-  legalName: "XoomCloud Pty Ltd",
+  legalName: "Xoom Cloud Pty Ltd",
   brand: "XoomAI",
   product: "XoomAgent™",
   tagline: "Your managed AI workforce for Australian business.",
@@ -19,7 +19,8 @@ export const SITE = {
   email: "support@xoomai.com.au",
   emailHref: "mailto:support@xoomai.com.au",
   abn: "37 680 921 162",
-  parent: "XoomCloud Pty Ltd",
+  parent: "Xoom Cloud Pty Ltd",
+  postcode: "4209",
   areaServed: ["Brisbane", "Gold Coast", "Queensland", "Australia"],
   region: "AU",
   // Conversion links
@@ -28,6 +29,7 @@ export const SITE = {
   quizPath: "/ai-readiness",
   social: {
     linkedin: "https://www.linkedin.com/company/xoomcloud",
+    linkedinBrand: "https://www.linkedin.com/company/xoom-ai",
   },
   founded: "2024",
 } as const;
