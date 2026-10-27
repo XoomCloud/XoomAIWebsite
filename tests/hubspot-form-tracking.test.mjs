@@ -9,7 +9,7 @@ const attributionNames=['xoomai_utm_medium','xoomai_campaign_name','xoomai_campa
 function harness({ready=true,store=new Map(),path='/youraiemployee',missingField=false,apiFailure=false,expired=false,wrongId=false,now=Date.now(),search='',cookie='',initialValues={},missingAttribution=false}={}){
  const listeners={},meta=[],timers=[],values={...initialValues},requests=[],reports=[],events=[],clock={now},control={apiFailure},sessionUntil=clock.now+7*86400000;
  class ClockDate extends Date { static now(){return clock.now;} }
- const form={getFormId:()=>formId,getFormFieldValues:async()=>[...fieldNames,...attributionNames].filter((name,i)=>(!missingField||i!==0)&&(!missingAttribution||!attributionNames.includes(name))).map(name=>({name,value:values[name]||''})),setFieldValue:(name,value)=>values[name]=value,getFieldValue:async name=>values[name],getConversionId:()=> 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee'};
+ const form={getFormId:()=>formId,getInstanceId:()=> 'instance1',getFormFieldValues:async()=>[...fieldNames,...attributionNames].filter((name,i)=>(!missingField||i!==0)&&(!missingAttribution||!attributionNames.includes(name))).map(name=>({name,value:values[name]||''})),setFieldValue:(name,value)=>values[name]=value,getFieldValue:async name=>values[name],getConversionId:()=> 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee'};
  const window={__xoomGaReady:true,CustomEvent:class {constructor(type,options){this.type=type;this.detail=options.detail;}},dispatchEvent:e=>{events.push(e);listeners[e.type]?.(e);},setTimeout:(fn,ms)=>{const t={fn,ms,cancelled:false};timers.push(t);return t;},clearTimeout:t=>t.cancelled=true,location:{pathname:path,search},document:{cookie:typeof cookie==='function'?cookie(clock.now):cookie,addEventListener:()=>{}},performance:{timeOrigin:clock.now},sessionStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners[name]=fn,
  fetch:async(url,init)=>{if(url==='/api/telemetry/form-identity'){reports.push({url,init});if(control.telemetryFailure)throw new Error('blocked');return {ok:true};}requests.push({url,init});if(requests.length>1&&control.renewalGate)await control.renewalGate;return {ok:!control.apiFailure,json:async()=>({ok:true,eventUuid:wrongId?'invalid':guid,token:'unit.test-token-'+requests.length,expiresAt:clock.now+(expired?-1000:900000),validUntil:sessionUntil,formId,sourceUrl:'https://xoomai.com.au/youraiemployee'})};},HubSpotFormsV4:{getFormFromEvent:()=>form}};
  if(ready)window.fbq=(...args)=>meta.push(args);
@@ -211,12 +211,25 @@ test('late prefill of each hidden field after ready fails closed at success with
  assert.equal(JSON.parse(b.store.get('xoomai:hubspot-form-conversions:v2')).pending.length,0);}
 });
 test('unreadable hidden fields at success fail closed with telemetry',async()=>{
- const b=harness();await b.emit('hs-form-event:on-ready');b.window.HubSpotFormsV4.getFormFromEvent().getFieldValue=async()=>{throw new Error('unavailable');};
+ const b=harness();await b.emit('hs-form-event:on-ready');b.window.HubSpotFormsV4.getFormFromEvent().getFormFieldValues=async()=>{throw new Error('unavailable');};
  await b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);assert.equal(b.reports.length,1);
 });
 test('duplicate success while read-back is held emits one conversion',async()=>{
  const b=harness();await b.emit('hs-form-event:on-ready');const form=b.window.HubSpotFormsV4.getFormFromEvent();let release;
- const gate=new Promise(resolve=>release=resolve);form.getFieldValue=async name=>{await gate;return b.values[name];};
+ const gate=new Promise(resolve=>release=resolve);const read=form.getFormFieldValues;form.getFormFieldValues=async()=>{await gate;return read();};
  const success=b.emit('hs-form-event:on-submission:success');await b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);
  release();await success;assert.equal(b.meta.length,1);
+});
+
+test('success reads one atomic snapshot without individual field IPC calls',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');const form=b.window.HubSpotFormsV4.getFormFromEvent();let reads=0;const read=form.getFormFieldValues;form.getFormFieldValues=async()=>{reads++;return read();};form.getFieldValue=async()=>{throw new Error('individual field IPC unavailable after success');};
+ await b.emit('hs-form-event:on-submission:success');assert.equal(reads,1);assert.equal(b.meta.length,1);assert.equal(b.reports.length,0);
+});
+test('documented instance ID recovers callback alias only with matching signed snapshot',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');await b.emit('hs-form-event:on-submission:success',{formId,instanceId:'callback-alias'});assert.equal(b.meta.length,1);
+ const c=harness();await c.emit('hs-form-event:on-ready');c.values[fieldNames[0]]=['stale'];await c.emit('hs-form-event:on-submission:success',{formId,instanceId:'callback-alias'});assert.equal(c.meta.length,0);assert.equal(c.reports.length,1);
+});
+test('duplicate identity fields in an atomic snapshot fail closed',async()=>{
+ const b=harness();await b.emit('hs-form-event:on-ready');const form=b.window.HubSpotFormsV4.getFormFromEvent();const read=form.getFormFieldValues;form.getFormFieldValues=async()=>[...await read(),{name:fieldNames[0],value:[guid]}];
+ await b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,0);assert.equal(b.reports.length,1);
 });

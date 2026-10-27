@@ -68,10 +68,10 @@
       w.dispatchEvent(new w.CustomEvent('xoomFormAttributionUnavailable', { detail: { formId: formId, source_page_path: sourcePath } }));
     }
   }
-  async function checkAttribution(form) {
+  async function checkAttribution(form, snapshot) {
     try {
       for (var name of Object.keys(attribution)) {
-        if (scalar(await form.getFieldValue('0-1/' + name)) !== attribution[name]) { attributionUnavailable(); return; }
+        if (scalar(snapshot ? snapshot.find(function (field) { return field.name === '0-1/' + name; })?.value : await form.getFieldValue('0-1/' + name)) !== attribution[name]) { attributionUnavailable(); return; }
       }
     } catch { attributionUnavailable(); }
   }
@@ -201,6 +201,7 @@
       var form = w.HubSpotFormsV4 && w.HubSpotFormsV4.getFormFromEvent(event);
       if (!form || form.getFormId() !== formId) return;
       var identity = identities[event.detail.instanceId];
+      if (!identity && typeof form.getInstanceId === 'function') identity = identities[form.getInstanceId()];
       if (!identity || !identity.ready || typeof identity.id !== 'string' || !uuid.test(identity.id) || identity.validUntil <= Date.now()) { unavailable(); return; }
       if (identity.checking || identity.submitted) return;
       identity.checking = true;
@@ -209,11 +210,19 @@
       if (identity.timer && typeof w.clearTimeout === 'function') w.clearTimeout(identity.timer);
       var expectedId = identity.id, expectedToken = identity.token;
       var actual;
-      try { actual = await Promise.all([form.getFieldValue(fields.id), form.getFieldValue(fields.token), form.getFieldValue(fields.source)]); }
+      try {
+        var snapshot = await form.getFormFieldValues();
+        if (!Array.isArray(snapshot)) throw new Error('Form snapshot unavailable');
+        actual = [fields.id, fields.token, fields.source].map(function (name) {
+          var matches = snapshot.filter(function (field) { return field.name === name; });
+          if (matches.length !== 1) throw new Error('Ambiguous identity field');
+          return matches[0].value;
+        });
+      }
       catch { unavailable(); return; }
       if (scalar(actual[0]) !== expectedId || scalar(actual[1]) !== expectedToken || scalar(actual[2]) !== sourceUrl) { unavailable(); return; }
       // Attribution mismatch is reported independently of a valid confirmed Lead.
-      await checkAttribution(form);
+      await checkAttribution(form, snapshot);
       var id = 'hs_form_' + expectedId;
       if (state.sentMeta.includes(id) || state.pending.some(function (entry) { return entry.id === id; })) return;
       state.pending.push({ id: id, path: path, at: Date.now() });
