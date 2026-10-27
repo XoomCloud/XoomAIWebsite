@@ -322,9 +322,9 @@ export const services: ServiceContent[] = [
     slug: "ai-chatbot-development",
     nav: "AI Chatbot Development",
     eyebrow: "AI Chatbot Development",
-    metaTitle: "AI Chatbot Development Australia | Custom AI Assistants | XoomAI",
+    metaTitle: "AI Chatbot Development Australia | 4 to 8 Week Builds",
     metaDescription:
-      "Custom AI chatbots built for Australian business. XoomAI develops intelligent, Claude-powered chatbots that qualify leads, support customers 24/7 and integrate with your CRM — Privacy Act focused.",
+      "Custom AI chatbots for Australian businesses: answer enquiries 24/7, qualify leads, book appointments and update your CRM. Typical build: 4 to 8 weeks.",
     keyword: "AI chatbot development Australia",
     h1: "Custom AI Chatbots Built for Australian Business",
     heroSubtitle:
