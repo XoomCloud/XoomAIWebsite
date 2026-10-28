@@ -18,35 +18,35 @@ import { Clock, Zap, Brain, Check } from "lucide-react";
 const URL = "/youraiemployee";
 
 export const metadata: Metadata = {
-  title: { absolute: "Hire Your First AI Employee | XoomAI" },
+  title: { absolute: "Hire Your AI Employees | XoomAI" },
   description:
-    "An AI employee that works 24/7, never sleeps and automates the repetitive work holding your Australian business back. Book a free AI Strategy Session with XoomAI.",
+    "We build, connect and run AI employees across your sales, admin and finance, inside Microsoft 365, HubSpot and Xero. Book a free AI Strategy Session with XoomAI.",
   alternates: { canonical: URL },
   openGraph: {
     type: "website",
     url: URL,
-    title: "Hire Your First AI Employee | XoomAI",
+    title: "Hire Your AI Employees | XoomAI",
     description:
-      "An AI employee that works 24/7 and automates the repetitive work holding your business back. Book a free AI Strategy Session.",
+      "Done-for-you AI employees across sales, admin and finance, live in weeks. Book a free AI Strategy Session.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hire Your First AI Employee | XoomAI",
-    description: "An AI employee that works 24/7 and automates the work holding your business back.",
+    title: "Hire Your AI Employees | XoomAI",
+    description: "Done-for-you AI employees across sales, admin and finance, live in weeks.",
   },
 };
 
 const benefits = [
-  { icon: Clock, title: "Works 24/7", body: "Answers enquiries, replies to email and completes tasks around the clock — evenings, weekends and public holidays included." },
-  { icon: Zap, title: "Never Sleeps", body: "No sick days, no leave, no drop in output. Your AI employee shows up every single day and never lets a task fall through the cracks." },
-  { icon: Brain, title: "Always Learning", body: "Trained on your business, it gets sharper over time — understanding your processes, tone and systems more with every task." },
+  { icon: Clock, title: "Works 24/7", body: "Answers enquiries, replies to email and completes tasks around the clock, including evenings, weekends and public holidays included." },
+  { icon: Zap, title: "Never Sleeps", body: "No sick days, no leave, no drop in output. Your AI employees show up every single day and never lets a task fall through the cracks." },
+  { icon: Brain, title: "Always Learning", body: "Trained on your business, they get sharper over time, learning your processes, tone and systems more with every task." },
 ];
 
 const steps = [
   { icon: "Search" as const, title: "Discover", body: "We map your workflows in a free strategy session and find the highest-impact work to automate first." },
-  { icon: "Rocket" as const, title: "Deploy", body: "We configure and connect your AI employee to your inbox, CRM and tools — fully managed by XoomAI." },
-  { icon: "Workflow" as const, title: "Automate", body: "It starts handling real work: enquiries, follow-ups, documents, data entry and reporting." },
-  { icon: "TrendingUp" as const, title: "Scale", body: "Add more skills and departments as you grow — one AI employee becomes an entire AI workforce." },
+  { icon: "Rocket" as const, title: "Deploy", body: "We configure and connect your AI employees to your inbox, CRM and tools, fully managed by XoomAI." },
+  { icon: "Workflow" as const, title: "Automate", body: "They start handling real work: enquiries, follow-ups, documents, data entry and reporting." },
+  { icon: "TrendingUp" as const, title: "Scale", body: "Add more skills and departments as you grow, until you have an entire AI workforce." },
 ];
 
 const capabilities = [
@@ -66,16 +66,16 @@ const integrations = [
 ];
 
 const faqs = [
-  { q: "What exactly is an AI employee?", a: "It's a fully managed AI system that performs real work inside your business — answering enquiries, replying to email, processing documents, updating your CRM and running workflows. Unlike a chatbot, it takes action across your tools, 24/7." },
-  { q: "Will it replace my staff?", a: "No. It removes the repetitive, low-value work your team dislikes so they can focus on customers, growth and the work that needs a human. Most businesses redeploy time, not people." },
-  { q: "How long until it's working?", a: "After your free strategy session, an initial deployment is typically live within a few weeks — starting with your highest-impact workflow so you see value fast." },
-  { q: "Which systems does it connect to?", a: "Microsoft 365, Google Workspace, Teams, SharePoint, HubSpot, Salesforce, Xero, QuickBooks, Dynamics, Outlook and most tools with an API." },
+  { q: "What exactly are AI employees?", a: "They're a fully managed AI system that performs real work inside your business: answering enquiries, replying to email, processing documents, updating your CRM and running workflows. Unlike a chatbot, they take action across your tools, 24/7." },
+  { q: "Will they replace my staff?", a: "No. They remove the repetitive, low-value work your team dislikes so they can focus on customers, growth and the work that needs a human. Most businesses redeploy time, not people." },
+  { q: "How long until they're working?", a: "After your free strategy session, an initial deployment is typically live within a few weeks, starting with your highest-impact workflow so you see value fast." },
+  { q: "Which systems do they connect to?", a: "Microsoft 365, Google Workspace, Teams, SharePoint, HubSpot, Salesforce, Xero, QuickBooks, Dynamics, Outlook and most tools with an API." },
   { q: "Is my business data secure?", a: "Yes. It runs on dedicated, isolated infrastructure with permissioned access and full audit trails, and your data is never used to train AI models. XoomAI is backed by XoomCloud, an Australian managed IT and security provider." },
-  { q: "Do I need technical staff to run it?", a: "No. XoomAI builds, hosts, monitors and continuously improves your AI employee. You get the outcomes without needing developers in-house." },
+  { q: "Do I need technical staff to run it?", a: "No. XoomAI builds, hosts, monitors and continuously improves your AI employees. You get the outcomes without needing developers in-house." },
   { q: "How much does it cost?", a: "It's designed to cost far less than a part-time hire, with pricing confirmed after your free strategy session once we understand the workflows you want automated." },
-  { q: "What size business is this for?", a: "It's built for Australian businesses with roughly 10–100 staff across professional services, trades, construction, accounting, legal, healthcare, manufacturing and retail." },
-  { q: "What happens in the free strategy session?", a: "In a 45-minute call we map where an AI employee would save you the most time and money, and outline a practical, secure plan. No obligation." },
-  { q: "Is XoomAI Australian?", a: "Yes — Australian owned and operated, with Australian data handling and a Privacy Act–first approach, backed by XoomCloud's managed IT and security expertise." },
+  { q: "What size business is this for?", a: "It's built for Australian businesses with roughly 10 to 100 staff across professional services, trades, construction, accounting, legal, healthcare, manufacturing and retail." },
+  { q: "What happens in the free strategy session?", a: "In a 45-minute call we map where AI employees would save you the most time and money, and outline a practical, secure plan. No obligation." },
+  { q: "Is XoomAI Australian?", a: "Yes. Australian owned and operated, with Australian data handling and a Privacy Act first approach, backed by XoomCloud's managed IT and security expertise." },
 ];
 
 export default function YourAiEmployeePage() {
@@ -99,6 +99,55 @@ export default function YourAiEmployeePage() {
         </div>
       </section>
 
+      {/* Client result: verified facts only (HubSpot deal + Fireflies notes, see XOO-1040 evidence) */}
+      <section className="py-16 md:py-24">
+        <div className="container-xa">
+          <SectionHeading
+            eyebrow="Client results"
+            title="Real Australian businesses, real work automated"
+            subtitle="What was slowing a client down, and what their AI employees now handle."
+          />
+          <article className="mx-auto mt-12 grid max-w-5xl gap-8 rounded-3xl border border-border bg-white/[0.03] p-7 shadow-[0_0_60px_-30px_rgba(34,211,238,0.5)] md:grid-cols-[1fr_1fr] md:p-10">
+            <div>
+              <p className="font-display text-2xl font-semibold text-foreground">OEMX Diesel</p>
+              <p className="mt-1 text-sm text-muted">Diesel and fabrication · live since mid 2026</p>
+              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-primary">The problem</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                Admin overhead, time tracking and workflow coordination were eating the team&apos;s week, with little
+                real-time view of the numbers.
+              </p>
+              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-primary">What we automated</p>
+              <ul className="mt-2 space-y-2">
+                {[
+                  "Weekly timesheet checks and payroll summaries, ready for Xero",
+                  "Supplier bills checked, matched to purchase orders and drafted in Xero for approval",
+                  "AI employees working across finance, operations and reporting",
+                ].map((p) => (
+                  <li key={p} className="flex items-start gap-2.5 text-sm text-foreground">
+                    <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden /> {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col justify-center rounded-2xl bg-gradient-to-r from-[#6d3bf5]/15 to-[#0891b2]/15 p-6 md:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">The result</p>
+              <p className="mt-3 font-display text-2xl font-semibold leading-snug text-foreground md:text-3xl">
+                The automated payroll summary matched the manual one exactly and caught 3 human errors.
+              </p>
+            </div>
+          </article>
+          <div className="mt-10 text-center">
+            <a
+              href="#book"
+              className="inline-flex h-13 items-center justify-center rounded-full bg-gradient-to-r from-[#6d3bf5] to-[#0891b2] px-8 py-3.5 text-base font-semibold text-white shadow-[0_12px_34px_-10px_rgba(34,211,238,0.6)] transition-transform hover:-translate-y-0.5"
+            >
+              Book my free session
+            </a>
+            <p className="mt-3 text-sm text-muted">A free strategy call. We map where AI employees save you the most time.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Video */}
       <section className="py-14 md:py-20">
         <div className="container-xa">
@@ -108,10 +157,10 @@ export default function YourAiEmployeePage() {
                 Watch
               </span>
               <h2 className="mt-2 font-display text-2xl font-semibold text-foreground md:text-3xl">
-                See your AI employee in action
+                See your AI employees in action
               </h2>
             </div>
-            <HeyGenVideo src="https://app.heygen.com/embeds/623a4bff1b1d4d3d9e031a35fa81cf51" poster="https://dynamic.heygen.ai/aws_pacific/avatar_tmp/59ef09acf8284df287d5bcd2b861a1f4/v8SSJ5vUZ8jHvoHTlx9oJYWz9kxZbMF3z/623a4bff1b1d4d3d9e031a35fa81cf51.jpeg" title="XoomAI: meet your AI employee" />
+            <HeyGenVideo src="https://app.heygen.com/embeds/623a4bff1b1d4d3d9e031a35fa81cf51" poster="https://dynamic.heygen.ai/aws_pacific/avatar_tmp/59ef09acf8284df287d5bcd2b861a1f4/v8SSJ5vUZ8jHvoHTlx9oJYWz9kxZbMF3z/623a4bff1b1d4d3d9e031a35fa81cf51.jpeg" title="XoomAI: meet your AI employees" />
           </div>
         </div>
       </section>
@@ -119,7 +168,7 @@ export default function YourAiEmployeePage() {
       {/* Benefits */}
       <section className="py-16 md:py-24">
         <div className="container-xa">
-          <SectionHeading eyebrow="Why an AI employee" title="Always on. Always working. Always improving." />
+          <SectionHeading eyebrow="Why AI employees" title="Always on. Always working. Always improving." />
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {benefits.map((b, i) => {
               const Icon = b.icon;
@@ -142,7 +191,7 @@ export default function YourAiEmployeePage() {
       {/* How it works */}
       <section className="py-16 md:py-24">
         <div className="container-xa">
-          <SectionHeading eyebrow="How it works" title="From first call to a working AI employee" subtitle="A clear, managed path — we do the heavy lifting." />
+          <SectionHeading eyebrow="How it works" title="From first call to working AI employees" subtitle="A clear, managed path. We do the heavy lifting." />
           <div className="relative mt-14 grid gap-6 md:grid-cols-4">
             <div className="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent md:block" aria-hidden />
             {steps.map((s, i) => (
@@ -164,7 +213,7 @@ export default function YourAiEmployeePage() {
       {/* ROI calculator */}
       <section className="py-16 md:py-24">
         <div className="container-xa">
-          <SectionHeading eyebrow="ROI Calculator" title="See what you're losing to repetitive work" subtitle="Move the sliders to estimate what an AI employee could save you each year." />
+          <SectionHeading eyebrow="ROI Calculator" title="See what you're losing to repetitive work" subtitle="Move the sliders to estimate what AI employees could save you each year." />
           <div className="mx-auto mt-12 max-w-4xl">
             <RoiCalculator />
           </div>
@@ -174,7 +223,7 @@ export default function YourAiEmployeePage() {
       {/* What it can do */}
       <section className="py-16 md:py-24">
         <div className="container-xa">
-          <SectionHeading eyebrow="Capabilities" title="What can your AI employee do?" subtitle="One hire. Every department covered." />
+          <SectionHeading eyebrow="Capabilities" title="What can your AI employees do?" subtitle="One team. Every department covered." />
           <div className="mt-12">
             <FeatureGrid features={capabilities} columns={4} />
           </div>
@@ -208,11 +257,11 @@ export default function YourAiEmployeePage() {
               <div className="relative grid gap-10 lg:grid-cols-2">
                 <div>
                   <h2 className="font-display text-3xl font-semibold text-foreground md:text-4xl">
-                    Ready to Hire Your First <span className="text-gradient">AI Employee?</span>
+                    Ready to Hire Your <span className="text-gradient">AI Employees?</span>
                   </h2>
                   <p className="mt-4 text-lg text-muted">
                     Book your free strategy session in two quick steps: tell us a little about your business,
-                    then pick a time in our calendar. We&apos;ll map exactly where an AI employee saves you the
+                    then pick a time in our calendar. We&apos;ll map exactly where AI employees save you the
                     most time and money, with no obligation.
                   </p>
                   <ol className="mt-6 space-y-2 text-sm text-foreground">
@@ -269,8 +318,8 @@ export default function YourAiEmployeePage() {
 
       <StickyCta />
 
-      <JsonLd data={serviceSchema({ name: "AI Strategy Session", description: "Free AI Strategy Session to plan your first AI employee.", href: URL, serviceType: "AI employee for business" })} />
-      <JsonLd data={breadcrumbSchema([{ name: "Hire Your First AI Employee", href: URL }])} />
+      <JsonLd data={serviceSchema({ name: "AI Strategy Session", description: "Free AI Strategy Session to plan your AI employees.", href: URL, serviceType: "AI employees for business" })} />
+      <JsonLd data={breadcrumbSchema([{ name: "Hire Your AI Employees", href: URL }])} />
     </div>
   );
 }

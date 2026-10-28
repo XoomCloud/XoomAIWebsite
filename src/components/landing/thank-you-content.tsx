@@ -62,8 +62,8 @@ export function ThankYouContent() {
             <span className="text-gradient">strategy session.</span>
           </motion.h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
-            Thanks — we&apos;ve received your details. Pick a time that works and we&apos;ll map out your first
-            AI employee together.
+            Thanks, we&apos;ve received your details. Pick a time that works and we&apos;ll map out your
+            AI employees together.
           </p>
         </div>
 
