@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    // HeyGen video poster frame on /youraiemployee
+    remotePatterns: [{ protocol: "https", hostname: "dynamic.heygen.ai" }],
   },
   poweredByHeader: false,
   async redirects() {

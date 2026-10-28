@@ -105,7 +105,10 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 text-xs text-muted-2 md:flex-row md:items-center">
           <p>© {year} {SITE.legalName}. All rights reserved. XoomAgent™ is a trademark of {SITE.parent}.</p>
-          <p>Brisbane · Gold Coast · Australia-wide · Australian English · Privacy Act focused</p>
+          <p>
+            Brisbane · Gold Coast · Australia-wide ·{" "}
+            <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
+          </p>
         </div>
       </div>
     </footer>

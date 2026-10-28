@@ -3,7 +3,6 @@ import { LandingNav } from "@/components/landing/landing-nav";
 import { LandingHero } from "@/components/landing/hero";
 import { StickyCta } from "@/components/landing/sticky-cta";
 import { RoiCalculator } from "@/components/landing/roi-calculator";
-import { Testimonials } from "@/components/landing/testimonials";
 import { HubspotForm } from "@/components/landing/hubspot-form";
 import { HeyGenVideo } from "@/components/landing/heygen-video";
 import { SectionHeading } from "@/components/sections/section";
@@ -12,6 +11,7 @@ import { FAQ } from "@/components/sections/faq";
 import { Reveal } from "@/components/motion/reveal";
 import { IconBadge } from "@/components/icon-badge";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/components/seo/json-ld";
+import Link from "next/link";
 import { SITE } from "@/lib/site";
 import { Clock, Zap, Brain, Check } from "lucide-react";
 
@@ -74,7 +74,7 @@ const faqs = [
   { q: "Do I need technical staff to run it?", a: "No. XoomAI builds, hosts, monitors and continuously improves your AI employee. You get the outcomes without needing developers in-house." },
   { q: "How much does it cost?", a: "It's designed to cost far less than a part-time hire, with pricing confirmed after your free strategy session once we understand the workflows you want automated." },
   { q: "What size business is this for?", a: "It's built for Australian businesses with roughly 10–100 staff across professional services, trades, construction, accounting, legal, healthcare, manufacturing and retail." },
-  { q: "What happens in the free strategy session?", a: "In about 30 minutes we map where an AI employee would save you the most time and money, and outline a practical, secure plan. No obligation." },
+  { q: "What happens in the free strategy session?", a: "In a 45-minute call we map where an AI employee would save you the most time and money, and outline a practical, secure plan. No obligation." },
   { q: "Is XoomAI Australian?", a: "Yes — Australian owned and operated, with Australian data handling and a Privacy Act–first approach, backed by XoomCloud's managed IT and security expertise." },
 ];
 
@@ -111,7 +111,7 @@ export default function YourAiEmployeePage() {
                 See your AI employee in action
               </h2>
             </div>
-            <HeyGenVideo src="https://app.heygen.com/embeds/623a4bff1b1d4d3d9e031a35fa81cf51" title="XoomAI — meet your AI employee" />
+            <HeyGenVideo src="https://app.heygen.com/embeds/623a4bff1b1d4d3d9e031a35fa81cf51" poster="https://dynamic.heygen.ai/aws_pacific/avatar_tmp/59ef09acf8284df287d5bcd2b861a1f4/v8SSJ5vUZ8jHvoHTlx9oJYWz9kxZbMF3z/623a4bff1b1d4d3d9e031a35fa81cf51.jpeg" title="XoomAI: meet your AI employee" />
           </div>
         </div>
       </section>
@@ -197,16 +197,6 @@ export default function YourAiEmployeePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-24">
-        <div className="container-xa">
-          <SectionHeading eyebrow="What owners say" title="Real outcomes, real businesses" />
-          <div className="mt-12">
-            <Testimonials />
-          </div>
-        </div>
-      </section>
-
       <FAQ items={faqs} eyebrow="FAQ" title="Everything you're wondering" />
 
       {/* Final CTA + form */}
@@ -221,9 +211,20 @@ export default function YourAiEmployeePage() {
                     Ready to Hire Your First <span className="text-gradient">AI Employee?</span>
                   </h2>
                   <p className="mt-4 text-lg text-muted">
-                    Book your free strategy session today. In 30 minutes we&apos;ll map exactly where an AI
-                    employee saves you the most time and money — no obligation.
+                    Book your free strategy session in two quick steps: tell us a little about your business,
+                    then pick a time in our calendar. We&apos;ll map exactly where an AI employee saves you the
+                    most time and money, with no obligation.
                   </p>
+                  <ol className="mt-6 space-y-2 text-sm text-foreground">
+                    <li className="flex items-center gap-2.5">
+                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary">1</span>
+                      Your details (about a minute)
+                    </li>
+                    <li className="flex items-center gap-2.5">
+                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary">2</span>
+                      Choose a time that suits you
+                    </li>
+                  </ol>
                   <ul className="mt-6 space-y-3">
                     {[
                       "A tailored plan for your business",
@@ -243,6 +244,11 @@ export default function YourAiEmployeePage() {
                 </div>
                 <div>
                   <HubspotForm />
+                  <p className="mt-4 text-xs leading-relaxed text-muted-2">
+                    We collect your details to arrange your strategy session and follow up about it. See our{" "}
+                    <Link href="/privacy" className="text-primary underline-offset-2 hover:underline">Privacy Policy</Link>{" "}
+                    for how we handle your information.
+                  </p>
                 </div>
               </div>
             </div>
@@ -254,7 +260,10 @@ export default function YourAiEmployeePage() {
       <footer className="border-t border-border py-8">
         <div className="container-xa flex flex-col items-center justify-between gap-3 text-xs text-muted-2 sm:flex-row">
           <p>© {new Date().getFullYear()} {SITE.legalName}. XoomAgent™ is a trademark of {SITE.parent}.</p>
-          <p>Australian owned · ABN {SITE.abn} · {SITE.phone}</p>
+          <p>
+            Australian owned · ABN {SITE.abn} · {SITE.phone} ·{" "}
+            <Link href="/privacy" className="underline-offset-2 hover:text-primary hover:underline">Privacy Policy</Link>
+          </p>
         </div>
       </footer>
 

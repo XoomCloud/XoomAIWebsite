@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guides", priority: 0.6, freq: "monthly" },
     { path: "/MSP-Partnership", priority: 0.7, freq: "monthly" },
     { path: "/contact", priority: 0.7, freq: "monthly" },
+    { path: "/privacy", priority: 0.3, freq: "yearly" },
   ];
 
   const serviceRoutes = services.map((s) => ({ path: `/${s.slug}`, priority: 0.8, freq: "monthly" as const }));
