@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { LandingNav } from "@/components/landing/landing-nav";
 import { MeetingEmbed } from "@/components/landing/meeting-embed";
 import { BookingLeadTracker } from "@/components/landing/booking-lead-tracker";
@@ -71,6 +72,8 @@ export default async function BookPage({ searchParams }: { searchParams: Promise
           <p>Australian owned · ABN {SITE.abn} · {SITE.phone}</p>
         </div>
       </footer>
+      {/* ChatGPT Ads pixel: inert unless the visitor submitted the /chatgpt form (XOO-4487). */}
+      <Script src="/chatgpt-ads-tracking.js" strategy="afterInteractive" />
     </div>
   );
 }
