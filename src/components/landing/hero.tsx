@@ -11,7 +11,12 @@ const ROWS = [
   { icon: BarChart3, text: "Sent the weekly operations report", dept: "Ops", color: "#f59e0b" },
 ];
 
-export function LandingHero() {
+type HeroProps = { badge?: string; intro?: string };
+
+const DEFAULT_INTRO =
+  "We build, connect and run AI employees across your sales, admin and finance, inside Microsoft 365, HubSpot and Xero. Done for you, live in weeks, no tech team needed.";
+
+export function LandingHero({ badge = "Built for Australian businesses · 10 to 100 staff", intro = DEFAULT_INTRO }: HeroProps = {}) {
   const reduce = useReducedMotion();
   const animate = !reduce;
   const ease = [0.16, 1, 0.3, 1] as const;
@@ -32,7 +37,7 @@ export function LandingHero() {
       <div className="container-xa grid items-center gap-14 pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-medium text-primary">
-            <ShieldCheck className="size-3.5" aria-hidden /> Built for Australian businesses · 10 to 100 staff
+            <ShieldCheck className="size-3.5" aria-hidden /> {badge}
           </span>
 
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.03em] text-foreground sm:text-5xl lg:text-6xl">
@@ -40,10 +45,7 @@ export function LandingHero() {
             <span className="text-gradient">AI Employees.</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted md:text-xl">
-            We build, connect and run AI employees across your sales, admin and finance, inside Microsoft
-            365, HubSpot and Xero. Done for you, live in weeks, no tech team needed.
-          </p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted md:text-xl">{intro}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
