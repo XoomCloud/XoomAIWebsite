@@ -44,17 +44,18 @@ export type CapiScheduleInput = {
   contentName?: string;
   value?: number;
   currency?: string;
+  formId?: string;
 };
 
 export type CapiResult =
-  | { sent: true; status: number; eventId: string }
+  | { sent: true; status: number; eventId: string; traceId?: string }
   | { sent: false; reason: "not_configured" | "no_identifiers" | "invalid_event_time" | "request_failed"; status?: number; detail?: string };
 
 /**
  * Send a single `Schedule` event to the Conversions API.
  * Returns a result so the webhook can distinguish retryable delivery failures.
  */
-export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<CapiResult> {
+async function sendEventToMetaCapi(eventName: "Lead" | "Schedule", input: CapiScheduleInput): Promise<CapiResult> {
   const accessToken = process.env.META_CAPI_ACCESS_TOKEN;
   const pixelId = process.env.META_PIXEL_ID || META_PIXEL_ID;
 
@@ -82,7 +83,7 @@ export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<
   const body: Record<string, unknown> = {
     data: [
       {
-        event_name: "Schedule",
+        event_name: eventName,
         event_time: Math.floor(eventTimeMs / 1000),
         event_id: input.eventId,
         action_source: "website",
@@ -90,7 +91,8 @@ export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<
         user_data: userData,
         custom_data: {
           content_name: input.contentName ?? "AI Strategy Session",
-          content_category: "Booking",
+          content_category: eventName === "Schedule" ? "Booking" : "Form",
+          ...(eventName === "Lead" ? { form_id: input.formId, source_page_path: "/youraiemployee", conversion_type: "hubspot_form_submission" } : {}),
           ...(input.value !== undefined ? { value: input.value, currency: input.currency ?? "AUD" } : {}),
         },
       },
@@ -113,13 +115,23 @@ export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<
     if (!res.ok) {
       return { sent: false, reason: "request_failed", status: res.status };
     }
-    const receipt = await res.json() as { events_received?: number };
+    const receipt = await res.json() as { events_received?: number; fbtrace_id?: string };
     if (receipt.events_received !== 1) return { sent: false, reason: "request_failed", status: res.status };
-    return { sent: true, status: res.status, eventId: input.eventId };
+    return { sent: true, status: res.status, eventId: input.eventId, ...(receipt.fbtrace_id ? { traceId: receipt.fbtrace_id } : {}) };
   } catch {
     return {
       sent: false,
       reason: "request_failed",
     };
   }
+}
+
+/** Send a confirmed meeting milestone with its shared browser/server identity. */
+export function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<CapiResult> {
+  return sendEventToMetaCapi("Schedule", input);
+}
+
+/** Form Leads share the exact event name and ID already used by the browser. */
+export function sendFormLeadToMetaCapi(input: CapiScheduleInput): Promise<CapiResult> {
+  return sendEventToMetaCapi("Lead", { ...input, formId: "d5bbb02f-27ce-4869-8428-3f9268bfe5d5", contentName: "AI Employee form submission" });
 }
