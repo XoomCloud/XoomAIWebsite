@@ -8,8 +8,8 @@ const REGION = process.env.NEXT_PUBLIC_HUBSPOT_REGION || "na1";
 
 /**
  * HubSpot confirms submissions through its global form events. The root
- * hubspot-form-tracking.js listener sends one Lead for a confirmed submission
- * on /youraiemployee. Completed meetings are reported separately as Schedule.
+ * hubspot-form-tracking.js listener sends one FormSubmitted (plus GA4 generate_lead) for a confirmed submission
+ * on /youraiemployee. Meta Lead fires only for a completed meeting booking.
  */
 export function HubspotForm() {
   return (

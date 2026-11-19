@@ -7,7 +7,7 @@ import { bookingConversionMetadata } from "@/lib/booking-conversion";
 /**
  * HubSpot webhook → Meta Conversions API.
  *
- * Fires a server-side `Schedule` when a meeting is booked, using the SAME event id
+ * Fires a server-side `Lead` when a meeting is booked, using the SAME event id
  * the browser Pixel derives for that booking, so Meta deduplicates the pair.
  * This recovers conversions the browser Pixel loses to ad blockers / ITP.
  *
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
     });
 
     if (!result.sent) {
-      console.error("[meta-capi] Schedule not sent:", result.reason, result.status ?? "");
+      console.error("[meta-capi] booking Lead not sent:", result.reason, result.status ?? "");
     }
     results.push({ eventId, sent: result.sent, ...(result.sent ? {} : { reason: result.reason }) });
   }

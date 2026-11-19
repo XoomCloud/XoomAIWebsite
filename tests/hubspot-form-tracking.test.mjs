@@ -115,7 +115,7 @@ test('URL campaign names and numeric fallback IDs never populate the campaign na
 });
 test('prepares one signed identity in hidden fields and sends only after success',async()=>{
  const b=harness();await b.emit('hs-form-event:on-ready');await b.emit('hs-form-event:on-ready');assert.equal(b.requests.length,1);assert.equal(b.meta.length,0);assert.equal(b.values[fieldNames[0]][0],guid);
- await b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');assert.equal(b.meta[0][1],'1643300670067276');
+ await b.emit('hs-form-event:on-submission:success');assert.equal(b.meta.length,1);assert.equal(b.meta[0][4].eventID,'hs_form_'+guid);assert.equal(b.meta[0][3].source_page_path,'/youraiemployee');assert.equal(b.meta[0][1],'1643300670067276');assert.equal(b.meta[0][0],'trackSingleCustom');assert.equal(b.meta[0][2],'FormSubmitted');
  b.window.location.pathname='/book';b.emit('ga4Ready');assert.equal(b.window.dataLayer[0][2].event_id,b.meta[0][4].eventID);
 });
 test('attempts, failed validation and missing readiness produce no conversions',async()=>{

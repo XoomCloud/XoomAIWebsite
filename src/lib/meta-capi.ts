@@ -51,7 +51,7 @@ export type CapiResult =
   | { sent: false; reason: "not_configured" | "no_identifiers" | "invalid_event_time" | "request_failed"; status?: number; detail?: string };
 
 /**
- * Send a single `Schedule` event to the Conversions API.
+ * Send a single booking `Lead` event to the Conversions API.
  * Returns a result so the webhook can distinguish retryable delivery failures.
  */
 export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<CapiResult> {
@@ -82,7 +82,7 @@ export async function sendScheduleToMetaCapi(input: CapiScheduleInput): Promise<
   const body: Record<string, unknown> = {
     data: [
       {
-        event_name: "Schedule",
+        event_name: "Lead",
         event_time: Math.floor(eventTimeMs / 1000),
         event_id: input.eventId,
         action_source: "website",

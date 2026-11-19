@@ -97,7 +97,8 @@
         state.sentGa.push(entry.id);
       }
       if (typeof w.fbq === 'function' && !state.sentMeta.includes(entry.id)) {
-        w.fbq('trackSingle', '1643300670067276', 'Lead', params, { eventID: entry.id });
+        // A form fill is a step, not a lead: Lead fires only on a confirmed booking (XOO-5162).
+        w.fbq('trackSingleCustom', '1643300670067276', 'FormSubmitted', params, { eventID: entry.id });
         state.sentMeta.push(entry.id);
       }
       return !state.sentMeta.includes(entry.id) || !state.sentGa.includes(entry.id);

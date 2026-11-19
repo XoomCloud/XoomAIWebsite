@@ -5,7 +5,7 @@ import { trackMeta, whenMetaReady } from "@/lib/meta";
 import { isHubSpotOrigin, isBookingConfirmed, bookingEventId } from "@/lib/booking-lead";
 
 /**
- * Fires the Meta `Schedule` event ONLY after a HubSpot meeting is successfully
+ * Fires the Meta `Lead` event (the ad set optimisation target) ONLY after a HubSpot meeting is successfully
  * booked and confirmed ; never on page load and never on a button click.
  *
  * The scheduler is a cross-origin iframe (meetings.hubspot.com), but HubSpot's
@@ -67,7 +67,7 @@ export function BookingLeadTracker({ contentName = "AI Strategy Session" }: { co
       firedThisSession.add(eventId);
       cancelPending.push(whenMetaReady(() => {
         trackMeta(
-          "Schedule",
+          "Lead",
           {
             content_name: contentName,
             content_category: "Booking",
